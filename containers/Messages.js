@@ -22,7 +22,7 @@ const Messages = () => {
             <View style={styles.containerMessages}>
                 <ScrollView>
                     <View style={styles.top}>
-                        <Text style={styles.title}>Messages</Text>
+                        <Text style={styles.title}>Tin nhắn</Text>
                         <TouchableOpacity>
                             <Text style={styles.icon}>
                                 <Icon name="optionsV" />

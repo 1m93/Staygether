@@ -69,7 +69,7 @@ const Profile = () => {
                         <Text style={styles.iconButton}>
                             <Icon name="chat" />
                         </Text>
-                        <Text style={styles.textButton}>Start chatting</Text>
+                        <Text style={styles.textButton}>Nhắn tin</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>

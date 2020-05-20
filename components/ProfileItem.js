@@ -18,7 +18,7 @@ const ProfileItem = ({
         <View style={styles.containerProfileItem}>
             <View style={styles.matchesProfileItem}>
                 <Text style={styles.matchesTextProfileItem}>
-                    <Icon name="heart" /> {matches}% Match!
+                    {matches} VND
         </Text>
             </View>
 

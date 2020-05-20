@@ -1,115 +1,115 @@
 module.exports = [
 	{
 		id: 1,
-		name: 'Leanne Graham',
+		name: 'Nguyễn Thu Phương',
 		status: 'Online',
 		match: '1200000',
 		description:
-			'Full-time Traveller. Globe Trotter. Occasional Photographer. Part time Singer/Dancer.',
+			'Giới tính: Nữ \n Tuổi: 21 \n Địa chỉ: xxxxxx \n Mô tả: Sinh viên Học viên báo chị và tuyên truyền, thích âm nhạc và phim ảnh \n Yêu cầu: Sạch sẽ, gọn gàng',
 		message:
-			'I will go back to Gotham and I will fight men Iike this but I will not become an executioner.',
+			'Chào bạn, bạn muốn tìm người ở ghép đúng không ạ?',
 		image: require('../images/01.jpg')
 	},
 	{
 		id: 2,
-		name: 'Clementine Bauch',
+		name: 'Nguyễn Tuấn Linh',
 		match: '2500000',
 		description:
-			'Full-time Traveller. Globe Trotter. Occasional Photographer. Part time Singer/Dancer.',
+			'Giới tính: Nam \n Tuổi: 21 \n Địa chỉ: xxxxxx \n Mô tả: Sinh viên Học viên báo chị và tuyên truyền, thích âm nhạc và phim ảnh \n Yêu cầu: Sạch sẽ, gọn gàng',
 		status: 'Offline',
-		message: "Someone like you. Someone who'll rattle the cages.",
+		message: "Chào bạn, bạn muốn tìm người ở ghép đúng không ạ?",
 		image: require('../images/02.jpg')
 	},
 	{
 		id: 3,
-		name: 'Ervin Howell',
+		name: 'Vũ Trọng Dương',
 		match: '4500000',
 		description:
-			'Full-time Traveller. Globe Trotter. Occasional Photographer. Part time Singer/Dancer.',
+			'Giới tính: Nam \n Tuổi: 21 \n Địa chỉ: xxxxxx \n Mô tả: Sinh viên Học viên báo chị và tuyên truyền, thích âm nhạc và phim ảnh \n Yêu cầu: Sạch sẽ, gọn gàng',
 		status: 'Offline',
 		message:
-			'Oh, hee-hee, aha. Ha, ooh, hee, ha-ha, ha-ha. And I thought my jokes were bad.',
+			'Chào bạn, bạn muốn tìm người ở ghép đúng không ạ?',
 		image: require('../images/03.jpg')
 	},
 	{
 		id: 4,
-		name: 'John Lebsack',
+		name: 'Vũ Quốc Trưởng',
 		match: '8800000',
 		description:
-			'Full-time Traveller. Globe Trotter. Occasional Photographer. Part time Singer/Dancer.',
+			'Giới tính: Nam \n Tuổi: 21 \n Địa chỉ: xxxxxx \n Mô tả: Sinh viên Học viên báo chị và tuyên truyền, thích âm nhạc và phim ảnh \n Yêu cầu: Sạch sẽ, gọn gàng',
 		status: 'Online',
-		message: "Bats frighten me. It's time my enemies shared my dread.",
+		message: "Chào bạn, bạn muốn tìm người ở ghép đúng không ạ?",
 		image: require('../images/04.jpg')
 	},
 	{
 		id: 5,
-		name: 'James Dietrich',
+		name: 'Aquaman',
 		match: '7600000',
 		description:
-			'Full-time Traveller. Globe Trotter. Occasional Photographer. Part time Singer/Dancer.',
+			'Giới tính: Nam \n Tuổi: 21 \n Địa chỉ: xxxxxx \n Mô tả: Sinh viên Học viên báo chị và tuyên truyền, thích âm nhạc và phim ảnh \n Yêu cầu: Sạch sẽ, gọn gàng',
 		status: 'Offline',
-		message: "It's not who I am underneath but what I do that defines me.",
-		image: require('../images/05.jpg')
+		message: "Chào bạn, bạn muốn tìm người ở ghép đúng không ạ?",
+		image: require('../images/05.jpeg')
 	},
 	{
 		id: 6,
-		name: 'Patricia Schulist',
+		name: 'Cell',
 		match: '9500000',
 		description:
-			'Full-time Traveller. Globe Trotter. Occasional Photographer. Part time Singer/Dancer.',
+			'Giới tính: Nam \n Tuổi: 21 \n Địa chỉ: xxxxxx \n Mô tả: Sinh viên Học viên báo chị và tuyên truyền, thích âm nhạc và phim ảnh \n Yêu cầu: Sạch sẽ, gọn gàng',
 		status: 'Online',
 		message:
-			'You have nothing, nothing to threaten me with. Nothing to do with all your strength.',
+			'Chào bạn, bạn muốn tìm người ở ghép đúng không ạ?',
 		image: require('../images/06.jpg')
 	},
 	{
 		id: 7,
-		name: 'Chelsey Weissnat',
+		name: 'Bruce Wayne',
 		match: '6700000',
 		description:
-			'Full-time Traveller. Globe Trotter. Occasional Photographer. Part time Singer/Dancer.',
+			'Giới tính: Nam \n Tuổi: 21 \n Địa chỉ: xxxxxx \n Mô tả: Sinh viên Học viên báo chị và tuyên truyền, thích âm nhạc và phim ảnh \n Yêu cầu: Sạch sẽ, gọn gàng',
 		status: 'Online',
 		message:
-			"Never start with the head. The victim gets all fuzzy. He can't feel the next... See?",
+			"Chào bạn, bạn muốn tìm người ở ghép đúng không ạ?",
 		image: require('../images/07.jpg')
 	},
 	{
 		id: 8,
-		name: 'Nicky Runol',
+		name: 'Harley Quinn',
 		match: '8500000',
 		description:
-			'Full-time Traveller. Globe Trotter. Occasional Photographer. Part time Singer/Dancer.',
-		age: '27',
-		location: 'Irvine, CA',
-		info1: 'Straight, Single, 5"10',
-		info2: 'Tea Totaller, Loves Photography & Travel',
-		info3: 'Beaches, Mountain, Cafe, Movies',
-		info4: 'Last seen: 23h ago',
+			'Giới tính: Nữ \n Tuổi: 21 \n Địa chỉ: xxxxxx \n Mô tả: Sinh viên Học viên báo chị và tuyên truyền, thích âm nhạc và phim ảnh \n Yêu cầu: Sạch sẽ, gọn gàng',
+		age: '21',
+		location: 'Cầu Giấy, Hà Nội',
+		info1: 'Nữ',
+		info2: 'Sinh viên Học viên báo chị và tuyên truyền, thích âm nhạc',
+		info3: 'Sách, Gym',
+		info4: '05/01/1999',
 		status: 'Online',
 		message:
-			"And as for the television's so-called plan, Batman has no jurisdiction.",
+			"Chào bạn, bạn muốn tìm người ở ghép đúng không ạ?",
 		image: require('../images/08.jpg')
 	},
 	{
 		id: 9,
-		name: 'Glenna Reichert',
+		name: 'Saitama',
 		match: '7400000',
 		description:
-			'Full-time Traveller. Globe Trotter. Occasional Photographer. Part time Singer/Dancer.',
+			'Giới tính: Nam \n Tuổi: 21 \n Địa chỉ: xxxxxx \n Mô tả: Sinh viên Học viên báo chị và tuyên truyền, thích âm nhạc và phim ảnh \n Yêu cầu: Sạch sẽ, gọn gàng',
 		status: 'Online',
 		message:
-			'This is what happens when an unstoppable force meets an immovable object.',
-		image: require('../images/09.jpg')
+			'Chào bạn, bạn muốn tìm người ở ghép đúng không ạ?',
+		image: require('../images/09.png')
 	},
 	{
 		id: 10,
-		name: 'Kurtis DuBuque',
+		name: 'White Ranger',
 		match: '9800000',
 		description:
-			'Full-time Traveller. Globe Trotter. Occasional Photographer. Part time Singer/Dancer.',
+			'Giới tính: Nam \n Tuổi: 21 \n Địa chỉ: xxxxxx \n Mô tả: Sinh viên Học viên báo chị và tuyên truyền, thích âm nhạc và phim ảnh \n Yêu cầu: Sạch sẽ, gọn gàng',
 		status: 'Offline',
 		message:
-			'You want order in Gotham. Batman must take off his mask and turn himself in.',
-		image: require('../images/10.jpg')
+			'Chào bạn, bạn muốn tìm người ở ghép đúng không ạ?',
+		image: require('../images/10.jpeg')
 	}
 ];
