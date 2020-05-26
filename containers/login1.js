@@ -5,9 +5,6 @@ import { Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Alert, Keybo
 import { Button } from 'react-native-elements';
 import * as Facebook from 'expo-facebook'
 import firebase from './firebase.js'
-import Main from '../containers/Main';
-import { useFonts } from '@use-expo/font';
-import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 
 
@@ -37,13 +34,23 @@ export default class LoginScreen extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.containerView} behavior="padding">
-
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.loginScreenContainer}>
             <View style={styles.loginFormView}>
               <Text style={styles.logoText}>Staygether</Text>
-              <TextInput placeholder="Email" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} onChangeText={(email) => this.setState({ email })} value={this.state.email} />
-              <TextInput placeholder="Password" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true} onChangeText={(pass) => this.setState({ pass })} value={this.state.pass} />
+              <TextInput
+                placeholder="Email"
+                placeholderColor="#c4c3cb"
+                style={styles.loginFormTextInput}
+                onChangeText={(email) => this.setState({ email })} value={this.state.email}
+              />
+              <TextInput
+                placeholder="Password"
+                placeholderColor="#c4c3cb"
+                style={styles.loginFormTextInput}
+                secureTextEntry={true}
+                onChangeText={(pass) => this.setState({ pass })} value={this.state.pass}
+              />
               <Button
                 buttonStyle={styles.loginButton}
                 onPress={() => this.log(this.state.email, this.state.pass)}
@@ -82,7 +89,7 @@ export default class LoginScreen extends Component {
   sign = (email, pass) => {
     try {
       firebase.auth().signInWithEmailAndPassword(email, pass).then(() => {
-        this.props.navigation.navigate('Main')
+        this.props.navigation.navigate('Uppost');
       }).catch(error => {
         alert(error.message);
       })
