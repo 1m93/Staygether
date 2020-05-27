@@ -18,34 +18,34 @@ class Signup extends React.Component {
             gender: "nam",
         }
     }
-    
+
     render() {
-        log=(email, pass, name, age, phone, gender) =>{
+        log = (email, pass, name, age, phone, gender) => {
             try {
-              firebase.auth().createUserWithEmailAndPassword(email,pass).then(() =>{
-                this.props.navigation.navigate('Login')
-              }).catch(error => {   
-                alert(error.message);}) 
+                firebase.auth().createUserWithEmailAndPassword(email, pass).then(() => {
+                    this.props.navigation.navigate('Uppost')
+                }).catch(error => {
+                    alert(error.message);
+                })
                 firebase.database().ref('UsersData/').push({
                     email,
                     name,
                     age,
                     phone,
                     gender,
-                }).catch((error)=>{
-                    console.log('error ' , error)
+                }).catch((error) => {
+                    console.log('error ', error)
                 })
             }
             catch (err) {
-              Alert.alert('Sign in Failed')
+                Alert.alert('Sign in Failed')
             }
         }
 
         return (
             <View style={styles.container}>
-                
                 <View style={styles.form}>
-                <Image source={logo} style={styles.logo} />
+                    <Image source={logo} style={styles.logo} />
                     <FormTextInput
                         value={this.state.email}
                         onChangeText={(email) => this.setState({ email })} value={this.state.email}
@@ -89,15 +89,22 @@ class Signup extends React.Component {
                     />
                     <View>
                         <Picker style={styles.picker}
-                        selectedValue={this.state.gender} 
-                        onValueChange={(value, index) =>{
-                            this.setState({gender : value})
-                        }}>
+                            selectedValue={this.state.gender}
+                            onValueChange={(value, index) => {
+                                this.setState({ gender: value })
+                            }}>
                             <Picker.Item label="Nam" value="Nam" />
                             <Picker.Item label="Nữ" value="Nữ" />
                         </Picker>
                     </View>
-                    <Button label="ĐĂNG KÝ" onPress={() => log(this.state.email, this.state.pass, this.state.name, this.state.age, this.state.phone, this.state.gender)}/>
+                    <Button label="ĐĂNG KÝ" onPress={() => {
+                        if (this.state.pass === this.state.repass) {
+                            log(this.state.email, this.state.pass, this.state.name, this.state.age, this.state.phone, this.state.gender);
+                            alert('Đăng ký thành công');
+                        } else {
+                            alert('Mật khẩu không trùng khớp');
+                        }
+                    }} />
                     <Text style={styles.text}>Đã có tài khoản?</Text>
                     <Button label="ĐĂNG NHẬP" style={styles.signup} onPress={() => this.props.navigation.navigate('Login')} />
                 </View>
