@@ -21,7 +21,7 @@ export default class Home extends React.Component {
     var data = [];
     firebase.database().ref('UsersData/').on('value', (snapshot) =>{
         snapshot.forEach((dt) =>{
-          data.push({image: dt.val().image, price:dt.val().price,name: dt.val().name, describe: dt.val().describe, email: dt.val().email});
+          data.push({image: dt.val().url, price:dt.val().price,name: dt.val().name, describe: dt.val().describe, email: dt.val().email});
       })
       this.setState({Data: data},()=> {
         console.log(this.state.Data)
