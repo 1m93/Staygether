@@ -4,6 +4,7 @@ import Main from './containers/Main';
 import Login from './containers/Login';
 import Uppost from './containers/Uppost';
 import Signup from './containers/Signup';
+import Home from './containers/Home'
 
 const App = createStackNavigator(
   {
@@ -15,6 +16,12 @@ const App = createStackNavigator(
     },
     Uppost: {
       screen: Uppost,
+      navigationOptions: {
+        headerShown: false,
+      }
+    },
+    Home: {
+      screen: Home,
       navigationOptions: {
         headerShown: false,
       }

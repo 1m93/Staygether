@@ -20,25 +20,33 @@ class Signup extends React.Component {
     }
 
     render() {
-        log = (email, pass, name, age, phone, gender) => {
-            try {
-                firebase.auth().createUserWithEmailAndPassword(email, pass).then(() => {
-                    this.props.navigation.navigate('Uppost')
-                }).catch(error => {
-                    alert(error.message);
-                })
-                firebase.database().ref('UsersData/').push({
-                    email,
-                    name,
-                    age,
-                    phone,
-                    gender,
-                }).catch((error) => {
-                    console.log('error ', error)
-                })
+        signUp = (email, pass, repass, name, age, phone, gender) => {
+            var price = 0, address = '', describe = '', require='';
+            let temp = {
+                email: email,
+                name: name,
+                age: age,
+                phone: phone,
+                gender: gender,
+                price: price,
+                address: address,
+                describe: describe,
+                require: require,
+            };
+            if (pass != repass) {
+                Alert.alert("Mật khẩu không trùng");
             }
-            catch (err) {
-                Alert.alert('Sign in Failed')
+            else {
+                try {
+                    firebase.auth().createUserWithEmailAndPassword(email, pass).then(() => {
+                        this.props.navigation.navigate('Uppost', temp)
+                    }).catch(error => {
+                        alert(error.message);
+                    })
+                }
+                catch (err) {
+                    Alert.alert('Sign in Failed')
+                }
             }
         }
 
@@ -98,12 +106,7 @@ class Signup extends React.Component {
                         </Picker>
                     </View>
                     <Button label="ĐĂNG KÝ" onPress={() => {
-                        if (this.state.pass === this.state.repass) {
-                            log(this.state.email, this.state.pass, this.state.name, this.state.age, this.state.phone, this.state.gender);
-                            alert('Đăng ký thành công');
-                        } else {
-                            alert('Mật khẩu không trùng khớp');
-                        }
+                            signUp(this.state.email, this.state.pass, this.state.repass, this.state.name, this.state.age, this.state.phone, this.state.gender);
                     }} />
                     <Text style={styles.text}>Đã có tài khoản?</Text>
                     <Button label="ĐĂNG NHẬP" style={styles.signup} onPress={() => this.props.navigation.navigate('Login')} />

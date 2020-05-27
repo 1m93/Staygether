@@ -6,18 +6,47 @@ import * as Permissions from 'expo-permissions';
 import Button from "../components/Button";
 import FormTextInput from "../components/FormTextInput";
 import MultiFormTextInput from "../components/MultiFormTextInput";
+import firebase from '../containers/firebase';
 
 export default class Uppost extends React.Component {
-    state = {
+    constructor(props) {
+        super(props);
+    this.state = {
         price: "",
         address: "",
         describe: "",
         require: "",
         image: null,
     };
-
+    }
     render() {
-        let { image } = this.state;
+        uppost=(address, describe, price, require) =>{
+            const temp = this.props.navigation.state.params;
+            email = temp.email;
+            age = temp.age;
+            gender = temp.gender;
+            phone = temp.phone;
+            name = temp.name;
+            try{
+                firebase.database().ref('UsersData/').push({
+                    email,
+                    name, 
+                    age,
+                    phone,
+                    gender,
+                    address,
+                    describe,
+                    price,
+                    require,
+                }).then(() => {
+                    this.props.navigation.navigate('Main');
+                })
+            }catch (err) {
+                console.log(err);
+            }
+
+        }
+        let {image} = this.state
 
         return (
             <View style={styles.container}>
@@ -50,7 +79,9 @@ export default class Uppost extends React.Component {
                     />
                     <Button label="ĐÍNH KÈM ẢNH" style={styles.signup} onPress={this._pickImage} />
                     {image && <Image source={{ uri: image }} style={{ width: 100, height: 100, alignSelf: "center", marginBottom: 20 }} />}
-                    <Button label="HOÀN TẤT" onPress={() => this.props.navigation.navigate('Main')} />
+                    <Button label="HOÀN TẤT" onPress={() => {
+                        uppost(this.state.address, this.state.describe, this.state.price, this.state.require);
+                    }} />
                 </View>
             </View>
         );
