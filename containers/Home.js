@@ -18,18 +18,15 @@ export default class Home extends React.Component {
   };
   }
   componentDidMount() {
-    this.renderData(firebase.database());
-  }
-
-  renderData(database) {
     var data = [];
-    firebase.database().ref('UsersStatus/').on('value', (snapshot) =>{
+    firebase.database().ref('UsersData/').on('value', (snapshot) =>{
         snapshot.forEach((dt) =>{
-          data.push({image: dt.val().image, match:dt.val().match,name: dt.val().name, description: dt.val().description, email: dt.val().email});
-      })})
-    this.setState({Data: data},()=> {
-      console.log(this.state.Data)
-    })
+          data.push({image: dt.val().image, price:dt.val().price,name: dt.val().name, describe: dt.val().describe, email: dt.val().email});
+      })
+      this.setState({Data: data},()=> {
+        console.log(this.state.Data)
+      })
+    })    
   }
 
   render() {
@@ -44,26 +41,30 @@ export default class Home extends React.Component {
           <City />
           <Filters />
         </View>
-        {this.state.Data.map((item, index) => (
+        
         <CardStack
           loop={false}
           verticalSwipe={false}
           renderNoMoreCards={() => null}
           ref={swiper => (this.swiper = swiper)}
         >
+          {this.state.Data.map((item, index) => (
             <Card key={index}>
               <CardItem
                 image={item.image}
                 name={item.name}
-                description={item.description}
-                matches={item.match}
+                description={item.describe}
+                matches={item.price}
                 actions
-                onPressLeft={() => this.swiper.swipeLeft()}
-                onPressRight={() => this.swiper.swipeRight()}
+                onPressLeft={() => {
+                  this.swiper.swipeLeft()}}
+                onPressRight={() => {
+                  this.swiper.swipeRight()}}
               />
             </Card>
+            ))}
         </CardStack>
-        ))}
+        
       </View>
     </ImageBackground>
   );

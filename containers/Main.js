@@ -61,7 +61,7 @@ export default class Main extends React.Component {
           }}
 
         >
-          <Tab.Screen name="Trang chủ" component={HomeScreen} />
+          <Tab.Screen name="Trang chủ" component={HomeScreen}/>
           <Tab.Screen name="Quan tâm" component={MatchesScreen} />
           <Tab.Screen name="Tin nhắn" component={MessagesScreen} />
           <Tab.Screen name="Cá nhân" component={ProfileScreen} />

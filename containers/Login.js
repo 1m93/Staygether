@@ -65,12 +65,13 @@ class Login extends React.Component {
         );
     }
 
+
     logIn = (email, pass) => {
         try {
             firebase.auth().signInWithEmailAndPassword(email, pass).then(() => {
                 this.props.navigation.navigate('Main');
-            }).catch(error => {
-                alert(error.message);
+            }).catch((err) => {
+                alert(err.message);
             })
         }
         catch (err) {
