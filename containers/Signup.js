@@ -21,7 +21,7 @@ class Signup extends React.Component {
 
     render() {
         signUp = (email, pass, repass, name, age, phone, gender) => {
-            var price = 0, address = '', describe = '', require='';
+            var price = 0, address = '', describe = '', require = '';
             let temp = {
                 email: email,
                 name: name,
@@ -106,7 +106,12 @@ class Signup extends React.Component {
                         </Picker>
                     </View>
                     <Button label="ĐĂNG KÝ" onPress={() => {
+                        if (this.state.pass === this.state.repass) {
                             signUp(this.state.email, this.state.pass, this.state.repass, this.state.name, this.state.age, this.state.phone, this.state.gender);
+                            alert("Đăng ký thành công");
+                        } else {
+                            alert("Mật khẩu không trùng khớp");
+                        }
                     }} />
                     <Text style={styles.text}>Đã có tài khoản?</Text>
                     <Button label="ĐĂNG NHẬP" style={styles.signup} onPress={() => this.props.navigation.navigate('Login')} />

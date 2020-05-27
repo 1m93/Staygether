@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, View, StyleSheet, Text } from 'react-native';
+import { Image, View, StyleSheet, Text, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
@@ -11,26 +11,26 @@ import firebase from '../containers/firebase';
 export default class Uppost extends React.Component {
     constructor(props) {
         super(props);
-    this.state = {
-        price: "",
-        address: "",
-        describe: "",
-        require: "",
-        image: null,
-    };
+        this.state = {
+            price: "",
+            address: "",
+            describe: "",
+            require: "",
+            image: null,
+        };
     }
     render() {
-        uppost=(address, describe, price, require) =>{
+        uppost = (address, describe, price, require) => {
             const temp = this.props.navigation.state.params;
             email = temp.email;
             age = temp.age;
             gender = temp.gender;
             phone = temp.phone;
             name = temp.name;
-            try{
+            try {
                 firebase.database().ref('UsersData/').push({
                     email,
-                    name, 
+                    name,
                     age,
                     phone,
                     gender,
@@ -41,12 +41,20 @@ export default class Uppost extends React.Component {
                 }).then(() => {
                     this.props.navigation.navigate('Main');
                 })
-            }catch (err) {
+            } catch (err) {
                 console.log(err);
             }
-
         }
-        let {image} = this.state
+
+        let { image } = this.state
+
+        upLoadImage = async (uri) => {
+            const res = await fetch(uri);
+            const blob = await res.blob();
+            const temp = this.props.navigation.state.params;
+            var ref = firebase.storage().ref().child(temp.email);
+            return ref.put(blob);
+        }
 
         return (
             <View style={styles.container}>
@@ -80,7 +88,12 @@ export default class Uppost extends React.Component {
                     <Button label="ĐÍNH KÈM ẢNH" style={styles.signup} onPress={this._pickImage} />
                     {image && <Image source={{ uri: image }} style={{ width: 100, height: 100, alignSelf: "center", marginBottom: 20 }} />}
                     <Button label="HOÀN TẤT" onPress={() => {
-                        uppost(this.state.address, this.state.describe, this.state.price, this.state.require);
+                        if (this.state.image !== null) {
+                            uppost(this.state.address, this.state.describe, this.state.price, this.state.require);
+                            upLoadImage(this.state.image);
+                        } else {
+                            alert("Chưa đính kèm ảnh");
+                        }
                     }} />
                 </View>
             </View>
@@ -111,7 +124,6 @@ export default class Uppost extends React.Component {
             if (!result.cancelled) {
                 this.setState({ image: result.uri });
             }
-
             console.log(result);
         } catch (E) {
             console.log(E);
