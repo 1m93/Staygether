@@ -1,8 +1,5 @@
 import * as React from 'react';
-import { Image, View, StyleSheet, Text, Alert } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import Constants from 'expo-constants';
-import * as Permissions from 'expo-permissions';
+import { View, StyleSheet, Text, Alert } from 'react-native';
 import Button from "../components/Button";
 import FormTextInput from "../components/FormTextInput";
 import MultiFormTextInput from "../components/MultiFormTextInput";
@@ -27,33 +24,26 @@ export default class Uppost extends React.Component {
             gender = temp.gender;
             phone = temp.phone;
             name = temp.name;
-            try {
-                firebase.database().ref('UsersData/').push({
-                    email,
-                    name,
-                    age,
-                    phone,
-                    gender,
-                    address,
-                    describe,
-                    price,
-                    require,
-                }).then(() => {
-                    this.props.navigation.navigate('Main');
-                })
-            } catch (err) {
-                console.log(err);
-            }
-        }
-
-        let { image } = this.state
-
-        upLoadImage = async (uri) => {
-            const res = await fetch(uri);
-            const blob = await res.blob();
-            const temp = this.props.navigation.state.params;
-            var ref = firebase.storage().ref().child(temp.email);
-            return ref.put(blob);
+            firebase.storage().ref().child(email).getDownloadURL().then(function (url) {
+                console.log(url);
+                try {
+                    firebase.database().ref('UsersData/').push({
+                        email,
+                        name,
+                        age,
+                        phone,
+                        gender,
+                        address,
+                        describe,
+                        price,
+                        require,
+                        url,
+                    })
+                } catch (err) {
+                    console.log(err);
+                }
+            });
+            this.props.navigation.navigate('Main');
         }
 
         return (
@@ -85,50 +75,13 @@ export default class Uppost extends React.Component {
                         placeholder="Yêu cầu"
                         returnKeyType="next"
                     />
-                    <Button label="ĐÍNH KÈM ẢNH" style={styles.signup} onPress={this._pickImage} />
-                    {image && <Image source={{ uri: image }} style={{ width: 100, height: 100, alignSelf: "center", marginBottom: 20 }} />}
                     <Button label="HOÀN TẤT" onPress={() => {
-                        if (this.state.image !== null) {
-                            uppost(this.state.address, this.state.describe, this.state.price, this.state.require);
-                            upLoadImage(this.state.image);
-                        } else {
-                            alert("Chưa đính kèm ảnh");
-                        }
+                        uppost(this.state.address, this.state.describe, this.state.price, this.state.require);
                     }} />
                 </View>
             </View>
         );
     }
-
-    componentDidMount() {
-        this.getPermissionAsync();
-    }
-
-    getPermissionAsync = async () => {
-        if (Constants.platform.ios) {
-            const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-            if (status !== 'granted') {
-                alert('Sorry, we need camera roll permissions to make this work!');
-            }
-        }
-    };
-
-    _pickImage = async () => {
-        try {
-            let result = await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.All,
-                allowsEditing: true,
-                aspect: [1, 1],
-                quality: 1,
-            });
-            if (!result.cancelled) {
-                this.setState({ image: result.uri });
-            }
-            console.log(result);
-        } catch (E) {
-            console.log(E);
-        }
-    };
 }
 
 const styles = StyleSheet.create({

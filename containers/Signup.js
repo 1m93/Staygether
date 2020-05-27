@@ -1,9 +1,13 @@
 import * as React from 'react';
-import { Image, StyleSheet, View, Text, Alert, Picker } from 'react-native';
+import { Image, StyleSheet, View, Text, Alert, Picker, SafeAreaView } from 'react-native';
 import Button from "../components/Button";
 import FormTextInput from "../components/FormTextInput";
-import logo from "../assets/images/logo.png";
-import firebase from "../containers/firebase.js"
+import avatar from "../assets/images/avatar.png";
+import firebase from "../containers/firebase.js";
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class Signup extends React.Component {
     constructor(props) {
@@ -16,6 +20,7 @@ class Signup extends React.Component {
             age: "",
             phone: "",
             gender: "nam",
+            image: avatar,
         }
     }
 
@@ -33,27 +38,33 @@ class Signup extends React.Component {
                 describe: describe,
                 require: require,
             };
-            if (pass != repass) {
-                Alert.alert("Mật khẩu không trùng");
+            try {
+                upLoadImage(this.state.image.uri);
+                firebase.auth().createUserWithEmailAndPassword(email, pass).then(() => {
+                    this.props.navigation.navigate('Uppost', temp)
+                }).catch(error => {
+                    alert(error.message);
+                })
             }
-            else {
-                try {
-                    firebase.auth().createUserWithEmailAndPassword(email, pass).then(() => {
-                        this.props.navigation.navigate('Uppost', temp)
-                    }).catch(error => {
-                        alert(error.message);
-                    })
-                }
-                catch (err) {
-                    Alert.alert('Sign in Failed')
-                }
+            catch (err) {
+                Alert.alert('Sign in Failed')
             }
+        }
+
+        upLoadImage = async (uri) => {
+            const res = await fetch(uri);
+            const blob = await res.blob();
+            var ref = firebase.storage().ref().child(this.state.email);
+            return ref.put(blob);
         }
 
         return (
             <View style={styles.container}>
                 <View style={styles.form}>
-                    <Image source={logo} style={styles.logo} />
+                    <TouchableOpacity style={styles.avatarBtn} onPress={this._pickImage}>
+                        <Image style={styles.avatarImg} source={this.state.image} />
+                        <Text style={{ textAlign: "center" }}>Ảnh Đại Diện</Text>
+                    </TouchableOpacity>
                     <FormTextInput
                         value={this.state.email}
                         onChangeText={(email) => this.setState({ email })} value={this.state.email}
@@ -107,8 +118,11 @@ class Signup extends React.Component {
                     </View>
                     <Button label="ĐĂNG KÝ" onPress={() => {
                         if (this.state.pass === this.state.repass) {
-                            signUp(this.state.email, this.state.pass, this.state.repass, this.state.name, this.state.age, this.state.phone, this.state.gender);
-                            alert("Đăng ký thành công");
+                            if (this.state.image !== avatar) {
+                                signUp(this.state.email, this.state.pass, this.state.repass, this.state.name, this.state.age, this.state.phone, this.state.gender);
+                            } else {
+                                alert("Vui lòng thay ảnh đại diện");
+                            }
                         } else {
                             alert("Mật khẩu không trùng khớp");
                         }
@@ -119,11 +133,48 @@ class Signup extends React.Component {
             </View>
         );
     }
+
+    componentDidMount() {
+        this.getPermissionAsync();
+    }
+
+    getPermissionAsync = async () => {
+        if (Constants.platform.ios) {
+            const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+            if (status !== 'granted') {
+                alert('Sorry, we need camera roll permissions to make this work!');
+            }
+        }
+    };
+
+    _pickImage = async () => {
+        try {
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                allowsEditing: true,
+                aspect: [1, 1],
+                quality: 1,
+            });
+            if (!result.cancelled) {
+                this.setState({ image: result });
+            }
+            console.log(result);
+        } catch (E) {
+            console.log(E);
+        }
+    };
 }
 
 const styles = StyleSheet.create({
-    logo: {
-        width: "60%",
+    avatarBtn: {
+        width: 100,
+        height: 120,
+        alignSelf: "center",
+        marginBottom: 40,
+    },
+    avatarImg: {
+        width: 100,
+        height: 100,
         resizeMode: "contain",
         alignSelf: "center"
     },
@@ -137,7 +188,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         width: "80%",
-        marginTop: -40,
+        marginTop: 0,
     },
     text: {
         textAlign: "center",
@@ -153,6 +204,11 @@ const styles = StyleSheet.create({
         height: 40,
         borderBottomWidth: StyleSheet.hairlineWidth,
         marginBottom: 20,
+    },
+    avatar: {
+        backgroundColor: "#FFF",
+        borderColor: "#7444C0",
+        color: "#7444C0",
     },
 });
 

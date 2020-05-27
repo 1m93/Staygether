@@ -6,6 +6,8 @@ import Uppost from './containers/Uppost';
 import Signup from './containers/Signup';
 import Home from './containers/Home'
 
+console.disableYellowBox = true;
+
 const App = createStackNavigator(
   {
     Signup: {

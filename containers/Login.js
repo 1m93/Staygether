@@ -34,7 +34,14 @@ class Login extends React.Component {
             this.FormTextInput.current.focus();
         }
     };
+
     render() {
+        let a;
+        firebase.storage().ref().child("Mm@gmail.com").getDownloadURL().then(function(url){
+            a ="" + url;
+        })
+        console.log(a);
+
         return (
             <View style={styles.container}>
                 <Image source={logo} style={styles.logo} />
