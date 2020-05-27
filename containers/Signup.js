@@ -3,6 +3,7 @@ import { Image, StyleSheet, View, Text, Alert, Picker } from 'react-native';
 import Button from "../components/Button";
 import FormTextInput from "../components/FormTextInput";
 import logo from "../assets/images/logo.png";
+import firebase from "../containers/firebase.js"
 
 class Signup extends React.Component {
     constructor(props) {
@@ -14,10 +15,32 @@ class Signup extends React.Component {
             name: "",
             age: "",
             phone: "",
-            gender: "",
+            gender: "nam",
         }
     }
+    
     render() {
+        log=(email, pass, name, age, phone, gender) =>{
+            try {
+              firebase.auth().createUserWithEmailAndPassword(email,pass).then(() =>{
+                this.props.navigation.navigate('Login')
+              }).catch(error => {   
+                alert(error.message);}) 
+                firebase.database().ref('UsersData/').push({
+                    email,
+                    name,
+                    age,
+                    phone,
+                    gender,
+                }).catch((error)=>{
+                    console.log('error ' , error)
+                })
+            }
+            catch (err) {
+              Alert.alert('Sign in Failed')
+            }
+        }
+
         return (
             <View style={styles.container}>
                 
@@ -65,12 +88,16 @@ class Signup extends React.Component {
                         keyboardType="phone-pad"
                     />
                     <View>
-                        <Picker style={styles.picker} >
+                        <Picker style={styles.picker}
+                        selectedValue={this.state.gender} 
+                        onValueChange={(value, index) =>{
+                            this.setState({gender : value})
+                        }}>
                             <Picker.Item label="Nam" value="Nam" />
                             <Picker.Item label="Nữ" value="Nữ" />
                         </Picker>
                     </View>
-                    <Button label="ĐĂNG KÝ" />
+                    <Button label="ĐĂNG KÝ" onPress={() => log(this.state.email, this.state.pass, this.state.name, this.state.age, this.state.phone, this.state.gender)}/>
                     <Text style={styles.text}>Đã có tài khoản?</Text>
                     <Button label="ĐĂNG NHẬP" style={styles.signup} onPress={() => this.props.navigation.navigate('Login')} />
                 </View>
