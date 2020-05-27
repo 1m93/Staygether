@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Image, StyleSheet, View, Text, Alert, Picker } from 'react-native';
 import Button from "../components/Button";
 import FormTextInput from "../components/FormTextInput";
+import logo from "../assets/images/logo.png";
 
 class Signup extends React.Component {
     constructor(props) {
@@ -19,7 +20,9 @@ class Signup extends React.Component {
     render() {
         return (
             <View style={styles.container}>
+                
                 <View style={styles.form}>
+                <Image source={logo} style={styles.logo} />
                     <FormTextInput
                         value={this.state.email}
                         onChangeText={(email) => this.setState({ email })} value={this.state.email}
@@ -29,7 +32,7 @@ class Signup extends React.Component {
                     />
                     <FormTextInput
                         secureTextEntry={true}
-                        value={this.state.password}
+                        value={this.state.pass}
                         onChangeText={(pass) => this.setState({ pass })} value={this.state.pass}
                         placeholder="Mật khẩu"
                         returnKeyType="next"
@@ -62,7 +65,6 @@ class Signup extends React.Component {
                         keyboardType="phone-pad"
                     />
                     <View>
-                        <Text>Giới Tính:</Text>
                         <Picker style={styles.picker} >
                             <Picker.Item label="Nam" value="Nam" />
                             <Picker.Item label="Nữ" value="Nữ" />
@@ -78,6 +80,11 @@ class Signup extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    logo: {
+        width: "60%",
+        resizeMode: "contain",
+        alignSelf: "center"
+    },
     container: {
         flex: 1,
         backgroundColor: "#FFF",
@@ -88,6 +95,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         width: "80%",
+        marginTop: -40,
     },
     text: {
         textAlign: "center",
