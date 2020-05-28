@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import ProfileItem from '../components/ProfileItem';
 import Icon from '../components/Icon';
+import Main from './Main';
 
 export default class Profile extends React.Component {
     constructor(props) {
@@ -18,12 +19,12 @@ export default class Profile extends React.Component {
     render() {
         const temp = this.props.navigation.state.params;
         console.log(temp);
-        age = temp.age;
+        age = temp.age + " Tuổi";
         image = temp.image;
         info1 = temp.gender;
         info2 = temp.describe;
         info3 = temp.require;
-        info4 = temp.email;
+        info4 = temp.phone;
         location = temp.address;
         match = temp.price;
         name = temp.name;
@@ -37,19 +38,6 @@ export default class Profile extends React.Component {
             >
                 <ScrollView style={styles.containerProfile}>
                     <ImageBackground source={{ uri: image }} style={styles.photo}>
-                        <View style={styles.top}>
-                            <TouchableOpacity onPress={() => { console.log("a") }}>
-                                <Text style={styles.topIconLeft}>
-                                    <Icon name="chevronLeft" />
-                                </Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity>
-                                <Text style={styles.topIconRight}>
-                                    <Icon name="optionsV" />
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
                     </ImageBackground>
 
                     <ProfileItem
@@ -64,18 +52,23 @@ export default class Profile extends React.Component {
                     />
 
                     <View style={styles.actionsProfile}>
-                        <TouchableOpacity style={styles.circledButton}>
-                            <Text style={styles.iconButton}>
-                                <Icon name="optionsH" />
+                        <TouchableOpacity style={styles.roundedButton} onPress={() => this.props.navigation.navigate('Main')}>
+                            <Text style={styles.topIconLeft}>
+                                <Icon name="chevronLeft" />
                             </Text>
+                            <Text style={styles.textButton}>Trở về</Text>
                         </TouchableOpacity>
-
                         <TouchableOpacity style={styles.roundedButton}>
                             <Text style={styles.iconButton}>
                                 <Icon name="chat" />
                             </Text>
                             <Text style={styles.textButton}>Nhắn tin</Text>
                         </TouchableOpacity>
+                        {/* <TouchableOpacity style={styles.circledButton}>
+                            <Text style={styles.iconButton}>
+                                <Icon name="optionsH" />
+                            </Text>
+                        </TouchableOpacity> */}
                     </View>
                 </ScrollView>
             </ImageBackground>

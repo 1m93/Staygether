@@ -19,7 +19,7 @@ const ProfileItem = ({
             <View style={styles.matchesProfileItem}>
                 <Text style={styles.matchesTextProfileItem}>
                     {matches} VND
-        </Text>
+                </Text>
             </View>
 
             <Text style={styles.name}>{name}</Text>

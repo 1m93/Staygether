@@ -37,11 +37,11 @@ export default StyleSheet.create({
 		backgroundColor: PRIMARY_COLOR,
 		paddingVertical: 7,
 		paddingHorizontal: 20,
-		borderRadius: 20
+		borderRadius: 20,
 	},
 	matchesTextCardItem: {
 		fontFamily: ICON_FONT,
-		color: WHITE
+		color: WHITE,
 	},
 	descriptionCardItem: {
 		color: GRAY,
@@ -190,7 +190,7 @@ export default StyleSheet.create({
 		shadowOffset: { height: 0, width: 0 }
 	},
 	matchesProfileItem: {
-		width: 131,
+		width: 150,
 		marginTop: -15,
 		backgroundColor: PRIMARY_COLOR,
 		paddingVertical: 7,
@@ -200,14 +200,16 @@ export default StyleSheet.create({
 		alignSelf: "center"
 	},
 	matchesTextProfileItem: {
+		fontSize:15,
 		fontFamily: ICON_FONT,
-		color: WHITE
+		color: WHITE,
+		textAlign: "center",
 	},
 	name: {
 		paddingTop: 25,
 		paddingBottom: 5,
 		color: DARK_GRAY,
-		fontSize: 15,
+		fontSize: 25,
 		textAlign: "center"
 	},
 	descriptionProfileItem: {
@@ -223,7 +225,7 @@ export default StyleSheet.create({
 	},
 	iconProfile: {
 		fontFamily: ICON_FONT,
-		fontSize: 12,
+		fontSize: 13,
 		color: DARK_GRAY,
 		paddingHorizontal: 10
 	},
@@ -281,8 +283,6 @@ export default StyleSheet.create({
 		fontFamily: ICON_FONT,
 		fontSize: 20,
 		color: WHITE,
-		paddingLeft: 20,
-		marginTop: -20,
 		transform: [{ rotate: "90deg" }]
 	},
 	topIconRight: {
@@ -307,10 +307,10 @@ export default StyleSheet.create({
 		width: 50,
 		height: 50,
 		borderRadius: 25,
-		backgroundColor: PRIMARY_COLOR,
+		backgroundColor: SECONDARY_COLOR,
 		justifyContent: "center",
 		alignItems: "center",
-		marginRight: 10
+		marginLeft: 10
 	},
 	roundedButton: {
 		justifyContent: "center",
@@ -318,6 +318,7 @@ export default StyleSheet.create({
 		alignItems: "center",
 		marginLeft: 10,
 		height: 50,
+		width: 150,
 		borderRadius: 25,
 		backgroundColor: SECONDARY_COLOR,
 		paddingHorizontal: 20

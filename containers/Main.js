@@ -5,10 +5,8 @@ import styles from "../assets/styles";
 import HomeScreen from "./Home";
 import MatchesScreen from "./Matches";
 import MessagesScreen from "./Messages";
-import ProfileScreen from "./Profile";
 import Icon from "../components/Icon";
 import { NavigationContainer, TabActions } from "@react-navigation/native";
-import { withNavigation } from "react-navigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -67,11 +65,10 @@ class Main extends React.Component {
             {() => <MatchesScreen myProp={this.props} />}
           </Tab.Screen>
           <Tab.Screen name="Tin nhắn" component={MessagesScreen} />
-          {/* <Tab.Screen name="Cá nhân" component={ProfileScreen} /> */}
         </Tab.Navigator>
       </NavigationContainer>
     );
   }
 }
 
-export default withNavigation(Main);
+export default Main;

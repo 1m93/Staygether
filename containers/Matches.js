@@ -35,6 +35,7 @@ class Matches extends React.Component {
                     gender: dt.val().gender,
                     require: dt.val().require,
                     address: dt.val().address,
+                    phone: dt.val().phone,
                 });
             });
             data = shuffleArray(data);
@@ -77,6 +78,7 @@ class Matches extends React.Component {
                                         describe: item.describe,
                                         require: item.require,
                                         price: item.price,
+                                        phone: item.phone,
                                     }
                                     this.props.myProp.navigation.navigate('Profile', tmp);
                                 }}>

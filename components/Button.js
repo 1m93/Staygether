@@ -11,7 +11,7 @@ class Button extends React.Component {
             </TouchableOpacity>
         );
     }
-}
+}   
 
 const styles = StyleSheet.create({
     container: {
