@@ -8,10 +8,11 @@ import MessagesScreen from "./Messages";
 import ProfileScreen from "./Profile";
 import Icon from "../components/Icon";
 import { NavigationContainer, TabActions } from "@react-navigation/native";
+import { withNavigation } from "react-navigation";
 
 const Tab = createBottomTabNavigator();
 
-export default class Main extends React.Component {
+class Main extends React.Component {
 
   render() {
     return (
@@ -61,13 +62,16 @@ export default class Main extends React.Component {
           }}
 
         >
-          <Tab.Screen name="Trang chủ" component={HomeScreen}/>
-          <Tab.Screen name="Quan tâm" component={MatchesScreen} />
+          <Tab.Screen name="Trang chủ" component={HomeScreen} />
+          <Tab.Screen name="Quan tâm">
+            {() => <MatchesScreen myProp={this.props} />}
+          </Tab.Screen>
           <Tab.Screen name="Tin nhắn" component={MessagesScreen} />
-          <Tab.Screen name="Cá nhân" component={ProfileScreen} />
+          {/* <Tab.Screen name="Cá nhân" component={ProfileScreen} /> */}
         </Tab.Navigator>
       </NavigationContainer>
     );
   }
 }
 
+export default withNavigation(Main);
