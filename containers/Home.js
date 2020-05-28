@@ -11,66 +11,82 @@ import firebase from '../containers/firebase';
 import shuffleArray from '../components/ShuffleArray';
 
 export default class Home extends React.Component {
-  
-  constructor (props){
+
+  constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       Data: [],
-  };
+    };
   }
   componentDidMount() {
     var data = [];
-    firebase.database().ref('UsersData/').on('value', (snapshot) =>{
-        snapshot.forEach((dt) =>{
-          data.push({image: dt.val().url, price:dt.val().price,name: dt.val().name, describe: dt.val().describe, email: dt.val().email});
+    firebase.database().ref('UsersData/').on('value', (snapshot) => {
+      snapshot.forEach((dt) => {
+        data.push({
+          image: dt.val().url,
+          price: dt.val().price,
+          name: dt.val().name,
+          describe: dt.val().describe,
+          email: dt.val().email,
+          age: dt.val().age,
+          gender: dt.val().gender,
+          require: dt.val().require,
+          address: dt.val().address,
+        });
       });
       data = shuffleArray(data);
-      this.setState({Data: data},()=> {
+      this.setState({ Data: data }, () => {
         console.log(this.state.Data)
       })
-    })    
+    })
   }
 
   render() {
 
-  return (
-    <ImageBackground
-      source={require('../assets/images/bg.png')}
-      style={styles.bg}
-    >
-      <View style={styles.containerHome}>
-        <View style={styles.top}>
-          <City />
-          <Filters />
-        </View>
-        
-        <CardStack
-          loop={false}
-          verticalSwipe={false}
-          renderNoMoreCards={() => null}
-          ref={swiper => (this.swiper = swiper)}
-        >
-          {this.state.Data.map((item, index) => (
-            <Card key={index}>
-              <CardItem
-                image={item.image}
-                name={item.name}
-                description={item.describe}
-                matches={item.price}
-                actions
-                onPressLeft={() => {
-                  this.swiper.swipeLeft()}}
-                onPressRight={() => {
-                  this.swiper.swipeRight()}}
-              />
-            </Card>
+    return (
+      <ImageBackground
+        source={require('../assets/images/bg.png')}
+        style={styles.bg}
+      >
+        <View style={styles.containerHome}>
+          <View style={styles.top}>
+            <City />
+            <Filters />
+          </View>
+
+          <CardStack
+            loop={false}
+            verticalSwipe={false}
+            renderNoMoreCards={() => null}
+            ref={swiper => (this.swiper = swiper)}
+          >
+            {this.state.Data.map((item, index) => (
+              <Card key={index}>
+                <CardItem
+                  image={item.image}
+                  name={item.name}
+                  description={
+                    "Tuổi: " + item.age + "\n" +
+                    "Giới tính: " + item.gender + "\n" +
+                    "Địa chỉ: " + item.address + "\n" +
+                    "Mô tả: " + item.describe + "\n" +
+                    "Yêu cầu: " + item.require
+                  }
+                  matches={item.price}
+                  actions
+                  onPressLeft={() => {
+                    this.swiper.swipeLeft()
+                  }}
+                  onPressRight={() => {
+                    this.swiper.swipeRight()
+                  }}
+                />
+              </Card>
             ))}
-        </CardStack>
-        
-      </View>
-    </ImageBackground>
-  );
-};
+          </CardStack>
+
+        </View>
+      </ImageBackground>
+    );
+  };
 }
-
-
