@@ -7,7 +7,8 @@ import CardItem from '../components/CardItem';
 import styles from '../assets/styles';
 import Demo from '../assets/data/demo.js';
 import { render } from 'react-dom';
-import firebase from '../containers/firebase'
+import firebase from '../containers/firebase';
+import shuffleArray from '../components/ShuffleArray';
 
 export default class Home extends React.Component {
   
@@ -22,7 +23,8 @@ export default class Home extends React.Component {
     firebase.database().ref('UsersData/').on('value', (snapshot) =>{
         snapshot.forEach((dt) =>{
           data.push({image: dt.val().url, price:dt.val().price,name: dt.val().name, describe: dt.val().describe, email: dt.val().email});
-      })
+      });
+      data = shuffleArray(data);
       this.setState({Data: data},()=> {
         console.log(this.state.Data)
       })
