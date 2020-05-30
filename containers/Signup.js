@@ -26,6 +26,7 @@ class Signup extends React.Component {
 
     render() {
         signUp = (email, pass, repass, name, age, phone, gender) => {
+            
             var price = 0, address = '', describe = '', require = '';
             let temp = {
                 email: email,

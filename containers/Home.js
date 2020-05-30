@@ -75,6 +75,25 @@ export default class Home extends React.Component {
                   matches={item.price}
                   actions
                   onPressLeft={() => {
+                    var user = firebase.auth().currentUser;
+                    arr1 = user.email.split('.');
+                    arr2 = item.email.split('.');
+                    let id1 = '', id2 = '';
+                    for (let i = 0; i < arr1.length - 1; i++) {
+                        id1 = id1 + arr1[i] + ',';
+                    }
+                    id1 = id1 + arr1[arr1.length - 1];
+                    for (let i = 0; i < arr2.length - 1; i++) {
+                      id2 = id2 + arr2[i] + ',';
+                    }
+                    id2 = id2 + arr2[arr2.length - 1];
+                    firebase.database().ref('DataMactch/' + id1 + '/Match').push({
+                      email: item.email,
+                    })
+                    firebase.database().ref('DataMactch/' + id2 + '/Matched').push({
+                      email: user.email,
+                    })
+
                     this.swiper.swipeLeft()
                   }}
                   onPressRight={() => {

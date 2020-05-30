@@ -23,26 +23,59 @@ class Matches extends React.Component {
     }
     componentDidMount() {
         var data = [];
-        firebase.database().ref('UsersData/').on('value', (snapshot) => {
+        var match = [];
+        var matched = [];
+        var love = [];
+        var user = firebase.auth().currentUser;
+        arr1 = user.email.split('.');
+        let id1 = '';
+        for (let i = 0; i < arr1.length - 1; i++) {
+            id1 = id1 + arr1[i] + ',';
+        }
+        id1 = id1 + arr1[arr1.length - 1];
+        firebase.database().ref('DataMactch/' + id1 + '/Match').on('value', (snapshot)=>{
             snapshot.forEach((dt) => {
-                data.push({
-                    image: dt.val().url,
-                    price: dt.val().price,
-                    name: dt.val().name,
-                    describe: dt.val().describe,
-                    email: dt.val().email,
-                    age: dt.val().age,
-                    gender: dt.val().gender,
-                    require: dt.val().require,
-                    address: dt.val().address,
-                    phone: dt.val().phone,
-                });
-            });
-            data = shuffleArray(data);
-            this.setState({ Data: data }, () => {
-                console.log(this.state.Data)
+                match.push(dt.val().email)
             })
+            firebase.database().ref('DataMactch/' + id1 + '/Matched').on('value', (snapshot)=>{
+                snapshot.forEach((dt) => {
+                    matched.push(dt.val().email)
+                })
+                for (let i = 0; i < match.length; i++) {
+                    for (let j = 0; j < matched.length; j++) {
+                        if (match[i] == matched[j]) {
+                            love.push(match[i])
+                        }
+                    }
+                }
+                firebase.database().ref('UsersData/').on('value', (snapshot) => {
+                    snapshot.forEach((dt) => {
+                        for (let k = 0; k < love.length; k ++) {
+                            if (love[k] == dt.val().email) {
+                                data.push({
+                                    image: dt.val().url,
+                                    price: dt.val().price,
+                                    name: dt.val().name,
+                                    describe: dt.val().describe,
+                                    email: dt.val().email,
+                                    age: dt.val().age,
+                                    gender: dt.val().gender,
+                                    require: dt.val().require,
+                                    address: dt.val().address,
+                                    phone: dt.val().phone,
+                                });
+                            }
+                        }
+                    });
+                    data = shuffleArray(data);
+                    this.setState({ Data: data }, () => {
+                        console.log(this.state.Data)
+                    })
+                })
+            })
+
         })
+        
     }
 
     render() {
