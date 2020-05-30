@@ -20,19 +20,22 @@ export default class Home extends React.Component {
   }
   componentDidMount() {
     var data = [];
-    firebase.database().ref('UsersData/').on('value', (snapshot) => {
+    var user = firebase.auth().currentUser;
+    firebase.database().ref('UsersData/').once('value', (snapshot) => {
       snapshot.forEach((dt) => {
-        data.push({
-          image: dt.val().url,
-          price: dt.val().price,
-          name: dt.val().name,
-          describe: dt.val().describe,
-          email: dt.val().email,
-          age: dt.val().age,
-          gender: dt.val().gender,
-          require: dt.val().require,
-          address: dt.val().address,
-        });
+        if (user.email != dt.val().email) {
+          data.push({
+            image: dt.val().url,
+            price: dt.val().price,
+            name: dt.val().name,
+            describe: dt.val().describe,
+            email: dt.val().email,
+            age: dt.val().age,
+            gender: dt.val().gender,
+            require: dt.val().require,
+            address: dt.val().address,
+          });
+        }
       });
       data = shuffleArray(data);
       this.setState({ Data: data }, () => {

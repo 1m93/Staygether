@@ -48,6 +48,8 @@ class Matches extends React.Component {
                         }
                     }
                 }
+                match = []
+                matched = []
                 firebase.database().ref('UsersData/').on('value', (snapshot) => {
                     snapshot.forEach((dt) => {
                         for (let k = 0; k < love.length; k ++) {
@@ -67,10 +69,12 @@ class Matches extends React.Component {
                             }
                         }
                     });
+                    love = []
                     data = shuffleArray(data);
                     this.setState({ Data: data }, () => {
                         console.log(this.state.Data)
                     })
+                    data = [];
                 })
             })
 

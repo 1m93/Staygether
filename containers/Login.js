@@ -47,6 +47,7 @@ class Login extends React.Component {
                         keyboardType="email-address"
                         returnKeyType="next"
                         onSubmitEditing={this.handleEmailSubmitPress}
+                        autoCapitalize='none'
                     />
                     <FormTextInput
                         ref={this.FormTextInput}
