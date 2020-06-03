@@ -19,7 +19,7 @@ class Signup extends React.Component {
             name: "",
             age: "",
             phone: "",
-            gender: "nam",
+            gender: "",
             image: avatar,
         }
     }
@@ -107,12 +107,13 @@ class Signup extends React.Component {
                         returnKeyType="next"
                         keyboardType="phone-pad"
                     />
-                    <View>
-                        <Picker style={styles.picker}
+                    <View style={styles.picker}>
+                        <Picker style={styles.pickerItem}
                             selectedValue={this.state.gender}
                             onValueChange={(value, index) => {
                                 this.setState({ gender: value })
                             }}>
+                            <Picker.Item label="Chọn giới tính" color="#C7C7CD" />
                             <Picker.Item label="Nam" value="Nam" />
                             <Picker.Item label="Nữ" value="Nữ" />
                         </Picker>
@@ -120,7 +121,11 @@ class Signup extends React.Component {
                     <Button label="ĐĂNG KÝ" onPress={() => {
                         if (this.state.pass === this.state.repass) {
                             if (this.state.image !== avatar) {
-                                signUp(this.state.email, this.state.pass, this.state.repass, this.state.name, this.state.age, this.state.phone, this.state.gender);
+                                if (this.state.gender !== "") {
+                                    signUp(this.state.email, this.state.pass, this.state.repass, this.state.name, this.state.age, this.state.phone, this.state.gender);
+                                } else {
+                                    alert("Bạn chưa chọn giới tính");
+                                }
                             } else {
                                 alert("Vui lòng thay ảnh đại diện");
                             }
@@ -205,6 +210,11 @@ const styles = StyleSheet.create({
         height: 40,
         borderBottomWidth: StyleSheet.hairlineWidth,
         marginBottom: 20,
+        width: "100%",
+    },
+    pickerItem: {
+        width: "105%",
+        alignSelf: "center",
     },
     avatar: {
         backgroundColor: "#FFF",
