@@ -83,7 +83,7 @@ export default class Home extends React.Component {
                     arr2 = item.email.split('.');
                     let id1 = '', id2 = '';
                     for (let i = 0; i < arr1.length - 1; i++) {
-                        id1 = id1 + arr1[i] + ',';
+                      id1 = id1 + arr1[i] + ',';
                     }
                     id1 = id1 + arr1[arr1.length - 1];
                     for (let i = 0; i < arr2.length - 1; i++) {

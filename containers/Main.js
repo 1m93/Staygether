@@ -5,6 +5,7 @@ import styles from "../assets/styles";
 import HomeScreen from "./Home";
 import MatchesScreen from "./Matches";
 import MessagesScreen from "./Messages";
+import UserScreen from "./User";
 import Icon from "../components/Icon";
 import { NavigationContainer, TabActions } from "@react-navigation/native";
 
@@ -65,6 +66,7 @@ class Main extends React.Component {
             {() => <MatchesScreen myProp={this.props} />}
           </Tab.Screen>
           <Tab.Screen name="Tin nhắn" component={MessagesScreen} />
+          <Tab.Screen name="Cá nhân" component={UserScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     );

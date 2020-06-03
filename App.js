@@ -7,11 +7,19 @@ import Signup from './containers/Signup';
 import Home from './containers/Home';
 import Matches from './containers/Matches';
 import Profile from './containers/Profile';
+import Map from './containers/Map';
+import User from './containers/User';
 
 console.disableYellowBox = true;
 
 const App = createStackNavigator(
   {
+    Map: {
+      screen: Map,
+      navigationOptions: {
+        headerShown: false,
+      }
+    },
     Matches: {
       screen: Matches,
       navigationOptions: {
@@ -20,6 +28,12 @@ const App = createStackNavigator(
     },
     Profile: {
       screen: Profile,
+      navigationOptions: {
+        headerShown: false,
+      }
+    },
+    User: {
+      screen: User,
       navigationOptions: {
         headerShown: false,
       }
