@@ -16,39 +16,38 @@ export default class User extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            age : '',
-            image : '',
-            info1 : '',
-            info2 : '',
-            info3 : '',
-            info4 : '',
-            location : '',
-            match : '',
-            name : '',
+            age: '',
+            image: '',
+            info1: '',
+            info2: '',
+            info3: '',
+            info4: '',
+            location: '',
+            match: '',
+            name: '',
         };
     }
-    render() {
-        
+
+    async componentDidMount() {
         var user = firebase.auth().currentUser;
-        firebase.database().ref('UsersData/').once('value', (snapshot) => {
-            snapshot.forEach((dt) => {
-                if (user.email == dt.val().email) {
-                    console.log(dt.val())
-                    this.setState({
-                        age: dt.val().age + 'Tuổi',
-                        image: dt.val().url,
-                        match: dt.val().price,
-                        location: dt.val().address,
-                        info1: dt.val().gender,
-                        info2: dt.val().describe,
-                        info3: dt.val().require,
-                        info4: dt.val().phone,
-                    
+        firebase.database().ref('UsersData/' + user.email.replace('.', ',')).once('value').then(function (snapshot) {
+            this.setState({
+                age: snapshot.val().age,
+                image: snapshot.val().url,
+                match: snapshot.val().price,
+                location: snapshot.val().address,
+                info1: snapshot.val().gender,
+                info2: snapshot.val().describe,
+                info3: snapshot.val().require,
+                info4: snapshot.val().phone,
+                name: snapshot.val().name,
             }, () => {
                 console.log(this.state)
-                })
-            }});
-        })
+            })
+        }.bind(this));
+    }
+
+    render() {
 
         return (
             <ImageBackground
@@ -72,16 +71,16 @@ export default class User extends React.Component {
 
                     <View style={styles.actionsProfile}>
                         <TouchableOpacity style={styles.roundedButton} onPress={() => this.props.navigation.navigate('Main')}>
-                            <Text style={styles.topIconLeft}>
+                            {/* <Text style={styles.topIconLeft}>
                                 <Icon name="chevronLeft" />
-                            </Text>
-                            <Text style={styles.textButton}>Trở về</Text>
+                            </Text> */}
+                            <Text style={styles.textButton}>Chỉnh sửa</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.roundedButton}>
-                            <Text style={styles.iconButton}>
+                            {/* <Text style={styles.iconButton}>
                                 <Icon name="chat" />
-                            </Text>
-                            <Text style={styles.textButton}>Nhắn tin</Text>
+                            </Text> */}
+                            <Text style={styles.textButton}>Đăng xuất</Text>
                         </TouchableOpacity>
                         {/* <TouchableOpacity style={styles.circledButton}>
                             <Text style={styles.iconButton}>

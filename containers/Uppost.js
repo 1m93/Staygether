@@ -25,13 +25,7 @@ export default class Uppost extends React.Component {
             gender = temp.gender;
             phone = temp.phone;
             name = temp.name;
-            arr = email.split('.');
-            let id = '';
-            for (let i = 0; i < arr.length - 1; i++) {
-                id = id + arr[i] + ',';
-            }
-            id = id + arr[arr.length - 1];
-            console.log(id);
+            let id = email.replace('.', ',');
             firebase.storage().ref().child(email).getDownloadURL().then(function (url) {
                 console.log(url);
                 try {

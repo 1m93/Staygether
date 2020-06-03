@@ -17,7 +17,7 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: "test1@gmail.com",
+            email: "test8@gmail.com",
             pass: "123456",
         };
         this.FormTextInput = React.createRef();

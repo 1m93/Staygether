@@ -27,12 +27,7 @@ class Matches extends React.Component {
         var matched = [];
         var love = [];
         var user = firebase.auth().currentUser;
-        arr1 = user.email.split('.');
-        let id1 = '';
-        for (let i = 0; i < arr1.length - 1; i++) {
-            id1 = id1 + arr1[i] + ',';
-        }
-        id1 = id1 + arr1[arr1.length - 1];
+        let id1 = user.email.replace('.', ',');
         firebase.database().ref('DataMactch/' + id1 + '/Match').on('value', (snapshot)=>{
             snapshot.forEach((dt) => {
                 match.push(dt.val().email)
@@ -70,7 +65,6 @@ class Matches extends React.Component {
                         }
                     });
                     love = []
-                    data = shuffleArray(data);
                     this.setState({ Data: data }, () => {
                         console.log(this.state.Data)
                     })

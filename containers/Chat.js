@@ -1,10 +1,11 @@
 import React from 'react';
+import { Text } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat'; // 0.3.0
 
 import Fire from '../containers/Fire';
 
 
-class Chat extends React.Component{
+class Chat extends React.Component {
 
   static navigationOptions = ({ navigation }) => ({
     title: (navigation.state.params || {}).name || 'Chat!',
@@ -27,6 +28,7 @@ class Chat extends React.Component{
         messages={this.state.messages}
         onSend={Fire.shared.send}
         user={this.user}
+        isTyping={true}
       />
     );
   }
