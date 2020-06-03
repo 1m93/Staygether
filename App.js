@@ -9,6 +9,7 @@ import Matches from './containers/Matches';
 import Profile from './containers/Profile';
 import Map from './containers/Map';
 import User from './containers/User';
+import Chat from './containers/Chat'
 
 console.disableYellowBox = true;
 
@@ -19,6 +20,10 @@ const App = createStackNavigator(
       navigationOptions: {
         headerShown: false,
       }
+    },
+    Chat: {
+      screen: Chat,
+      
     },
     Matches: {
       screen: Matches,
