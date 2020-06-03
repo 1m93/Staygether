@@ -18,7 +18,6 @@ export default class Profile extends React.Component {
     }
     render() {
         const temp = this.props.navigation.state.params;
-        console.log(temp);
         age = temp.age + " Tuổi";
         image = temp.image;
         info1 = temp.gender;
@@ -28,8 +27,6 @@ export default class Profile extends React.Component {
         location = temp.address;
         match = temp.price;
         name = temp.name;
-
-        console.log(temp.age);
 
         return (
             <ImageBackground

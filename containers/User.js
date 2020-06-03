@@ -10,25 +10,45 @@ import {
 } from 'react-native';
 import ProfileItem from '../components/ProfileItem';
 import Icon from '../components/Icon';
+import firebase from '../containers/firebase'
 
 export default class User extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            age : '',
+            image : '',
+            info1 : '',
+            info2 : '',
+            info3 : '',
+            info4 : '',
+            location : '',
+            match : '',
+            name : '',
+        };
     }
     render() {
-        const temp = this.props.navigation.state.params;
-        console.log(temp);
-        age = temp.age + " Tuổi";
-        image = temp.image;
-        info1 = temp.gender;
-        info2 = temp.describe;
-        info3 = temp.require;
-        info4 = temp.phone;
-        location = temp.address;
-        match = temp.price;
-        name = temp.name;
-
-        console.log(temp.age);
+        
+        var user = firebase.auth().currentUser;
+        firebase.database().ref('UsersData/').once('value', (snapshot) => {
+            snapshot.forEach((dt) => {
+                if (user.email == dt.val().email) {
+                    console.log(dt.val())
+                    this.setState({
+                        age: dt.val().age + 'Tuổi',
+                        image: dt.val().url,
+                        match: dt.val().price,
+                        location: dt.val().address,
+                        info1: dt.val().gender,
+                        info2: dt.val().describe,
+                        info3: dt.val().require,
+                        info4: dt.val().phone,
+                    
+            }, () => {
+                console.log(this.state)
+                })
+            }});
+        })
 
         return (
             <ImageBackground
@@ -36,18 +56,18 @@ export default class User extends React.Component {
                 style={styles.bg}
             >
                 <ScrollView style={styles.containerProfile}>
-                    <ImageBackground source={{ uri: image }} style={styles.photo}>
+                    <ImageBackground source={{ uri: this.state.image }} style={styles.photo}>
                     </ImageBackground>
 
                     <ProfileItem
-                        matches={match}
-                        name={name}
-                        age={age}
-                        location={location}
-                        info1={info1}
-                        info2={info2}
-                        info3={info3}
-                        info4={info4}
+                        matches={this.state.match}
+                        name={this.state.name}
+                        age={this.state.age}
+                        location={this.state.location}
+                        info1={this.state.info1}
+                        info2={this.state.info2}
+                        info3={this.state.info3}
+                        info4={this.state.info4}
                     />
 
                     <View style={styles.actionsProfile}>
