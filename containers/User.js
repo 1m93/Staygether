@@ -70,17 +70,21 @@ export default class User extends React.Component {
                     />
 
                     <View style={styles.actionsProfile}>
-                        <TouchableOpacity style={styles.roundedButton} onPress={() => this.props.navigation.navigate('Main')}>
+                        <TouchableOpacity style={styles.roundedButton}>
                             {/* <Text style={styles.topIconLeft}>
                                 <Icon name="chevronLeft" />
                             </Text> */}
                             <Text style={styles.textButton}>Chỉnh sửa</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.roundedButton}>
+                        <TouchableOpacity
+                            style={styles.roundedButton}
+                            onPress={() => {
+                                firebase.auth().signOut();
+                            }}>
                             {/* <Text style={styles.iconButton}>
                                 <Icon name="chat" />
                             </Text> */}
-                            <Text style={styles.textButton}>Đăng xuất</Text>
+                            <Text style={styles.textButton}> Đăng xuất</Text>
                         </TouchableOpacity>
                         {/* <TouchableOpacity style={styles.circledButton}>
                             <Text style={styles.iconButton}>

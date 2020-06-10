@@ -12,8 +12,9 @@ import { NavigationContainer, TabActions } from "@react-navigation/native";
 const Tab = createBottomTabNavigator();
 
 class Main extends React.Component {
-
+  state = { currentUser: null }
   render() {
+    const { currentUser } = this.state
     return (
       <NavigationContainer>
         <Tab.Navigator

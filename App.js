@@ -1,4 +1,4 @@
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import Main from './containers/Main';
 import Login from './containers/Login';
@@ -7,23 +7,23 @@ import Signup from './containers/Signup';
 import Home from './containers/Home';
 import Matches from './containers/Matches';
 import Profile from './containers/Profile';
-import Map from './containers/Map';
 import User from './containers/User';
-import Chat from './containers/Chat'
+import Chat from './containers/Chat';
+import Loading from './containers/Loading';
 
 console.disableYellowBox = true;
 
-const App = createStackNavigator(
+const mainStack = createStackNavigator(
   {
-    Map: {
-      screen: Map,
+    Main: {
+      screen: Main,
       navigationOptions: {
         headerShown: false,
       }
     },
     Chat: {
       screen: Chat,
-      
+
     },
     Matches: {
       screen: Matches,
@@ -43,6 +43,23 @@ const App = createStackNavigator(
         headerShown: false,
       }
     },
+    Home: {
+      screen: Home,
+      navigationOptions: {
+        headerShown: false,
+      }
+    },
+  }
+);
+
+const App = createSwitchNavigator(
+  {
+    Loading: {
+      screen: Loading,
+      navigationOptions: {
+        headerShown: false,
+      }
+    },
     Signup: {
       screen: Signup,
       navigationOptions: {
@@ -55,27 +72,16 @@ const App = createStackNavigator(
         headerShown: false,
       }
     },
-    Home: {
-      screen: Home,
-      navigationOptions: {
-        headerShown: false,
-      }
-    },
     Login: {
       screen: Login,
       navigationOptions: {
         headerShown: false,
       }
     },
-    Main: {
-      screen: Main,
-      navigationOptions: {
-        headerShown: false,
-      }
-    }
+    mainStack: mainStack,
   },
   {
-    initialRouteName: "Login"
+    initialRouteName: "Loading"
   }
 );
 

@@ -5,13 +5,8 @@ import FormTextInput from "../components/FormTextInput";
 import logo from "../assets/images/logo.png";
 import * as Facebook from 'expo-facebook'
 import firebase from './firebase.js';
-import * as Font from 'expo-font';
 
 Facebook.initializeAsync('550967015812950', 'Staygether')
-
-let customFonts = {
-    'tinderclone': require('../assets/fonts/tinderclone.ttf'),
-};
 
 class Login extends React.Component {
     constructor(props) {
@@ -21,13 +16,6 @@ class Login extends React.Component {
             pass: "123456",
         };
         this.FormTextInput = React.createRef();
-    }
-    async _loadFontsAsync() {
-        await Font.loadAsync(customFonts);
-        this.setState({ fontsLoaded: true });
-    }
-    componentDidMount() {
-        this._loadFontsAsync();
     }
     handleEmailSubmitPress = () => {
         if (this.FormTextInput.current) {
