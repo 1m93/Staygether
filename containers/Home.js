@@ -20,10 +20,24 @@ export default class Home extends React.Component {
   }
   componentDidMount() {
     var data = [];
+    var dataNotShow = [];
     var user = firebase.auth().currentUser;
+    
+    id1 = user.email.replace('.', ',');
+    firebase.database().ref('DataMactch/' + id1 + '/Match').on('value', (snapshot) => {
+      snapshot.forEach((dt) => {
+        dataNotShow.push(dt.val().email);
+      })
+    })
+    firebase.database().ref('DataMactch/' + id1 + '/Dislike').on('value', (snapshot) => {
+      snapshot.forEach((dt) => {
+        dataNotShow.push(dt.val().email);
+      })
+    })
+
     firebase.database().ref('UsersData/').once('value', (snapshot) => {
       snapshot.forEach((dt) => {
-        if (user.email != dt.val().email) {
+        if ((user.email != dt.val().email) && (!dataNotShow.includes(dt.val().email))) {
           data.push({
             image: dt.val().url,
             price: dt.val().price,
@@ -46,15 +60,23 @@ export default class Home extends React.Component {
 
   render() {
     function match(item) {
-      console.log("A");
       var user = firebase.auth().currentUser;
       id1 = user.email.replace('.', ',');
       id2 = item.email.replace('.', ',');
-      firebase.database().ref('DataMactch/' + id1 + '/Match').push({
+      firebase.database().ref('DataMactch/' + id1 + '/Match/' + id2).set({
         email: item.email,
       })
-      firebase.database().ref('DataMactch/' + id2 + '/Matched').push({
+      firebase.database().ref('DataMactch/' + id2 + '/Matched/' + id1).set({
         email: user.email,
+      })
+    }
+
+    function dislike(item) {
+      var user = firebase.auth().currentUser;
+      id1 = user.email.replace('.', ',');
+      id2 = item.email.replace('.', ',');
+      firebase.database().ref('DataMactch/' + id1 + '/Dislike/' + id2).set({
+        email: item.email,
       })
     }
 
@@ -81,6 +103,9 @@ export default class Home extends React.Component {
                 onSwipedLeft={() => {
                   match(item);
                 }}
+                onSwipedRight={() => {
+                  dislike(item);
+                }}
               >
                 <CardItem
                   image={item.image}
@@ -99,6 +124,7 @@ export default class Home extends React.Component {
                     this.swiper.swipeLeft()
                   }}
                   onPressRight={() => {
+                    dislike(item);
                     this.swiper.swipeRight()
                   }}
                 />
