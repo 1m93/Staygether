@@ -5,13 +5,13 @@ import { Text, TouchableOpacity } from 'react-native';
 import Icon from './Icon';
 
 const City = () => {
-  return (
-    <TouchableOpacity style={styles.city}>
-      <Text style={styles.cityText}>
-        <Icon name="marker" /> Hà Nội
+    return (
+        <TouchableOpacity style={styles.city}>
+            <Text style={styles.cityText}>
+                <Icon name="marker" /> Hà Nội
       </Text>
-    </TouchableOpacity>
-  );
+        </TouchableOpacity>
+    );
 };
 
 export default City;

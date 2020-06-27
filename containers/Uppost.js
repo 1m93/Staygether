@@ -21,6 +21,7 @@ export default class Uppost extends React.Component {
         uppost = (address, describe, price, require, location) => {
             const temp = this.props.navigation.state.params;
             email = temp.email;
+            pass = temp.pass;
             age = temp.age;
             gender = temp.gender;
             phone = temp.phone;
@@ -46,7 +47,16 @@ export default class Uppost extends React.Component {
                     console.log(err);
                 }
             });
-            this.props.navigation.navigate('Main');
+            try {
+                firebase.auth().createUserWithEmailAndPassword(email, pass).then(() => {
+                    this.props.navigation.navigate('Main')
+                }).catch(error => {
+                    alert(error.message);
+                })
+            }
+            catch (err) {
+                Alert.alert('Sign in Failed')
+            }
         }
 
         return (

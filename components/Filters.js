@@ -5,13 +5,13 @@ import { Text, TouchableOpacity } from 'react-native';
 import Icon from './Icon';
 
 const Filters = () => {
-  return (
-    <TouchableOpacity style={styles.filters}>
-      <Text style={styles.filtersText}>
-        <Icon name="filter" /> Lọc
+    return (
+        <TouchableOpacity style={styles.filters}>
+            <Text style={styles.filtersText}>
+                <Icon name="filter" /> Lọc
       </Text>
-    </TouchableOpacity>
-  );
+        </TouchableOpacity>
+    );
 };
 
 export default Filters;
