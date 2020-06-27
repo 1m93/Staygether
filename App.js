@@ -14,75 +14,75 @@ import Loading from './containers/Loading';
 console.disableYellowBox = true;
 
 const mainStack = createStackNavigator(
-  {
-    Main: {
-      screen: Main,
-      navigationOptions: {
-        headerShown: false,
-      }
-    },
-    Chat: {
-      screen: Chat,
+    {
+        Main: {
+            screen: Main,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
+        Chat: {
+            screen: Chat,
 
-    },
-    Matches: {
-      screen: Matches,
-      navigationOptions: {
-        headerShown: false,
-      }
-    },
-    Profile: {
-      screen: Profile,
-      navigationOptions: {
-        headerShown: false,
-      }
-    },
-    User: {
-      screen: User,
-      navigationOptions: {
-        headerShown: false,
-      }
-    },
-    Home: {
-      screen: Home,
-      navigationOptions: {
-        headerShown: false,
-      }
-    },
-  }
+        },
+        Matches: {
+            screen: Matches,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
+        Profile: {
+            screen: Profile,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
+        User: {
+            screen: User,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
+        Home: {
+            screen: Home,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
+    }
 );
 
 const App = createSwitchNavigator(
-  {
-    Loading: {
-      screen: Loading,
-      navigationOptions: {
-        headerShown: false,
-      }
+    {
+        Loading: {
+            screen: Loading,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
+        Signup: {
+            screen: Signup,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
+        Uppost: {
+            screen: Uppost,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
+        Login: {
+            screen: Login,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
+        mainStack: mainStack,
     },
-    Signup: {
-      screen: Signup,
-      navigationOptions: {
-        headerShown: false,
-      }
-    },
-    Uppost: {
-      screen: Uppost,
-      navigationOptions: {
-        headerShown: false,
-      }
-    },
-    Login: {
-      screen: Login,
-      navigationOptions: {
-        headerShown: false,
-      }
-    },
-    mainStack: mainStack,
-  },
-  {
-    initialRouteName: "Loading"
-  }
+    {
+        initialRouteName: "Loading"
+    }
 );
 
 export default createAppContainer(App);

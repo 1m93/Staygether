@@ -29,6 +29,7 @@ class Signup extends React.Component {
             var price = 0, address = '', describe = '', require = '';
             let temp = {
                 email: email,
+                pass: pass,
                 name: name,
                 age: age,
                 phone: phone,
@@ -40,14 +41,9 @@ class Signup extends React.Component {
             };
             try {
                 upLoadImage(this.state.image.uri);
-                firebase.auth().createUserWithEmailAndPassword(email, pass).then(() => {
-                    this.props.navigation.navigate('Uppost', temp)
-                }).catch(error => {
-                    alert(error.message);
-                })
+                this.props.navigation.navigate('Uppost', temp);
             }
             catch (err) {
-                Alert.alert('Sign in Failed')
             }
         }
 
