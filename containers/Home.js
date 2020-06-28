@@ -269,7 +269,7 @@ export default class Home extends React.Component {
                                                     <Picker.Item label="Dưới 20m2" value={0, 20} />
                                                     <Picker.Item label="20m2 đến 30m2" value={20, 30} />
                                                     <Picker.Item label="30m2 đến 45m2" value={30, 45} />
-                                                    <Picker.Item label="45m2 đến 45m2" value={45, 60} />
+                                                    <Picker.Item label="45m2 đến 60m2" value={45, 60} />
                                                     <Picker.Item label="Trên 60m2" value={60, Number.MAX_SAFE_INTEGER} />
                                                 </Picker>
                                             </View>
