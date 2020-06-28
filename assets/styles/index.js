@@ -44,8 +44,8 @@ export default StyleSheet.create({
 		color: WHITE,
 	},
 	descriptionCardItem: {
+		width: "85%",
 		color: GRAY,
-		textAlign: "center"
 	},
 	status: {
 		paddingBottom: 10,
@@ -73,7 +73,7 @@ export default StyleSheet.create({
 	actionsCardItem: {
 		flexDirection: "row",
 		alignItems: "center",
-		paddingVertical: 30
+		paddingVertical: 0
 	},
 	button: {
 		width: 60,
@@ -125,7 +125,7 @@ export default StyleSheet.create({
 		backgroundColor: WHITE,
 		padding: 10,
 		borderRadius: 20,
-		width: 90,
+		width: "auto",
 		shadowOpacity: 0.05,
 		shadowRadius: 10,
 		shadowColor: BLACK,
@@ -142,7 +142,7 @@ export default StyleSheet.create({
 		backgroundColor: WHITE,
 		padding: 10,
 		borderRadius: 20,
-		width: 70,
+		width: "auto",
 		shadowOpacity: 0.05,
 		shadowRadius: 10,
 		shadowColor: BLACK,

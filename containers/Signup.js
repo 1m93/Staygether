@@ -21,11 +21,12 @@ class Signup extends React.Component {
             phone: "",
             gender: "",
             image: avatar,
+            role: "",
         }
     }
 
     render() {
-        signUp = (email, pass, repass, name, age, phone, gender) => {
+        signUp = (email, pass, name, age, phone, gender, role) => {
             var price = 0, address = '', describe = '', require = '';
             let temp = {
                 email: email,
@@ -38,6 +39,7 @@ class Signup extends React.Component {
                 address: address,
                 describe: describe,
                 require: require,
+                role: role,
             };
             try {
                 upLoadImage(this.state.image.uri);
@@ -114,11 +116,26 @@ class Signup extends React.Component {
                             <Picker.Item label="Nữ" value="Nữ" />
                         </Picker>
                     </View>
-                    <Button label="ĐĂNG KÝ" onPress={() => {
+                    <View style={styles.picker}>
+                        <Picker style={styles.pickerItem}
+                            selectedValue={this.state.role}
+                            onValueChange={(value, index) => {
+                                this.setState({ role: value })
+                            }}>
+                            <Picker.Item label="Chọn đối tượng" color="#C7C7CD" />
+                            <Picker.Item label="Đã có phòng" value="Đã có phòng" />
+                            <Picker.Item label="Chưa có phòng" value="Chưa có phòng" />
+                        </Picker>
+                    </View>
+                    <Button label="TIẾP THEO" onPress={() => {
                         if (this.state.pass === this.state.repass) {
                             if (this.state.image !== avatar) {
                                 if (this.state.gender !== "") {
-                                    signUp(this.state.email, this.state.pass, this.state.repass, this.state.name, this.state.age, this.state.phone, this.state.gender);
+                                    if (this.state.role !== "") {
+                                        signUp(this.state.email, this.state.pass, this.state.name, this.state.age, this.state.phone, this.state.gender, this.state.role);
+                                    } else {
+                                        alert("Bạn chưa chọn đối tượng");
+                                    }
                                 } else {
                                     alert("Bạn chưa chọn giới tính");
                                 }

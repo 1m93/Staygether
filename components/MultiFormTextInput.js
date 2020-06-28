@@ -18,7 +18,7 @@ class MultiFormTextInput extends React.Component {
                 <View>
                     <TextInput
                         multiline
-                        numberOfLines={4}
+                        numberOfLines={3}
                         ref={this.TextInput}
                         selectionColor="#7444C0"
                         style={[styles.textinput, style]}

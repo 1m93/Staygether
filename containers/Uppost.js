@@ -15,17 +15,20 @@ export default class Uppost extends React.Component {
             require: "",
             image: null,
             location: "",
+            acreage: "",
+            roomDescribe: "",
         };
     }
     render() {
-        uppost = (address, describe, price, require, location) => {
-            const temp = this.props.navigation.state.params;
-            email = temp.email;
-            pass = temp.pass;
-            age = temp.age;
-            gender = temp.gender;
-            phone = temp.phone;
-            name = temp.name;
+        temp = this.props.navigation.state.params;
+        email = temp.email;
+        pass = temp.pass;
+        age = temp.age;
+        gender = temp.gender;
+        phone = temp.phone;
+        name = temp.name;
+        role = temp.role;
+        uppost = (address, describe, price, require, location, roomDescribe, acreage, status) => {
             let id = email.replace('.', ',');
             firebase.storage().ref().child(email).getDownloadURL().then(function (url) {
                 console.log(url);
@@ -42,6 +45,10 @@ export default class Uppost extends React.Component {
                         require,
                         url,
                         location,
+                        role,
+                        roomDescribe,
+                        acreage,
+                        status,
                     })
                 } catch (err) {
                     console.log(err);
@@ -115,6 +122,24 @@ export default class Uppost extends React.Component {
                         placeholder="Địa chỉ"
                         returnKeyType="next"
                     />
+                    {
+                        role == "Đã có phòng" &&
+                        <View>
+                            <FormTextInput
+                                value={this.state.acreage}
+                                onChangeText={(acreage) => this.setState({ acreage })} value={this.state.acreage}
+                                placeholder="Diện tích phòng (m2)"
+                                returnKeyType="next"
+                                keyboardType="number-pad"
+                            />
+                            <MultiFormTextInput
+                                value={this.state.roomDescribe}
+                                onChangeText={(roomDescribe) => this.setState({ roomDescribe })} value={this.state.roomDescribe}
+                                placeholder="Mô tả phòng"
+                                returnKeyType="next"
+                            />
+                        </View>
+                    }
                     <MultiFormTextInput
                         value={this.state.describe}
                         onChangeText={(describe) => this.setState({ describe })} value={this.state.describe}
@@ -129,7 +154,7 @@ export default class Uppost extends React.Component {
                     />
                     <Button label="HOÀN TẤT" onPress={() => {
                         if (this.state.location !== "") {
-                            uppost(this.state.address, this.state.describe, this.state.price, this.state.require, this.state.location);
+                            uppost(this.state.address, this.state.describe, this.state.price, this.state.require, this.state.location, this.state.roomDescribe, this.state.acreage, "open");
                         } else {
                             alert("Bạn chưa chọn khu vực");
                         }
@@ -159,8 +184,8 @@ const styles = StyleSheet.create({
     },
     text: {
         fontWeight: "bold",
-        fontSize: 30,
-        marginBottom: 30,
+        fontSize: 25,
+        marginBottom: 20,
         textAlign: "center",
         color: "#7444C0"
     },
@@ -173,5 +198,10 @@ const styles = StyleSheet.create({
     pickerItem: {
         width: "105%",
         alignSelf: "center",
-    }
+    },
+    signup: {
+        backgroundColor: "#FFF",
+        borderColor: "#7444C0",
+        color: "#7444C0",
+    },
 })

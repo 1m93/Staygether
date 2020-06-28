@@ -6,6 +6,7 @@ import Icon from './Icon';
 
 const CardItem = ({
     actions,
+    role,
     description,
     image,
     matches,
@@ -21,7 +22,8 @@ const CardItem = ({
         {
             borderRadius: 8,
             width: variant ? fullWidth / 2 - 30 : fullWidth - 80,
-            height: variant ? 170 : 350,
+            // height: variant ? 170 : 350,
+            height: variant ? fullWidth / 2 - 30 : fullWidth - 100,
             margin: variant ? 0 : 20
         }
     ];
@@ -45,12 +47,17 @@ const CardItem = ({
                 <View style={styles.matchesCardItem}>
                     <Text style={styles.matchesTextCardItem}>
                         {matches} VND
-          </Text>
+                    </Text>
                 </View>
             )}
 
             {/* NAME */}
             <Text style={nameStyle}>{name}</Text>
+
+            {/* ROLE */}
+            {role && (
+                <Text style={{fontSize: 17, color: "#7444C0", marginTop: -12, marginBottom: 7}}>{role}</Text>
+            )}
 
             {/* DESCRIPTION */}
             {description && (

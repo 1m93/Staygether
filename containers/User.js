@@ -84,7 +84,7 @@ export default class User extends React.Component {
                             {/* <Text style={styles.iconButton}>
                                 <Icon name="chat" />
                             </Text> */}
-                            <Text style={styles.textButton}> Đăng xuất</Text>
+                            <Text style={styles.textButton}>Đăng xuất</Text>
                         </TouchableOpacity>
                         {/* <TouchableOpacity style={styles.circledButton}>
                             <Text style={styles.iconButton}>
