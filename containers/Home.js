@@ -16,10 +16,14 @@ export default class Home extends React.Component {
             location: "Chọn khu vực",
             role: "",
             roleSelected: "",
-            acreage: "",
-            acreageSelected: "",
-            price: "",
-            priceSelected: "",
+            acreage: null,
+            acreageSelected: null,
+            price: null,
+            priceSelected: null,
+            age: null,
+            ageSelected: null,
+            sex: "",
+            sexSelected: "",
             isVisible: false,
             isVisible2: false,
         };
@@ -149,9 +153,29 @@ export default class Home extends React.Component {
                                                 <Picker.Item label="Huyện Mỹ Đức" value="Huyện Mỹ Đức" />
                                             </Picker>
                                         </View>
-                                        <TouchableOpacity onPress={() => { this.setState({ isVisible: false }); }} >
-                                            <Text style={{ fontSize: 18, color: "red" }}>Hủy</Text>
-                                        </TouchableOpacity>
+                                        <View style={{ display: "flex", flexDirection: "row", marginTop: 40 }}>
+
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    this.setState({
+                                                        isVisible: false,
+                                                        location: "Chọn khu vực",
+                                                    });
+                                                }}
+                                            >
+                                                <Text style={{ fontSize: 18, color: "blue", marginRight: 25 }}>Xoá lọc</Text>
+                                            </TouchableOpacity>
+
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    this.setState({
+                                                        isVisible: false
+                                                    });
+                                                }}
+                                            >
+                                                <Text style={{ fontSize: 18, color: "red" }}>Đóng</Text>
+                                            </TouchableOpacity>
+                                        </View>
                                     </View>
                                 </View>
                             </Modal>
@@ -185,12 +209,116 @@ export default class Home extends React.Component {
                                                 <Picker.Item label="Chưa có phòng" value="Chưa có phòng" />
                                             </Picker>
                                         </View>
-                                        <View style={{ display: "flex", flexDirection: "row" }}>
-                                            <TouchableOpacity onPress={() => { this.setState({ isVisible2: false }); }} >
-                                                <Text style={{ fontSize: 18, color: "green", marginRight: 20 }}>Xác nhận</Text>
+
+                                        <View style={customStyles.picker}>
+                                            <Picker
+                                                style={customStyles.pickerItem}
+                                                selectedValue={this.state.sexSelected}
+                                                onValueChange={(value, index) => {
+                                                    this.setState({ sexSelected: value });
+                                                }}>
+                                                <Picker.Item label="Chọn giới tính" />
+                                                <Picker.Item label="Nam" value="Nam" />
+                                                <Picker.Item label="Nữ" value="Nữ" />
+                                            </Picker>
+                                        </View>
+
+                                        <View style={customStyles.picker}>
+                                            <Picker
+                                                style={customStyles.pickerItem}
+                                                selectedValue={this.state.priceSelected}
+                                                onValueChange={(value, index) => {
+                                                    this.setState({ priceSelected: value });
+                                                }}>
+                                                <Picker.Item label="Chọn Khoảng giá" />
+                                                <Picker.Item label="Dưới 500,000" value={0, 500000} />
+                                                <Picker.Item label="500,000 đến 1,000,000" value={500000, 1000000} />
+                                                <Picker.Item label="1,000,000 đến 2,000,000" value={1000000, 2000000} />
+                                                <Picker.Item label="2,000,000 đến 3,000,000" value={2000000, 3000000} />
+                                                <Picker.Item label="3,000,000 đến 4,000,000" value={3000000, 4000000} />
+                                                <Picker.Item label="4,000,000 đến 6,000,000" value={4000000, 6000000} />
+                                                <Picker.Item label="Trên 6,000,000" value={6000000, Number.MAX_SAFE_INTEGER} />
+                                            </Picker>
+                                        </View>
+
+                                        <View style={customStyles.picker}>
+                                            <Picker
+                                                style={customStyles.pickerItem}
+                                                selectedValue={this.state.ageSelected}
+                                                onValueChange={(value, index) => {
+                                                    this.setState({ ageSelected: value });
+                                                }}>
+                                                <Picker.Item label="Chọn Khoảng độ tuổi" />
+                                                <Picker.Item label="Dưới 20" value={0, 20} />
+                                                <Picker.Item label="20 đến 25" value={20, 25} />
+                                                <Picker.Item label="25 đến 30" value={25, 30} />
+                                                <Picker.Item label="Trên 30" value={30, Number.MAX_SAFE_INTEGER} />
+                                            </Picker>
+                                        </View>
+
+                                        {
+                                            this.state.roleSelected == "Đã có phòng" &&
+                                            <View style={customStyles.picker}>
+                                                <Picker
+                                                    style={customStyles.pickerItem}
+                                                    selectedValue={this.state.acreageSelected}
+                                                    onValueChange={(value, index) => {
+                                                        this.setState({ acreageSelected: value });
+                                                    }}>
+                                                    <Picker.Item label="Chọn diện tích phòng" />
+                                                    <Picker.Item label="Dưới 20m2" value={0, 20} />
+                                                    <Picker.Item label="20m2 đến 30m2" value={20, 30} />
+                                                    <Picker.Item label="30m2 đến 45m2" value={30, 45} />
+                                                    <Picker.Item label="45m2 đến 45m2" value={45, 60} />
+                                                    <Picker.Item label="Trên 60m2" value={60, Number.MAX_SAFE_INTEGER} />
+                                                </Picker>
+                                            </View>
+                                        }
+
+                                        <View style={{ display: "flex", flexDirection: "row", marginTop: 40 }}>
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    this.setState({
+                                                        isVisible2: false,
+                                                        role: this.state.roleSelected,
+                                                        sex: this.state.sexSelected,
+                                                        price: this.state.priceSelected,
+                                                        age: this.state.ageSelected,
+                                                        acreage: this.state.acreageSelected,
+                                                    });
+                                                }}
+                                            >
+                                                <Text style={{ fontSize: 18, color: "green", marginRight: 25 }}>Xác nhận</Text>
                                             </TouchableOpacity>
-                                            <TouchableOpacity onPress={() => { this.setState({ isVisible2: false }); }} >
-                                                <Text style={{ fontSize: 18, color: "red" }}>Xoá lọc</Text>
+
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    this.setState({
+                                                        isVisible2: false,
+                                                        price: null,
+                                                        priceSelected: null,
+                                                        age: null,
+                                                        ageSelected: null,
+                                                        sex: "",
+                                                        sexSelected: "",
+                                                        role: "",
+                                                        roleSelected: "",
+                                                        acreage: null,
+                                                        acreageSelected: null,
+                                                    });
+                                                }}
+                                            >
+                                                <Text style={{ fontSize: 18, color: "blue", marginRight: 25 }}>Xoá lọc</Text>
+                                            </TouchableOpacity>
+
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    this.setState({
+                                                        isVisible2: false
+                                                    });
+                                                }}
+                                            >
+                                                <Text style={{ fontSize: 18, color: "red" }}>Đóng</Text>
                                             </TouchableOpacity>
                                         </View>
                                     </View>
@@ -306,7 +434,6 @@ customStyles = StyleSheet.create({
     picker: {
         height: 40,
         borderBottomWidth: StyleSheet.hairlineWidth,
-        marginBottom: 30,
         marginTop: 20,
         width: "100%",
     },
