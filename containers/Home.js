@@ -1,11 +1,8 @@
 import React from 'react';
 import { Text, TouchableOpacity, Modal, View, StyleSheet, Picker, ImageBackground } from 'react-native';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
-import Filters from '../components/Filters';
 import CardItem from '../components/CardItem';
 import styles from '../assets/styles';
-import Demo from '../assets/data/demo.js';
-import { render } from 'react-dom';
 import firebase from '../containers/firebase';
 import shuffleArray from '../components/ShuffleArray';
 import Icon from '../components/Icon';
@@ -17,7 +14,14 @@ export default class Home extends React.Component {
         this.state = {
             Data: [],
             location: "Chọn khu vực",
+            role: "",
+            roleSelected: "",
+            acreage: "",
+            acreageSelected: "",
+            price: "",
+            priceSelected: "",
             isVisible: false,
+            isVisible2: false,
         };
     }
     componentDidMount() {
@@ -160,7 +164,44 @@ export default class Home extends React.Component {
                         {/* -------------------------------------- */}
 
                         {/* Loc du lieu theo dieu kien */}
-                        <Filters />
+                        <View>
+                            <Modal
+                                animationType="fade"
+                                transparent={true}
+                                visible={this.state.isVisible2}
+                            >
+                                <View style={customStyles.centerView}>
+                                    <View style={customStyles.modalView}>
+                                        <Text style={{ color: "#7444C0", fontSize: 18, textAlign: "center" }} >Lọc</Text>
+                                        <View style={customStyles.picker}>
+                                            <Picker
+                                                style={customStyles.pickerItem}
+                                                selectedValue={this.state.roleSelected}
+                                                onValueChange={(value, index) => {
+                                                    this.setState({ roleSelected: value });
+                                                }}>
+                                                <Picker.Item label="Chọn đối tượng" />
+                                                <Picker.Item label="Đã có phòng" value="Đã có phòng" />
+                                                <Picker.Item label="Chưa có phòng" value="Chưa có phòng" />
+                                            </Picker>
+                                        </View>
+                                        <View style={{ display: "flex", flexDirection: "row" }}>
+                                            <TouchableOpacity onPress={() => { this.setState({ isVisible2: false }); }} >
+                                                <Text style={{ fontSize: 18, color: "green", marginRight: 20 }}>Xác nhận</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={() => { this.setState({ isVisible2: false }); }} >
+                                                <Text style={{ fontSize: 18, color: "red" }}>Xoá lọc</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </View>
+                            </Modal>
+                            <TouchableOpacity onPress={() => { this.setState({ isVisible2: true }); }} style={styles.filters}>
+                                <Text style={styles.filtersText}>
+                                    <Icon name="filter" /> Lọc
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                         {/* -------------------------------------- */}
 
                     </View>
@@ -214,7 +255,7 @@ export default class Home extends React.Component {
                                                 "Giới tính: " + item.gender + "\n" +
                                                 "Địa chỉ: " + item.address + ", " + item.location + "\n" +
                                                 "Diện tích phòng: " + item.acreage + " m2\n" +
-                                                "Mô tả phòng: " + item.roomDescribe + "\n" + 
+                                                "Mô tả phòng: " + item.roomDescribe + "\n" +
                                                 "Mô tả bản thân: " + item.describe + "\n" +
                                                 "Yêu cầu: " + item.require
                                             }

@@ -69,7 +69,7 @@ export default class Uppost extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.form}>
-                    <Text style={styles.text}>THÔNG TIN BỔ SUNG</Text>
+                    <Text style={styles.text1}>THÔNG TIN BỔ SUNG</Text>
                     <FormTextInput
                         value={this.state.price}
                         onChangeText={(price) => this.setState({ price })} value={this.state.price}
@@ -159,6 +159,8 @@ export default class Uppost extends React.Component {
                             alert("Bạn chưa chọn khu vực");
                         }
                     }} />
+                    <Text style={styles.text}>Đã có tài khoản?</Text>
+                    <Button label="ĐĂNG NHẬP" style={styles.signup} onPress={() => this.props.navigation.navigate('Login')} />
                 </View>
             </View>
         );
@@ -182,10 +184,10 @@ const styles = StyleSheet.create({
         borderColor: "#7444C0",
         color: "#7444C0",
     },
-    text: {
+    text1: {
         fontWeight: "bold",
-        fontSize: 25,
-        marginBottom: 20,
+        fontSize: 30,
+        marginBottom: 60,
         textAlign: "center",
         color: "#7444C0"
     },
@@ -203,5 +205,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFF",
         borderColor: "#7444C0",
         color: "#7444C0",
+    },
+    text: {
+        textAlign: "center",
+        marginTop: 20,
+        marginBottom: 10
     },
 })
