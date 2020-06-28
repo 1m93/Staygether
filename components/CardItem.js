@@ -8,12 +8,12 @@ const CardItem = ({
     actions,
     role,
     description,
+    matchDescription,
     image,
     matches,
     name,
     onPressLeft,
     onPressRight,
-    status,
     variant
 }) => {
     // Custom styling
@@ -56,7 +56,7 @@ const CardItem = ({
 
             {/* ROLE */}
             {role && (
-                <Text style={{fontSize: 17, color: "#7444C0", marginTop: -12, marginBottom: 7}}>{role}</Text>
+                <Text style={{ fontSize: 17, color: "#7444C0", marginTop: -12, marginBottom: 7 }}>{role}</Text>
             )}
 
             {/* DESCRIPTION */}
@@ -64,12 +64,8 @@ const CardItem = ({
                 <Text style={styles.descriptionCardItem}>{description}</Text>
             )}
 
-            {/* STATUS */}
-            {status && (
-                <View style={styles.status}>
-                    <View style={status === 'Online' ? styles.online : styles.offline} />
-                    <Text style={styles.statusText}>{status}</Text>
-                </View>
+            {matchDescription && (
+                <Text style={styles.matchDescription}>{matchDescription}</Text>
             )}
 
             {/* ACTIONS */}

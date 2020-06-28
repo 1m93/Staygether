@@ -47,6 +47,10 @@ export default StyleSheet.create({
 		width: "85%",
 		color: GRAY,
 	},
+	matchDescription: {
+		color: GRAY,
+		textAlign: "center",
+	},
 	status: {
 		paddingBottom: 10,
 		flexDirection: "row",

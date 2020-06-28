@@ -116,7 +116,7 @@ class Matches extends React.Component {
                                     <CardItem
                                         image={item.image}
                                         name={item.name}
-                                        description={item.gender + " - " + item.age + " tuổi\n"}
+                                        matchDescription={item.gender + " - " + item.age + " tuổi\n"}
                                         variant
                                     />
                                 </TouchableOpacity>
