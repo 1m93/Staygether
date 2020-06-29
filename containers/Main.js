@@ -66,7 +66,9 @@ class Main extends React.Component {
                     <Tab.Screen name="Quan tâm">
                         {() => <MatchesScreen myProp={this.props} />}
                     </Tab.Screen>
-                    <Tab.Screen name="Tin nhắn" component={MessagesScreen} />
+                    <Tab.Screen name="Tin nhắn" > 
+                        {() => <MessagesScreen myProps={this.props} />}
+                    </Tab.Screen>
                     <Tab.Screen name="Cá nhân">
                         {() => <UserScreen myProp2={this.props} />}
                     </Tab.Screen>
