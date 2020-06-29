@@ -18,8 +18,6 @@ export default class Home extends React.Component {
             roleSelected: "",
             acreage: null,
             acreageSelected: null,
-            price: null,
-            priceSelected: null,
             age: null,
             ageSelected: null,
             sex: "",
@@ -226,24 +224,6 @@ export default class Home extends React.Component {
                                         <View style={customStyles.picker}>
                                             <Picker
                                                 style={customStyles.pickerItem}
-                                                selectedValue={this.state.priceSelected}
-                                                onValueChange={(value, index) => {
-                                                    this.setState({ priceSelected: value });
-                                                }}>
-                                                <Picker.Item label="Chọn khoảng giá" />
-                                                <Picker.Item label="Dưới 500,000" value={0, 500000} />
-                                                <Picker.Item label="500,000 đến 1,000,000" value={500000, 1000000} />
-                                                <Picker.Item label="1,000,000 đến 2,000,000" value={1000000, 2000000} />
-                                                <Picker.Item label="2,000,000 đến 3,000,000" value={2000000, 3000000} />
-                                                <Picker.Item label="3,000,000 đến 4,000,000" value={3000000, 4000000} />
-                                                <Picker.Item label="4,000,000 đến 6,000,000" value={4000000, 6000000} />
-                                                <Picker.Item label="Trên 6,000,000" value={6000000, Number.MAX_SAFE_INTEGER} />
-                                            </Picker>
-                                        </View>
-
-                                        <View style={customStyles.picker}>
-                                            <Picker
-                                                style={customStyles.pickerItem}
                                                 selectedValue={this.state.ageSelected}
                                                 onValueChange={(value, index) => {
                                                     this.setState({ ageSelected: value });
@@ -282,7 +262,6 @@ export default class Home extends React.Component {
                                                         isVisible2: false,
                                                         role: this.state.roleSelected,
                                                         sex: this.state.sexSelected,
-                                                        price: this.state.priceSelected,
                                                         age: this.state.ageSelected,
                                                         acreage: this.state.acreageSelected,
                                                     });
@@ -295,8 +274,6 @@ export default class Home extends React.Component {
                                                 onPress={() => {
                                                     this.setState({
                                                         isVisible2: false,
-                                                        price: null,
-                                                        priceSelected: null,
                                                         age: null,
                                                         ageSelected: null,
                                                         sex: "",
