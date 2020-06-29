@@ -24,12 +24,12 @@ class Messages extends React.Component {
     componentDidMount() {
         var data = [];
         var email1 = firebase.auth().currentUser.email;
-        id1 = email1.replace('.', ',');        
-        firebase.database().ref('DataMactch/' + id1 + '/messages').on('value', (snapshot)=>{
+        id1 = email1.replace('.', ',');
+        firebase.database().ref('DataMactch/' + id1 + '/messages').on('value', (snapshot) => {
             snapshot.forEach((dt) => {
-                firebase.database().ref('UsersData/'+ dt.val().email).on('value',(s)=> {
+                firebase.database().ref('UsersData/' + dt.val().email).on('value', (s) => {
                     if (s.val().email > email1) {
-                        var id2 = s.val().email.replace('.',',');
+                        var id2 = s.val().email.replace('.', ',');
                         firebase.database().ref('messages/' + id2 + id1).on('value', (info) => {
                             var max = 0
                             var text = ''
@@ -54,7 +54,7 @@ class Messages extends React.Component {
                         })
                     }
                     else {
-                        var id2 = s.val().email.replace('.',',');
+                        var id2 = s.val().email.replace('.', ',');
                         firebase.database().ref('messages/' + id1 + id2).on('value', (info) => {
                             var max = 0
                             var text = ''
@@ -80,7 +80,7 @@ class Messages extends React.Component {
                     }
                 })
             })
-            this.setState({Data:data}, () =>{
+            this.setState({ Data: data }, () => {
                 console.log(this.state.Data);
             })
         })

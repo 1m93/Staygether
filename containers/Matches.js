@@ -32,11 +32,11 @@ class Matches extends React.Component {
         match = []
         matched = []
         love = []
-        firebase.database().ref('DataMactch/' + id1 + '/Match').on('value', (snapshot)=>{
+        firebase.database().ref('DataMactch/' + id1 + '/Match').on('value', (snapshot) => {
             snapshot.forEach((dt) => {
                 match.push(dt.val().email)
             })
-            firebase.database().ref('DataMactch/' + id1 + '/Matched').on('value', (snapshot)=>{
+            firebase.database().ref('DataMactch/' + id1 + '/Matched').on('value', (snapshot) => {
                 snapshot.forEach((dt) => {
                     matched.push(dt.val().email)
                 })
@@ -49,7 +49,7 @@ class Matches extends React.Component {
                 }
                 firebase.database().ref('UsersData/').on('value', (snapshot) => {
                     snapshot.forEach((dt) => {
-                        for (let k = 0; k < love.length; k ++) {
+                        for (let k = 0; k < love.length; k++) {
                             if (love[k] == dt.val().email) {
                                 data.push({
                                     image: dt.val().url,
@@ -78,7 +78,7 @@ class Matches extends React.Component {
             })
 
         })
-        
+
     }
 
     render() {
