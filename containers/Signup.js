@@ -91,42 +91,57 @@ class Signup extends React.Component {
                         placeholder="Họ Tên"
                         returnKeyType="next"
                     />
-                    <FormTextInput
-                        value={this.state.age}
-                        onChangeText={(age) => this.setState({ age })} value={this.state.age}
-                        placeholder="Tuổi"
-                        returnKeyType="next"
-                        keyboardType="number-pad"
-                    />
-                    <FormTextInput
-                        value={this.state.phone}
-                        onChangeText={(phone) => this.setState({ phone })} value={this.state.phone}
-                        placeholder="Số điện thoại"
-                        returnKeyType="next"
-                        keyboardType="phone-pad"
-                    />
-                    <View style={styles.picker}>
-                        <Picker style={styles.pickerItem}
-                            selectedValue={this.state.gender}
-                            onValueChange={(value, index) => {
-                                this.setState({ gender: value })
-                            }}>
-                            <Picker.Item label="Chọn giới tính" color="#C7C7CD" />
-                            <Picker.Item label="Nam" value="Nam" />
-                            <Picker.Item label="Nữ" value="Nữ" />
-                        </Picker>
+
+                    <View style={{ flexDirection: "row", justifyContent: "space-between" }} >
+                        <View style={{ width: "30%" }}>
+                            <FormTextInput
+                                value={this.state.age}
+                                onChangeText={(age) => this.setState({ age })} value={this.state.age}
+                                placeholder="Tuổi"
+                                returnKeyType="next"
+                                keyboardType="number-pad"
+                            />
+                        </View>
+                        <View style={{ width: "60%" }}>
+                            <FormTextInput
+                                value={this.state.phone}
+                                onChangeText={(phone) => this.setState({ phone })} value={this.state.phone}
+                                placeholder="Số điện thoại"
+                                returnKeyType="next"
+                                keyboardType="phone-pad"
+                            />
+                        </View>
                     </View>
-                    <View style={styles.picker}>
-                        <Picker style={styles.pickerItem}
-                            selectedValue={this.state.role}
-                            onValueChange={(value, index) => {
-                                this.setState({ role: value })
-                            }}>
-                            <Picker.Item label="Chọn đối tượng" color="#C7C7CD" />
-                            <Picker.Item label="Đã có phòng" value="Đã có phòng" />
-                            <Picker.Item label="Chưa có phòng" value="Chưa có phòng" />
-                        </Picker>
+
+                    <View style={{ flexDirection: "row", justifyContent: "space-between" }} >
+                        <View style={{ width: "30%" }}>
+                            <View style={styles.picker}>
+                                <Picker style={styles.pickerItem}
+                                    selectedValue={this.state.gender}
+                                    onValueChange={(value, index) => {
+                                        this.setState({ gender: value })
+                                    }}>
+                                    <Picker.Item label="Chọn giới tính" color="#C7C7CD" />
+                                    <Picker.Item label="Nam" value="Nam" />
+                                    <Picker.Item label="Nữ" value="Nữ" />
+                                </Picker>
+                            </View>
+                        </View>
+                        <View style={{ width: "60%" }}>
+                            <View style={styles.picker}>
+                                <Picker style={styles.pickerItem}
+                                    selectedValue={this.state.role}
+                                    onValueChange={(value, index) => {
+                                        this.setState({ role: value })
+                                    }}>
+                                    <Picker.Item label="Chọn đối tượng" color="#C7C7CD" />
+                                    <Picker.Item label="Đã có phòng" value="Đã có phòng" />
+                                    <Picker.Item label="Chưa có phòng" value="Chưa có phòng" />
+                                </Picker>
+                            </View>
+                        </View>
                     </View>
+
                     <Button label="TIẾP THEO" onPress={() => {
                         if (this.state.pass === this.state.repass) {
                             if (this.state.image !== avatar) {
@@ -186,14 +201,14 @@ class Signup extends React.Component {
 
 const styles = StyleSheet.create({
     avatarBtn: {
-        width: 100,
-        height: 120,
+        width: 150,
+        height: 170,
         alignSelf: "center",
-        marginBottom: 40,
+        marginBottom: 20,
     },
     avatarImg: {
-        width: 100,
-        height: 100,
+        width: 150,
+        height: 150,
         resizeMode: "contain",
         alignSelf: "center"
     },

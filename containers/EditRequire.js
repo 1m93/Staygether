@@ -4,91 +4,75 @@ import Button from "../components/Button";
 import FormTextInput from "../components/FormTextInput";
 import MultiFormTextInput from "../components/MultiFormTextInput";
 import firebase from '../containers/firebase';
+import { ScrollView } from 'react-native-gesture-handler';
 
-export default class Uppost extends React.Component {
+export default class EditRequire extends React.Component {
     constructor(props) {
         super(props);
+        temp = this.props.navigation.state.params;
         this.state = {
-            price: "",
-            address: "",
-            describe: "",
-            require: "",
-            image: null,
-            location: "",
-            acreage: "",
-            roomDescribe: "",
+            email: temp.email,
+            role: temp.role,
+            price: temp.price,
+            location: temp.location,
+            address: temp.address,
+            describe: temp.describe,
+            require: temp.require,
+            acreage: temp.acreage,
+            roomDescribe: temp.roomDescribe,
         };
     }
+
     render() {
-        temp = this.props.navigation.state.params;
-        email = temp.email;
-        pass = temp.pass;
-        age = temp.age;
-        gender = temp.gender;
-        phone = temp.phone;
-        name = temp.name;
-        role = temp.role;
-        uppost = (address, describe, price, require, location, roomDescribe, acreage, status) => {
-            let id = email.replace('.', ',');
-            firebase.storage().ref().child(email).getDownloadURL().then(function (url) {
-                console.log(url);
-                try {
-                    firebase.database().ref('UsersData/' + id).set({
-                        email,
-                        name,
-                        age,
-                        phone,
-                        gender,
-                        address,
-                        describe,
-                        price,
-                        require,
-                        url,
-                        location,
-                        role,
-                        roomDescribe,
-                        acreage,
-                        status,
-                    })
-                } catch (err) {
-                    console.log(err);
-                }
-            });
+
+        changeRequire = () => {
+            let id = this.state.email.replace('.', ',');
             try {
-                firebase.auth().createUserWithEmailAndPassword(email, pass).then(() => {
-                    this.props.navigation.navigate('Main')
-                }).catch(error => {
-                    alert(error.message);
+                firebase.database().ref('UsersData/' + id).update({
+                    email: this.state.email,
+                    role: this.state.role,
+                    price: this.state.price,
+                    location: this.state.location,
+                    address: this.state.address,
+                    describe: this.state.describe,
+                    require: this.state.require,
+                    acreage: this.state.acreage,
+                    roomDescribe: this.state.roomDescribe,
+                }).then(() => {
+                    alert('Cập nhật thông tin thành công');
+                    this.props.navigation.goBack();
                 })
-            }
-            catch (err) {
-                Alert.alert('Sign in Failed')
-            }
+            } catch (err) {
+                alert(err);
+            };
         }
 
         return (
             <View style={styles.container}>
                 <View style={styles.form}>
-                    <Text style={styles.text1}>THÔNG TIN BỔ SUNG</Text>
-
                     <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                        <View style={{ width: "30%" }}>
-                            <FormTextInput
-                                value={this.state.price}
-                                onChangeText={(price) => this.setState({ price })} value={this.state.price}
-                                placeholder="Giá (VND)"
-                                keyboardType="number-pad"
-                                returnKeyType="next"
-                            />
+                        <View style={{ width: "45%" }}>
+                            <Text style={{ color: "gray" }}>Loại người dùng:</Text>
+                            <View style={styles.picker}>
+                                <Picker style={styles.pickerItem}
+                                    selectedValue={this.state.role}
+                                    onValueChange={(value, index) => {
+                                        this.setState({ role: value })
+                                    }}>
+                                    <Picker.Item label="Đã có phòng" value="Đã có phòng" />
+                                    <Picker.Item label="Chưa có phòng" value="Chưa có phòng" />
+                                </Picker>
+                            </View>
                         </View>
-                        <View style={{ width: "60%" }}>
+
+                        <View style={{ width: "45%" }}>
+                            <Text style={{ color: "gray" }}>Khu vực:</Text>
                             <View style={styles.picker}>
                                 <Picker style={styles.pickerItem}
                                     selectedValue={this.state.location}
                                     onValueChange={(value, index) => {
                                         this.setState({ location: value })
                                     }}>
-                                    <Picker.Item label="Chọn khu vực" color="#C7C7CD" />
                                     <Picker.Item label="Quận Ba Đình" value="Quận Ba Đình" />
                                     <Picker.Item label="Quận Hoàn Kiếm" value="Quận Hoàn Kiếm" />
                                     <Picker.Item label="Quận Tây Hồ" value="Quận Tây Hồ" />
@@ -124,51 +108,67 @@ export default class Uppost extends React.Component {
                         </View>
                     </View>
 
-                    <FormTextInput
-                        value={this.state.address}
-                        onChangeText={(address) => this.setState({ address })} value={this.state.address}
-                        placeholder="Địa chỉ"
+                    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                        <View style={{ width: "65%" }}>
+                            <Text style={{ color: "gray" }}>Điạ chỉ:</Text>
+                            <FormTextInput
+                                value={this.state.address}
+                                onChangeText={(address) => this.setState({ address })} value={this.state.address}
+                                returnKeyType="next"
+                            />
+                        </View>
+
+                        <View style={{ width: "25%" }}>
+                            <Text style={{ color: "gray" }}>Giá (VND):</Text>
+                            <FormTextInput
+                                value={this.state.price}
+                                onChangeText={(price) => this.setState({ price })} value={this.state.price}
+                                keyboardType="number-pad"
+                                returnKeyType="next"
+                            />
+                        </View>
+                    </View>
+
+                    <Text style={{ color: "gray" }}>Mô tả bản thân:</Text>
+                    <MultiFormTextInput
+                        value={this.state.describe}
+                        onChangeText={(describe) => this.setState({ describe })} value={this.state.describe}
                         returnKeyType="next"
                     />
+
+                    <Text style={{ color: "gray" }}>Yêu cầu:</Text>
+                    <MultiFormTextInput
+                        value={this.state.require}
+                        onChangeText={(require) => this.setState({ require })} value={this.state.require}
+                        returnKeyType="next"
+                    />
+
                     {
-                        role == "Đã có phòng" &&
+                        this.state.role == "Đã có phòng" &&
                         <View>
+                            <Text style={{ color: "gray" }}>Diện tích phòng (m2):</Text>
                             <FormTextInput
                                 value={this.state.acreage}
                                 onChangeText={(acreage) => this.setState({ acreage })} value={this.state.acreage}
-                                placeholder="Diện tích phòng (m2)"
                                 returnKeyType="next"
                                 keyboardType="number-pad"
                             />
+
+                            <Text style={{ color: "gray" }}>Mô tả phòng:</Text>
                             <MultiFormTextInput
                                 value={this.state.roomDescribe}
                                 onChangeText={(roomDescribe) => this.setState({ roomDescribe })} value={this.state.roomDescribe}
-                                placeholder="Mô tả phòng"
                                 returnKeyType="next"
                             />
                         </View>
                     }
-                    <MultiFormTextInput
-                        value={this.state.describe}
-                        onChangeText={(describe) => this.setState({ describe })} value={this.state.describe}
-                        placeholder="Mô tả bản thân"
-                        returnKeyType="next"
-                    />
-                    <MultiFormTextInput
-                        value={this.state.require}
-                        onChangeText={(require) => this.setState({ require })} value={this.state.require}
-                        placeholder="Yêu cầu"
-                        returnKeyType="next"
-                    />
-                    <Button label="HOÀN TẤT" onPress={() => {
-                        if (this.state.location !== "") {
-                            uppost(this.state.address, this.state.describe, this.state.price, this.state.require, this.state.location, this.state.roomDescribe, this.state.acreage, "open");
-                        } else {
-                            alert("Bạn chưa chọn khu vực");
-                        }
-                    }} />
-                    <Text style={styles.text}>Đã có tài khoản?</Text>
-                    <Button label="ĐĂNG NHẬP" style={styles.signup} onPress={() => this.props.navigation.navigate('Login')} />
+
+                    <View style={{ marginTop: 0 }}>
+                        <Button label="LƯU THAY ĐỔI" onPress={() => {
+                            changeRequire()
+                        }} />
+                        <Button label="HỦY" style={styles.signup} onPress={() => this.props.navigation.goBack()} />
+                    </View>
                 </View>
             </View>
         );
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     text1: {
         fontWeight: "bold",
         fontSize: 30,
-        marginBottom: 40,
+        marginBottom: 30,
         textAlign: "center",
         color: "#7444C0"
     },

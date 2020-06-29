@@ -10,6 +10,9 @@ import Profile from './containers/Profile';
 import User from './containers/User';
 import Chat from './containers/Chat';
 import Loading from './containers/Loading';
+import EditPassword from './containers/EditPassword';
+import EditInfo from './containers/EditInfo';
+import EditRequire from './containers/EditRequire';
 
 console.disableYellowBox = true;
 
@@ -45,6 +48,24 @@ const mainStack = createStackNavigator(
         },
         Home: {
             screen: Home,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
+        EditPassword: {
+            screen: EditPassword,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
+        EditInfo: {
+            screen: EditInfo,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
+        EditRequire: {
+            screen: EditRequire,
             navigationOptions: {
                 headerShown: false,
             }

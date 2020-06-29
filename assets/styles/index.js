@@ -210,7 +210,7 @@ export default StyleSheet.create({
 		textAlign: "center",
 	},
 	name: {
-		paddingTop: 25,
+		paddingTop: 10,
 		paddingBottom: 5,
 		color: DARK_GRAY,
 		fontSize: 25,

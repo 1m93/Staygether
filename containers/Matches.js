@@ -59,7 +59,11 @@ class Matches extends React.Component {
                                     gender: dt.val().gender,
                                     require: dt.val().require,
                                     address: dt.val().address,
+                                    location: dt.val().location,
                                     phone: dt.val().phone,
+                                    role: dt.val().role,
+                                    acreage: dt.val().acreage,
+                                    roomDescribe: dt.val().roomDescribe,
                                 });
                             }
                         }
@@ -106,10 +110,14 @@ class Matches extends React.Component {
                                         gender: item.gender,
                                         image: item.image,
                                         address: item.address,
+                                        location: item.location,
                                         describe: item.describe,
                                         require: item.require,
                                         price: item.price,
                                         phone: item.phone,
+                                        role: item.role,
+                                        acreage: item.acreage,
+                                        roomDescribe: item.roomDescribe,
                                     }
                                     this.props.myProp.navigation.navigate('Profile', tmp);
                                 }}>

@@ -6,55 +6,64 @@ import Icon from './Icon';
 
 const ProfileItem = ({
     age,
-    info1,
-    info2,
-    info3,
-    info4,
+    gender,
+    describe,
+    require,
+    address,
     location,
-    matches,
-    name
+    price,
+    name,
+    role,
+    acreage,
+    roomDescribe,
 }) => {
     return (
         <View style={styles.containerProfileItem}>
             <View style={styles.matchesProfileItem}>
                 <Text style={styles.matchesTextProfileItem}>
-                    {matches} VND
+                    {price} VND
                 </Text>
             </View>
 
             <Text style={styles.name}>{name}</Text>
+            <Text style={{ fontSize: 17, color: "#7444C0", marginTop: -10, marginBottom: 0, textAlign: "center" }}>{role}</Text>
 
             <Text style={styles.descriptionProfileItem}>
-                {age} - {location}
+                {address}, {location}
             </Text>
 
             <View style={styles.info}>
                 <Text style={styles.iconProfile}>
                     <Icon name="user" />
                 </Text>
-                <Text style={styles.infoContent}>{info1}</Text>
+                <Text style={styles.infoContent}>{gender}, {age} tuổi</Text>
             </View>
 
             <View style={styles.info}>
                 <Text style={styles.iconProfile}>
                     <Icon name="circle" />
                 </Text>
-                <Text style={styles.infoContent}>{info2}</Text>
+                <Text style={styles.infoContent}>{describe}</Text>
             </View>
 
             <View style={styles.info}>
                 <Text style={styles.iconProfile}>
                     <Icon name="hashtag" />
                 </Text>
-                <Text style={styles.infoContent}>{info3}</Text>
+                <Text style={styles.infoContent}>{require}</Text>
             </View>
 
-            <View style={styles.info}>
-                <Text style={styles.iconProfile}>
-                    <Icon name="calendar" />
-                </Text>
-                <Text style={styles.infoContent}>{info4}</Text>
-            </View>
+            {
+                role == "Đã có phòng" &&
+                (
+                    <View style={styles.info}>
+                        <Text style={styles.iconProfile}>
+                            <Icon name="calendar" />
+                        </Text>
+                        <Text style={styles.infoContent}>Phòng rộng {acreage} m2, {roomDescribe}</Text>
+                    </View>
+                )
+            }
         </View>
     );
 };

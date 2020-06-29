@@ -13,6 +13,10 @@ import {
 import ProfileItem from '../components/ProfileItem';
 import Icon from '../components/Icon';
 import firebase from '../containers/firebase'
+import Button from "../components/Button";
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
 
 export default class User extends React.Component {
     constructor(props) {
@@ -21,40 +25,69 @@ export default class User extends React.Component {
             email: '',
             age: '',
             image: '',
-            info1: '',
-            info2: '',
-            info3: '',
-            info4: '',
+            gender: '',
+            describe: '',
+            require: '',
+            phone: '',
+            address: '',
             location: '',
-            match: '',
+            price: '',
             name: '',
             status: '',
+            role: '',
+            acreage: '',
+            roomDescribe: '',
             isVisible: 'false',
+            isVisible2: 'false',
         };
     }
 
     async componentDidMount() {
+        this.getPermissionAsync;
         var user = firebase.auth().currentUser;
-        firebase.database().ref('UsersData/' + user.email.replace('.', ',')).once('value').then(function (snapshot) {
+        firebase.database().ref('UsersData/' + user.email.replace('.', ',')).on('value', (snapshot) => {
             this.setState({
                 email: snapshot.val().email,
                 age: snapshot.val().age,
                 image: snapshot.val().url,
-                match: snapshot.val().price,
-                location: snapshot.val().address,
-                info1: snapshot.val().gender,
-                info2: snapshot.val().describe,
-                info3: snapshot.val().require,
-                info4: snapshot.val().phone,
+                price: snapshot.val().price,
+                address: snapshot.val().address,
+                location: snapshot.val().location,
+                gender: snapshot.val().gender,
+                describe: snapshot.val().describe,
+                require: snapshot.val().require,
+                phone: snapshot.val().phone,
                 name: snapshot.val().name,
                 status: snapshot.val().status,
+                role: snapshot.val().role,
+                acreage: snapshot.val().acreage,
+                roomDescribe: snapshot.val().roomDescribe,
             }, () => {
                 console.log(this.state)
             })
-        }.bind(this));
+        });
     }
 
     render() {
+        upLoadImage = async (uri) => {
+            const res = await fetch(uri);
+            const blob = await res.blob();
+            var ref = firebase.storage().ref().child(this.state.email);
+            ref.put(blob).then(() => {
+                let id = this.state.email.replace('.', ',');
+                firebase.storage().ref().child(this.state.email).getDownloadURL().then(function (url) {
+                    console.log(url);
+                    try {
+                        firebase.database().ref('UsersData/' + id).update({
+                            url: url,
+                        }).then(alert("Cập nhật ảnh đại diện thành công"))
+                    } catch (err) {
+                        console.log(err);
+                    }
+                })
+            })
+        }
+
         changeStatus = () => {
             let id = this.state.email.replace('.', ',');
             if (this.state.status == "open") {
@@ -82,6 +115,45 @@ export default class User extends React.Component {
             }
         }
 
+        editPassword = () => {
+            this.setState({
+                isVisible2: false
+            })
+            this.props.myProp2.navigation.navigate('EditPassword');
+        }
+
+        editInfo = () => {
+            tmp = {
+                email: this.state.email,
+                name: this.state.name,
+                age: this.state.age,
+                gender: this.state.gender,
+                phone: this.state.phone,
+            }
+            this.setState({
+                isVisible2: false
+            })
+            this.props.myProp2.navigation.navigate('EditInfo', tmp);
+        }
+
+        editRequire = () => {
+            tmp = {
+                email: this.state.email,
+                role: this.state.role,
+                price: this.state.price,
+                location: this.state.location,
+                address: this.state.address,
+                describe: this.state.describe,
+                require: this.state.require,
+                acreage: this.state.acreage,
+                roomDescribe: this.state.roomDescribe,
+            }
+            this.setState({
+                isVisible2: false
+            })
+            this.props.myProp2.navigation.navigate('EditRequire', tmp);
+        }
+
         return (
             <ImageBackground
                 source={require('../assets/images/bg.png')}
@@ -92,30 +164,63 @@ export default class User extends React.Component {
                     </ImageBackground>
 
                     <ProfileItem
-                        matches={this.state.match}
+                        price={this.state.price}
                         name={this.state.name}
                         age={this.state.age}
+                        address={this.state.address}
                         location={this.state.location}
-                        info1={this.state.info1}
-                        info2={this.state.info2}
-                        info3={this.state.info3}
-                        info4={this.state.info4}
+                        gender={this.state.gender}
+                        describe={this.state.describe}
+                        require={this.state.require}
+                        role={this.state.role}
+                        acreage={this.state.acreage}
+                        roomDescribe={this.state.roomDescribe}
                     />
 
                     <View style={styles.actionsProfile}>
+                        <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={this.state.isVisible2}
+                        >
+                            <View style={customStyles2.centerView}>
+                                <View style={customStyles2.modalView}>
+                                    <Text style={{ fontSize: 20, textAlign: "center", marginBottom: 20 }} >Chỉnh sửa</Text>
+                                    <Button label="ĐỔI ẢNH ĐẠI DIỆN" onPress={this._pickImage} style={customStyles2.signup} />
+                                    <Button label="THÔNG TIN CÁ NHÂN" onPress={() => editInfo()} style={customStyles2.signup} />
+                                    <Button label="THÔNG TIN TÌM NGƯỜI Ở GHÉP" onPress={() => editRequire()} style={customStyles2.signup} />
+                                    <Button label="ĐỔI MẬT KHẨU" onPress={() => editPassword()} style={customStyles2.signup} />
+                                    <View style={{ display: "flex", flexDirection: "row", marginTop: 10 }}>
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                this.setState({
+                                                    isVisible2: false
+                                                });
+                                            }}
+                                        >
+                                            <Text style={{ fontSize: 18, color: "red" }}>Đóng</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>
                         <TouchableOpacity
                             style={styles.roundedButton}
-                            onPress={() => this.props.myProp2.navigation.navigate('Loading')}
+                            onPress={() => {
+                                this.setState({
+                                    isVisible2: true,
+                                })
+                            }}
                         >
                             <Text style={styles.textButton}>Chỉnh sửa</Text>
                         </TouchableOpacity>
                         <Modal
-                            animationType="slide"
+                            animationType="fade"
                             transparent={true}
                             visible={this.state.isVisible}
                         >
-                            <View style={customStyles.centerView}>
-                                <View style={customStyles.modalView}>
+                            <View style={customStyles2.centerView}>
+                                <View style={customStyles2.modalView}>
                                     {
                                         this.state.status == "open" ?
                                             <Text style={{ color: "#7444C0", fontSize: 18, textAlign: "center" }} >Sau khi đóng profile, thông tin tìm người ở ghép của bạn sẽ không còn xuất hiện trên bảng tin của người khác nữa, bạn có chắc chắn muốn đóng?</Text> :
@@ -180,9 +285,40 @@ export default class User extends React.Component {
             </ImageBackground>
         );
     };
+
+    getPermissionAsync = async () => {
+        if (Constants.platform.ios) {
+            const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+            if (status !== 'granted') {
+                alert('Sorry, we need camera roll permissions to make this work!');
+            }
+        }
+    };
+
+    _pickImage = async () => {
+        try {
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                allowsEditing: true,
+                aspect: [1, 1],
+                quality: 1,
+            });
+            if (!result.cancelled) {
+                this.setState({
+                    image: result,
+                    isVisible2: false,
+
+                });
+                upLoadImage(this.state.image.uri);
+            }
+            console.log(result);
+        } catch (E) {
+            console.log(E);
+        }
+    };
 }
 
-customStyles = StyleSheet.create({
+customStyles2 = StyleSheet.create({
     centerView: {
         flex: 1,
         justifyContent: "center",
@@ -203,5 +339,10 @@ customStyles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
         width: "80%",
+    },
+    signup: {
+        backgroundColor: "#FFF",
+        borderColor: "#7444C0",
+        color: "#7444C0",
     },
 })

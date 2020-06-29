@@ -18,19 +18,22 @@ export default class Profile extends React.Component {
     }
     render() {
         const temp = this.props.navigation.state.params;
-        age = temp.age + " Tuổi";
+        age = temp.age;
         image = temp.image;
-        info1 = temp.gender;
-        info2 = temp.describe;
-        info3 = temp.require;
-        info4 = temp.phone;
-        location = temp.address;
-        match = temp.price;
+        gender = temp.gender;
+        describe = temp.describe;
+        require = temp.require;
+        phone = temp.phone;
+        address = temp.address;
+        location = temp.location;
+        price = temp.price;
         name = temp.name;
+        role = temp.role;
+        acreage = temp.acreage;
+        roomDescribe = temp.roomDescribe;
 
         return (
             <ImageBackground
-                source={require('../assets/images/bg.png')}
                 style={styles.bg}
             >
                 <ScrollView style={styles.containerProfile}>
@@ -38,14 +41,17 @@ export default class Profile extends React.Component {
                     </ImageBackground>
 
                     <ProfileItem
-                        matches={match}
+                        price={price}
                         name={name}
                         age={age}
+                        address={address}
                         location={location}
-                        info1={info1}
-                        info2={info2}
-                        info3={info3}
-                        info4={info4}
+                        gender={gender}
+                        describe={describe}
+                        require={require}
+                        role={role}
+                        acreage={acreage}
+                        roomDescribe={roomDescribe}
                     />
 
                     <View style={styles.actionsProfile}>
