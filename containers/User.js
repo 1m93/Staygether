@@ -39,6 +39,7 @@ export default class User extends React.Component {
             roomDescribe: '',
             isVisible: 'false',
             isVisible2: 'false',
+            isVisible3: 'false',
         };
     }
 
@@ -261,10 +262,45 @@ export default class User extends React.Component {
                                     <Text style={styles.textButton}>Mở Profile</Text>
                                 </TouchableOpacity>
                         }
+
+                        <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={this.state.isVisible3}
+                        >
+                            <View style={customStyles2.centerView}>
+                                <View style={customStyles2.modalView}>
+                                    <Text style={{ color: "#7444C0", fontSize: 18, textAlign: "center" }} >Bạn có chắc muốn đăng xuất khỏi tài khoản này?</Text>
+                                    <View style={{ display: "flex", flexDirection: "row", marginTop: 40 }}>
+
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                firebase.auth().signOut();
+                                            }}
+                                        >
+                                            <Text style={{ fontSize: 18, color: "green", marginRight: 25 }}>Xác nhận</Text>
+                                        </TouchableOpacity>
+
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                this.setState({
+                                                    isVisible3: false
+                                                });
+                                            }}
+                                        >
+                                            <Text style={{ fontSize: 18, color: "red" }}>Hủy</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>
+
                         <TouchableOpacity
                             style={styles.roundedButton}
                             onPress={() => {
-                                firebase.auth().signOut();
+                                this.setState({
+                                    isVisible3: true,
+                                });
                             }}
                         >
                             <Text style={styles.textButton}>Đăng xuất</Text>

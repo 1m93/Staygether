@@ -24,7 +24,6 @@ export default class Home extends React.Component {
             sexSelected: "",
             isVisible: false,
             isVisible2: false,
-            filter: true,
         };
     }
 
@@ -54,6 +53,7 @@ export default class Home extends React.Component {
                 if (user.email != dt.val().email
                     && !dataNotShow.includes(dt.val().email)
                     && Math.abs(dt.val().price) - priceDot <= 500000
+                    && dt.val().status == "open"
                     && dt.val().age >= this.state.age[0]
                     && dt.val().age <= this.state.age[1]
                     && dt.val().acreage >= this.state.acreage[0]
