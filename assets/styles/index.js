@@ -305,7 +305,7 @@ export default StyleSheet.create({
 		fontFamily: ICON_FONT,
 		fontSize: 15,
 		color: WHITE,
-		paddingLeft: 5
+		
 	},
 	circledButton: {
 		width: 50,
@@ -321,11 +321,12 @@ export default StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		marginLeft: 10,
-		height: 50,
-		width: 150,
+		height: "auto",
+		width: "auto",
 		borderRadius: 25,
 		backgroundColor: SECONDARY_COLOR,
-		paddingHorizontal: 20
+		padding: 15,
+		//paddingHorizontal: 20
 	},
 
 	// MENU

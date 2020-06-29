@@ -16,6 +16,7 @@ export default class User extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            email: '',
             age: '',
             image: '',
             info1: '',
@@ -25,6 +26,7 @@ export default class User extends React.Component {
             location: '',
             match: '',
             name: '',
+            status: '',
         };
     }
 
@@ -32,6 +34,7 @@ export default class User extends React.Component {
         var user = firebase.auth().currentUser;
         firebase.database().ref('UsersData/' + user.email.replace('.', ',')).once('value').then(function (snapshot) {
             this.setState({
+                email: snapshot.val().email,
                 age: snapshot.val().age,
                 image: snapshot.val().url,
                 match: snapshot.val().price,
@@ -41,6 +44,7 @@ export default class User extends React.Component {
                 info3: snapshot.val().require,
                 info4: snapshot.val().phone,
                 name: snapshot.val().name,
+                status: snapshot.val().status,
             }, () => {
                 console.log(this.state)
             })
@@ -48,6 +52,32 @@ export default class User extends React.Component {
     }
 
     render() {
+        changeStatus = () => {
+            let id = this.state.email.replace('.', ',');
+            if (this.state.status == "open") {
+                try {
+                    firebase.database().ref('UsersData/' + id).update({
+                        status: "close",
+                    })
+                } catch (err) {
+                    console.log(err);
+                };
+                this.setState({
+                    status: "close",
+                })
+            } else {
+                try {
+                    firebase.database().ref('UsersData/' + id).update({
+                        status: "open",
+                    })
+                } catch (err) {
+                    console.log(err);
+                };
+                this.setState({
+                    status: "open",
+                })
+            }
+        }
 
         return (
             <ImageBackground
@@ -70,20 +100,33 @@ export default class User extends React.Component {
                     />
 
                     <View style={styles.actionsProfile}>
-                        <TouchableOpacity style={styles.roundedButton}>
-                            {/* <Text style={styles.topIconLeft}>
-                                <Icon name="chevronLeft" />
-                            </Text> */}
+                        <TouchableOpacity
+                            style={styles.roundedButton}
+                            onPress={() => this.props.myProp2.navigation.navigate('Loading')}
+                        >
                             <Text style={styles.textButton}>Chỉnh sửa</Text>
                         </TouchableOpacity>
+                        {
+                            this.state.status == "open" ?
+                                <TouchableOpacity
+                                    style={styles.roundedButton}
+                                    onPress={() => { changeStatus() }}
+                                >
+                                    <Text style={styles.textButton}>Đóng Profile</Text>
+                                </TouchableOpacity> :
+                                <TouchableOpacity
+                                    style={styles.roundedButton}
+                                    onPress={() => { changeStatus() }}
+                                >
+                                    <Text style={styles.textButton}>Mở Profile</Text>
+                                </TouchableOpacity>
+                        }
                         <TouchableOpacity
                             style={styles.roundedButton}
                             onPress={() => {
                                 firebase.auth().signOut();
-                            }}>
-                            {/* <Text style={styles.iconButton}>
-                                <Icon name="chat" />
-                            </Text> */}
+                            }}
+                        >
                             <Text style={styles.textButton}>Đăng xuất</Text>
                         </TouchableOpacity>
                         {/* <TouchableOpacity style={styles.circledButton}>

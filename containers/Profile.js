@@ -53,13 +53,13 @@ export default class Profile extends React.Component {
                             <Text style={styles.topIconLeft}>
                                 <Icon name="chevronLeft" />
                             </Text>
-                            <Text style={styles.textButton}>Trở về</Text>
+                            <Text style={styles.textButton}>  Trở về</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.roundedButton} onPress={() => this.props.navigation.navigate('Chat', temp)}>
                             <Text style={styles.iconButton}>
                                 <Icon name="chat" />
                             </Text>
-                            <Text style={styles.textButton}>Nhắn tin</Text>
+                            <Text style={styles.textButton}>  Nhắn tin</Text>
                         </TouchableOpacity>
                         {/* <TouchableOpacity style={styles.circledButton}>
                             <Text style={styles.iconButton}>
