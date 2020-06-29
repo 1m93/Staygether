@@ -16,23 +16,28 @@ export default class Home extends React.Component {
             location: "Chọn khu vực",
             role: "",
             roleSelected: "",
-            acreage: '0',
-            acreageSelected: '0',
-            age:'0',
-            ageSelected: '0',
+            acreage: [0, 1000],
+            acreageSelected: "0, 1000",
+            age: [0, 100],
+            ageSelected: "0, 100",
             sex: "",
             sexSelected: "",
             isVisible: false,
             isVisible2: false,
+            filter: true,
         };
     }
-    componentDidMount() {
+
+    getData = () => {
         var data = [];
         var dataNotShow = [];
         var user = firebase.auth().currentUser;
-        var price = 0;
-
         id1 = user.email.replace('.', ',');
+        var priceDot = 0;
+        firebase.database().ref('UsersData/' + id1).on('value', (snapshot) => {
+            priceDot = snapshot.val().price;
+        })
+
         firebase.database().ref('DataMactch/' + id1 + '/Match').on('value', (snapshot) => {
             snapshot.forEach((dt) => {
                 dataNotShow.push(dt.val().email);
@@ -44,13 +49,19 @@ export default class Home extends React.Component {
             })
         })
 
-        firebase.database().ref('UsersData/' + id1).on('value', (snapshot) => {
-            price = snapshot.val().price;
-        })
-
         firebase.database().ref('UsersData/').on('value', (snapshot) => {
             snapshot.forEach((dt) => {
-                if ((user.email != dt.val().email) && (!dataNotShow.includes(dt.val().email)) && (Math.abs(dt.val().price - price) <= 500000)) {
+                if (user.email != dt.val().email
+                    && !dataNotShow.includes(dt.val().email)
+                    && Math.abs(dt.val().price) - priceDot <= 500000
+                    && dt.val().age >= this.state.age[0]
+                    && dt.val().age <= this.state.age[1]
+                    && dt.val().acreage >= this.state.acreage[0]
+                    && dt.val().acreage <= this.state.acreage[1]
+                    && (this.state.location == "Chọn khu vực" || dt.val().location == this.state.location)
+                    && (this.state.role == "" || dt.val().role == this.state.role)
+                    && (this.state.sex == "" || dt.val().gender == this.state.sex)
+                ) {
                     data.push({
                         role: dt.val().role,
                         image: dt.val().url,
@@ -74,77 +85,16 @@ export default class Home extends React.Component {
             })
         })
     }
-    filter = (location, role, sex, age, acreage) => {
-        var data = [];
-        var dataNotShow = [];
-        var user = firebase.auth().currentUser;
-        id1 = user.email.replace('.', ',');
-        firebase.database().ref('DataMactch/' + id1 + '/Match').on('value', (snapshot) => {
-            snapshot.forEach((dt) => {
-                dataNotShow.push(dt.val().email);
-            })
-        })
-        firebase.database().ref('DataMactch/' + id1 + '/Dislike').on('value', (snapshot) => {
-            snapshot.forEach((dt) => {
-                dataNotShow.push(dt.val().email);
-            })
-        })
-        var price = 0;
-        firebase.database().ref('UsersData/' + id1).on('value', (snapshot) => {
-            price = snapshot.val().price;
-        })
-            firebase.database().ref('UsersData/').on('value', (snapshot) => {
-                snapshot.forEach((dt) => {
-                    if ((user.email != dt.val().email) && (!dataNotShow.includes(dt.val().email)) && (Math.abs(dt.val().price - price) <= 500000) ) {
-                        if (this.state.location == 'Chọn khu vực' ) {
-                            data.push({
-                                role: dt.val().role,
-                                image: dt.val().url,
-                                price: dt.val().price,
-                                name: dt.val().name,
-                                describe: dt.val().describe,
-                                email: dt.val().email,
-                                age: dt.val().age,
-                                gender: dt.val().gender,
-                                require: dt.val().require,
-                                address: dt.val().address,
-                                location: dt.val().location,
-                                acreage: dt.val().acreage,
-                                roomDescribe: dt.val().roomDescribe,
-                            });
-                        }
-                        else if (location == dt.val().location) {
-                            data.push({
-                                role: dt.val().role,
-                                image: dt.val().url,
-                                price: dt.val().price,
-                                name: dt.val().name,
-                                describe: dt.val().describe,
-                                email: dt.val().email,
-                                age: dt.val().age,
-                                gender: dt.val().gender,
-                                require: dt.val().require,
-                                address: dt.val().address,
-                                location: dt.val().location,
-                                acreage: dt.val().acreage,
-                                roomDescribe: dt.val().roomDescribe,
-                            });
-                        }
-                    }    
-                });
-                data = shuffleArray(data);
-                this.setState({ Data: data }, () => {
-                    console.log(this.state.Data)
-                })
-            })
-        }
 
+    componentDidMount() {
+        this.getData();
+    }
 
     render() {
         function match(item) {
             var user = firebase.auth().currentUser;
-            var id1 = user.email.replace('.', ',');
-            var id2 = item.email.replace('.', ',');
+            id1 = user.email.replace('.', ',');
+            id2 = item.email.replace('.', ',');
             firebase.database().ref('DataMactch/' + id1 + '/Match/' + id2).set({
                 email: item.email,
             })
@@ -155,8 +105,8 @@ export default class Home extends React.Component {
 
         function dislike(item) {
             var user = firebase.auth().currentUser;
-            var id1 = user.email.replace('.', ',');
-            var id2 = item.email.replace('.', ',');
+            id1 = user.email.replace('.', ',');
+            id2 = item.email.replace('.', ',');
             firebase.database().ref('DataMactch/' + id1 + '/Dislike/' + id2).set({
                 email: item.email,
             })
@@ -185,12 +135,12 @@ export default class Home extends React.Component {
                                                 style={customStyles.pickerItem}
                                                 selectedValue={this.state.location}
                                                 onValueChange={(value, index) => {
-                                                    this.setState({ location: value }, ()=> {
-                                                        this.filter(this.state.location, this.state.role, this.state.sex, this.state.age, this.state.acreage)
-                                                        console.log(this.state.location);
+                                                    this.setState({
+                                                        location: value,
+                                                        isVisible: false
+                                                    }, () => {
+                                                        this.getData();
                                                     });
-                                                    this.setState({ isVisible: false });
-                                                    
                                                 }}>
                                                 <Picker.Item label="Chọn khu vực" value="Chọn khu vực" />
                                                 <Picker.Item label="Quận Ba Đình" value="Quận Ba Đình" />
@@ -232,8 +182,8 @@ export default class Home extends React.Component {
                                                     this.setState({
                                                         isVisible: false,
                                                         location: "Chọn khu vực",
-                                                    },()=>{
-                                                        this.filter(this.state.location, this.state.role, this.state.sex, this.state.age, this.state.acreage)
+                                                    }, () => {
+                                                        this.getData()
                                                     });
                                                 }}
                                             >
@@ -278,7 +228,7 @@ export default class Home extends React.Component {
                                                 onValueChange={(value, index) => {
                                                     this.setState({ roleSelected: value });
                                                 }}>
-                                                <Picker.Item label="Chọn đối tượng" />
+                                                <Picker.Item label="Chọn đối tượng" value="" />
                                                 <Picker.Item label="Đã có phòng" value="Đã có phòng" />
                                                 <Picker.Item label="Chưa có phòng" value="Chưa có phòng" />
                                             </Picker>
@@ -291,7 +241,7 @@ export default class Home extends React.Component {
                                                 onValueChange={(value, index) => {
                                                     this.setState({ sexSelected: value });
                                                 }}>
-                                                <Picker.Item label="Chọn giới tính" />
+                                                <Picker.Item label="Chọn giới tính" value="" />
                                                 <Picker.Item label="Nam" value="Nam" />
                                                 <Picker.Item label="Nữ" value="Nữ" />
                                             </Picker>
@@ -304,11 +254,11 @@ export default class Home extends React.Component {
                                                 onValueChange={(value, index) => {
                                                     this.setState({ ageSelected: value });
                                                 }}>
-                                                <Picker.Item label="Chọn khoảng độ tuổi" />
-                                                <Picker.Item label="Dưới 20" value= '20' />
-                                                <Picker.Item label="20 đến 25" value='25' />
-                                                <Picker.Item label="25 đến 30" value='30' />
-                                                <Picker.Item label="Trên 30" value='31' />
+                                                <Picker.Item label="Chọn khoảng độ tuổi" value="0, 100" />
+                                                <Picker.Item label="Dưới 20" value="0, 20" />
+                                                <Picker.Item label="20 đến 25" value="20, 25" />
+                                                <Picker.Item label="25 đến 30" value="25, 30" />
+                                                <Picker.Item label="Trên 30" value="30, 100" />
                                             </Picker>
                                         </View>
 
@@ -321,12 +271,12 @@ export default class Home extends React.Component {
                                                     onValueChange={(value, index) => {
                                                         this.setState({ acreageSelected: value });
                                                     }}>
-                                                    <Picker.Item label="Chọn diện tích phòng" />
-                                                    <Picker.Item label="Dưới 20m2" value='20' />
-                                                    <Picker.Item label="20m2 đến 30m2" value='30' />
-                                                    <Picker.Item label="30m2 đến 45m2" value='45' />
-                                                    <Picker.Item label="45m2 đến 60m2" value='60' />
-                                                    <Picker.Item label="Trên 60m2" value='61' />
+                                                    <Picker.Item label="Chọn diện tích phòng" value="0, 1000" />
+                                                    <Picker.Item label="Dưới 20m2" value="0, 20" />
+                                                    <Picker.Item label="20m2 đến 30m2" value="20, 30" />
+                                                    <Picker.Item label="30m2 đến 45m2" value="30, 45" />
+                                                    <Picker.Item label="45m2 đến 60m2" value="45, 60" />
+                                                    <Picker.Item label="Trên 60m2" value="60, 1000" />
                                                 </Picker>
                                             </View>
                                         }
@@ -338,10 +288,10 @@ export default class Home extends React.Component {
                                                         isVisible2: false,
                                                         role: this.state.roleSelected,
                                                         sex: this.state.sexSelected,
-                                                        age: this.state.ageSelected,
-                                                        acreage: this.state.acreageSelected,
-                                                    },()=>{
-                                                        this.filter(this.state.location, this.state.role, this.state.sex, this.state.age, this.state.acreage);
+                                                        age: JSON.parse("[" + this.state.ageSelected + "]"),
+                                                        acreage: JSON.parse("[" + this.state.acreageSelected + "]"),
+                                                    }, () => {
+                                                        this.getData();
                                                     });
                                                 }}
                                             >
@@ -352,17 +302,17 @@ export default class Home extends React.Component {
                                                 onPress={() => {
                                                     this.setState({
                                                         isVisible2: false,
-                                                        age: '0',
-                                                        ageSelected: '0',
+                                                        age: [0, 100],
+                                                        ageSelected: "0, 100",
                                                         sex: "",
                                                         sexSelected: "",
                                                         role: "",
                                                         roleSelected: "",
-                                                        acreage: '0',
-                                                        acreageSelected: '0',
-                                                    },()=> {
-                                                        this.filter(this.state.location, this.state.role, this.state.sex, this.state.age, this.state.acreage)
-                                                    } );
+                                                        acreage: [0, 1000],
+                                                        acreageSelected: "0, 1000",
+                                                    }, () => {
+                                                        this.getData();
+                                                    });
                                                 }}
                                             >
                                                 <Text style={{ fontSize: 18, color: "blue", marginRight: 25 }}>Xoá lọc</Text>
@@ -397,67 +347,69 @@ export default class Home extends React.Component {
                         renderNoMoreCards={() => null}
                         ref={swiper => (this.swiper = swiper)}
                     >
-                        {this.state.Data.map((item, index) => (
-                            <Card
-                                key={index}
-                                onSwipedLeft={() => {
-                                    match(item);
-                                }}
-                                onSwipedRight={() => {
-                                    dislike(item);
-                                }}
-                            >
-                                {
-                                    item.role == "Chưa có phòng" ?
-                                        <CardItem
-                                            image={item.image}
-                                            name={item.name}
-                                            role={item.role}
-                                            description={
-                                                "Tuổi: " + item.age + "\n" +
-                                                "Giới tính: " + item.gender + "\n" +
-                                                "Địa chỉ: " + item.address + ", " + item.location + "\n" +
-                                                "Mô tả bản thân: " + item.describe + "\n" +
-                                                "Yêu cầu: " + item.require
-                                            }
-                                            matches={item.price}
-                                            actions
-                                            onPressLeft={() => {
-                                                match(item);
-                                                this.swiper.swipeLeft()
-                                            }}
-                                            onPressRight={() => {
-                                                dislike(item);
-                                                this.swiper.swipeRight()
-                                            }}
-                                        /> :
-                                        <CardItem
-                                            image={item.image}
-                                            name={item.name}
-                                            role={item.role}
-                                            description={
-                                                "Tuổi: " + item.age + "\n" +
-                                                "Giới tính: " + item.gender + "\n" +
-                                                "Địa chỉ: " + item.address + ", " + item.location + "\n" +
-                                                "Diện tích phòng: " + item.acreage + " m2\n" +
-                                                "Mô tả phòng: " + item.roomDescribe + "\n" +
-                                                "Mô tả bản thân: " + item.describe + "\n" +
-                                                "Yêu cầu: " + item.require
-                                            }
-                                            matches={item.price}
-                                            actions
-                                            onPressLeft={() => {
-                                                match(item);
-                                                this.swiper.swipeLeft()
-                                            }}
-                                            onPressRight={() => {
-                                                dislike(item);
-                                                this.swiper.swipeRight()
-                                            }}
-                                        />
-                                }
-                            </Card>
-                        ))}
+                        {
+                            this.state.Data.map((item, index) => (
+                                <Card
+                                    key={index}
+                                    onSwipedLeft={() => {
+                                        match(item);
+                                    }}
+                                    onSwipedRight={() => {
+                                        dislike(item);
+                                    }}
+                                >
+                                    {
+                                        item.role == "Chưa có phòng" ?
+                                            <CardItem
+                                                image={item.image}
+                                                name={item.name}
+                                                role={item.role}
+                                                description={
+                                                    "Tuổi: " + item.age + "\n" +
+                                                    "Giới tính: " + item.gender + "\n" +
+                                                    "Địa chỉ: " + item.address + ", " + item.location + "\n" +
+                                                    "Mô tả bản thân: " + item.describe + "\n" +
+                                                    "Yêu cầu: " + item.require
+                                                }
+                                                matches={item.price}
+                                                actions
+                                                onPressLeft={() => {
+                                                    match(item);
+                                                    this.swiper.swipeLeft()
+                                                }}
+                                                onPressRight={() => {
+                                                    dislike(item);
+                                                    this.swiper.swipeRight()
+                                                }}
+                                            /> :
+                                            <CardItem
+                                                image={item.image}
+                                                name={item.name}
+                                                role={item.role}
+                                                description={
+                                                    "Tuổi: " + item.age + "\n" +
+                                                    "Giới tính: " + item.gender + "\n" +
+                                                    "Địa chỉ: " + item.address + ", " + item.location + "\n" +
+                                                    "Diện tích phòng: " + item.acreage + " m2\n" +
+                                                    "Mô tả phòng: " + item.roomDescribe + "\n" +
+                                                    "Mô tả bản thân: " + item.describe + "\n" +
+                                                    "Yêu cầu: " + item.require
+                                                }
+                                                matches={item.price}
+                                                actions
+                                                onPressLeft={() => {
+                                                    match(item);
+                                                    this.swiper.swipeLeft()
+                                                }}
+                                                onPressRight={() => {
+                                                    dislike(item);
+                                                    this.swiper.swipeRight()
+                                                }}
+                                            />
+                                    }
+                                </Card>
+                            ))
+                        }
                     </CardStack>
 
                 </View>
