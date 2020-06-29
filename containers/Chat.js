@@ -1,17 +1,21 @@
 import React from 'react';
-import { Text,View } from 'react-native';
+import { Text,View,TouchableOpacity } from 'react-native';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat'; 
 import firebase from 'firebase'; 
+import {HeaderBackButton} from 'react-navigation-stack'
 import NavigationBar from "react-native-navbar";
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import avatar from "../assets/images/avatar.png";
+import { format } from 'url';
 
 class Chat extends React.Component {
 
   static navigationOptions = ({ navigation }) => ({
     title: (navigation.state.params || {}).name || 'Chat!',
+    headerRight: <TouchableOpacity onPress={()=> navigation.navigate("Main", this.props)}>
+    <Text>Back</Text></TouchableOpacity>
   });
 
   state = {

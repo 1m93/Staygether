@@ -14,6 +14,10 @@ import Icon from '../components/Icon';
 import firebase from '../containers/firebase';
 import shuffleArray from '../components/ShuffleArray';
 //import Demo from '../assets/data/demo.js';
+var data = [];
+var match = [];
+var matched = [];
+var love = [];
 class Matches extends React.Component {
     constructor(props) {
         super(props);
@@ -21,13 +25,13 @@ class Matches extends React.Component {
             Data: [],
         };
     }
+
     componentDidMount() {
-        var data = [];
-        var match = [];
-        var matched = [];
-        var love = [];
         var user = firebase.auth().currentUser;
         let id1 = user.email.replace('.', ',');
+        match = []
+        matched = []
+        love = []
         firebase.database().ref('DataMactch/' + id1 + '/Match').on('value', (snapshot)=>{
             snapshot.forEach((dt) => {
                 match.push(dt.val().email)
@@ -43,8 +47,6 @@ class Matches extends React.Component {
                         }
                     }
                 }
-                match = []
-                matched = []
                 firebase.database().ref('UsersData/').on('value', (snapshot) => {
                     snapshot.forEach((dt) => {
                         for (let k = 0; k < love.length; k ++) {
@@ -68,7 +70,6 @@ class Matches extends React.Component {
                             }
                         }
                     });
-                    love = []
                     this.setState({ Data: data }, () => {
                         console.log(this.state.Data)
                     })

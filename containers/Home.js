@@ -16,10 +16,10 @@ export default class Home extends React.Component {
             location: "Chọn khu vực",
             role: "",
             roleSelected: "",
-            acreage: null,
-            acreageSelected: null,
-            age: null,
-            ageSelected: null,
+            acreage: '0',
+            acreageSelected: '0',
+            age:'0',
+            ageSelected: '0',
             sex: "",
             sexSelected: "",
             isVisible: false,
@@ -30,6 +30,7 @@ export default class Home extends React.Component {
         var data = [];
         var dataNotShow = [];
         var user = firebase.auth().currentUser;
+        var price = 0;
 
         id1 = user.email.replace('.', ',');
         firebase.database().ref('DataMactch/' + id1 + '/Match').on('value', (snapshot) => {
@@ -43,9 +44,13 @@ export default class Home extends React.Component {
             })
         })
 
-        firebase.database().ref('UsersData/').once('value', (snapshot) => {
+        firebase.database().ref('UsersData/' + id1).on('value', (snapshot) => {
+            price = snapshot.val().price;
+        })
+
+        firebase.database().ref('UsersData/').on('value', (snapshot) => {
             snapshot.forEach((dt) => {
-                if ((user.email != dt.val().email) && (!dataNotShow.includes(dt.val().email))) {
+                if ((user.email != dt.val().email) && (!dataNotShow.includes(dt.val().email)) && (Math.abs(dt.val().price - price) <= 500000)) {
                     data.push({
                         role: dt.val().role,
                         image: dt.val().url,
@@ -69,12 +74,77 @@ export default class Home extends React.Component {
             })
         })
     }
+    filter = (location, role, sex, age, acreage) => {
+        var data = [];
+        var dataNotShow = [];
+        var user = firebase.auth().currentUser;
+        id1 = user.email.replace('.', ',');
+        firebase.database().ref('DataMactch/' + id1 + '/Match').on('value', (snapshot) => {
+            snapshot.forEach((dt) => {
+                dataNotShow.push(dt.val().email);
+            })
+        })
+        firebase.database().ref('DataMactch/' + id1 + '/Dislike').on('value', (snapshot) => {
+            snapshot.forEach((dt) => {
+                dataNotShow.push(dt.val().email);
+            })
+        })
+        var price = 0;
+        firebase.database().ref('UsersData/' + id1).on('value', (snapshot) => {
+            price = snapshot.val().price;
+        })
+            firebase.database().ref('UsersData/').on('value', (snapshot) => {
+                snapshot.forEach((dt) => {
+                    if ((user.email != dt.val().email) && (!dataNotShow.includes(dt.val().email)) && (Math.abs(dt.val().price - price) <= 500000) ) {
+                        if (this.state.location == 'Chọn khu vực' ) {
+                            data.push({
+                                role: dt.val().role,
+                                image: dt.val().url,
+                                price: dt.val().price,
+                                name: dt.val().name,
+                                describe: dt.val().describe,
+                                email: dt.val().email,
+                                age: dt.val().age,
+                                gender: dt.val().gender,
+                                require: dt.val().require,
+                                address: dt.val().address,
+                                location: dt.val().location,
+                                acreage: dt.val().acreage,
+                                roomDescribe: dt.val().roomDescribe,
+                            });
+                        }
+                        else if (location == dt.val().location) {
+                            data.push({
+                                role: dt.val().role,
+                                image: dt.val().url,
+                                price: dt.val().price,
+                                name: dt.val().name,
+                                describe: dt.val().describe,
+                                email: dt.val().email,
+                                age: dt.val().age,
+                                gender: dt.val().gender,
+                                require: dt.val().require,
+                                address: dt.val().address,
+                                location: dt.val().location,
+                                acreage: dt.val().acreage,
+                                roomDescribe: dt.val().roomDescribe,
+                            });
+                        }
+                    }    
+                });
+                data = shuffleArray(data);
+                this.setState({ Data: data }, () => {
+                    console.log(this.state.Data)
+                })
+            })
+        }
+
 
     render() {
         function match(item) {
             var user = firebase.auth().currentUser;
-            id1 = user.email.replace('.', ',');
-            id2 = item.email.replace('.', ',');
+            var id1 = user.email.replace('.', ',');
+            var id2 = item.email.replace('.', ',');
             firebase.database().ref('DataMactch/' + id1 + '/Match/' + id2).set({
                 email: item.email,
             })
@@ -85,8 +155,8 @@ export default class Home extends React.Component {
 
         function dislike(item) {
             var user = firebase.auth().currentUser;
-            id1 = user.email.replace('.', ',');
-            id2 = item.email.replace('.', ',');
+            var id1 = user.email.replace('.', ',');
+            var id2 = item.email.replace('.', ',');
             firebase.database().ref('DataMactch/' + id1 + '/Dislike/' + id2).set({
                 email: item.email,
             })
@@ -115,8 +185,12 @@ export default class Home extends React.Component {
                                                 style={customStyles.pickerItem}
                                                 selectedValue={this.state.location}
                                                 onValueChange={(value, index) => {
-                                                    this.setState({ location: value });
+                                                    this.setState({ location: value }, ()=> {
+                                                        this.filter(this.state.location, this.state.role, this.state.sex, this.state.age, this.state.acreage)
+                                                        console.log(this.state.location);
+                                                    });
                                                     this.setState({ isVisible: false });
+                                                    
                                                 }}>
                                                 <Picker.Item label="Chọn khu vực" value="Chọn khu vực" />
                                                 <Picker.Item label="Quận Ba Đình" value="Quận Ba Đình" />
@@ -158,6 +232,8 @@ export default class Home extends React.Component {
                                                     this.setState({
                                                         isVisible: false,
                                                         location: "Chọn khu vực",
+                                                    },()=>{
+                                                        this.filter(this.state.location, this.state.role, this.state.sex, this.state.age, this.state.acreage)
                                                     });
                                                 }}
                                             >
@@ -229,10 +305,10 @@ export default class Home extends React.Component {
                                                     this.setState({ ageSelected: value });
                                                 }}>
                                                 <Picker.Item label="Chọn khoảng độ tuổi" />
-                                                <Picker.Item label="Dưới 20" value={0, 20} />
-                                                <Picker.Item label="20 đến 25" value={20, 25} />
-                                                <Picker.Item label="25 đến 30" value={25, 30} />
-                                                <Picker.Item label="Trên 30" value={30, Number.MAX_SAFE_INTEGER} />
+                                                <Picker.Item label="Dưới 20" value= '20' />
+                                                <Picker.Item label="20 đến 25" value='25' />
+                                                <Picker.Item label="25 đến 30" value='30' />
+                                                <Picker.Item label="Trên 30" value='31' />
                                             </Picker>
                                         </View>
 
@@ -246,11 +322,11 @@ export default class Home extends React.Component {
                                                         this.setState({ acreageSelected: value });
                                                     }}>
                                                     <Picker.Item label="Chọn diện tích phòng" />
-                                                    <Picker.Item label="Dưới 20m2" value={0, 20} />
-                                                    <Picker.Item label="20m2 đến 30m2" value={20, 30} />
-                                                    <Picker.Item label="30m2 đến 45m2" value={30, 45} />
-                                                    <Picker.Item label="45m2 đến 60m2" value={45, 60} />
-                                                    <Picker.Item label="Trên 60m2" value={60, Number.MAX_SAFE_INTEGER} />
+                                                    <Picker.Item label="Dưới 20m2" value='20' />
+                                                    <Picker.Item label="20m2 đến 30m2" value='30' />
+                                                    <Picker.Item label="30m2 đến 45m2" value='45' />
+                                                    <Picker.Item label="45m2 đến 60m2" value='60' />
+                                                    <Picker.Item label="Trên 60m2" value='61' />
                                                 </Picker>
                                             </View>
                                         }
@@ -264,6 +340,8 @@ export default class Home extends React.Component {
                                                         sex: this.state.sexSelected,
                                                         age: this.state.ageSelected,
                                                         acreage: this.state.acreageSelected,
+                                                    },()=>{
+                                                        this.filter(this.state.location, this.state.role, this.state.sex, this.state.age, this.state.acreage);
                                                     });
                                                 }}
                                             >
@@ -274,15 +352,17 @@ export default class Home extends React.Component {
                                                 onPress={() => {
                                                     this.setState({
                                                         isVisible2: false,
-                                                        age: null,
-                                                        ageSelected: null,
+                                                        age: '0',
+                                                        ageSelected: '0',
                                                         sex: "",
                                                         sexSelected: "",
                                                         role: "",
                                                         roleSelected: "",
-                                                        acreage: null,
-                                                        acreageSelected: null,
-                                                    });
+                                                        acreage: '0',
+                                                        acreageSelected: '0',
+                                                    },()=> {
+                                                        this.filter(this.state.location, this.state.role, this.state.sex, this.state.age, this.state.acreage)
+                                                    } );
                                                 }}
                                             >
                                                 <Text style={{ fontSize: 18, color: "blue", marginRight: 25 }}>Xoá lọc</Text>
