@@ -230,7 +230,7 @@ export default class Home extends React.Component {
                                                 onValueChange={(value, index) => {
                                                     this.setState({ priceSelected: value });
                                                 }}>
-                                                <Picker.Item label="Chọn Khoảng giá" />
+                                                <Picker.Item label="Chọn khoảng giá" />
                                                 <Picker.Item label="Dưới 500,000" value={0, 500000} />
                                                 <Picker.Item label="500,000 đến 1,000,000" value={500000, 1000000} />
                                                 <Picker.Item label="1,000,000 đến 2,000,000" value={1000000, 2000000} />
@@ -248,7 +248,7 @@ export default class Home extends React.Component {
                                                 onValueChange={(value, index) => {
                                                     this.setState({ ageSelected: value });
                                                 }}>
-                                                <Picker.Item label="Chọn Khoảng độ tuổi" />
+                                                <Picker.Item label="Chọn khoảng độ tuổi" />
                                                 <Picker.Item label="Dưới 20" value={0, 20} />
                                                 <Picker.Item label="20 đến 25" value={20, 25} />
                                                 <Picker.Item label="25 đến 30" value={25, 30} />

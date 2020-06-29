@@ -6,7 +6,9 @@ import {
     View,
     Text,
     ImageBackground,
-    TouchableOpacity
+    TouchableOpacity,
+    Modal,
+    StyleSheet
 } from 'react-native';
 import ProfileItem from '../components/ProfileItem';
 import Icon from '../components/Icon';
@@ -27,6 +29,7 @@ export default class User extends React.Component {
             match: '',
             name: '',
             status: '',
+            isVisible: 'false',
         };
     }
 
@@ -106,17 +109,55 @@ export default class User extends React.Component {
                         >
                             <Text style={styles.textButton}>Chỉnh sửa</Text>
                         </TouchableOpacity>
+                        <Modal
+                            animationType="slide"
+                            transparent={true}
+                            visible={this.state.isVisible}
+                        >
+                            <View style={customStyles.centerView}>
+                                <View style={customStyles.modalView}>
+                                    {
+                                        this.state.status == "open" ?
+                                            <Text style={{ color: "#7444C0", fontSize: 18, textAlign: "center" }} >Sau khi đóng profile, thông tin tìm người ở ghép của bạn sẽ không còn xuất hiện trên bảng tin của người khác nữa, bạn có chắc chắn muốn đóng?</Text> :
+                                            <Text style={{ color: "#7444C0", fontSize: 18, textAlign: "center" }} >Sau khi mở profile, thông tin tìm người ở ghép của bạn sẽ xuất hiện trên bảng tin của người khác, bạn có chắc chắn muốn mở?</Text>
+                                    }
+                                    <View style={{ display: "flex", flexDirection: "row", marginTop: 40 }}>
+
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                changeStatus();
+                                                this.setState({
+                                                    isVisible: false
+                                                })
+                                            }}
+                                        >
+                                            <Text style={{ fontSize: 18, color: "green", marginRight: 25 }}>Xác nhận</Text>
+                                        </TouchableOpacity>
+
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                this.setState({
+                                                    isVisible: false
+                                                });
+                                            }}
+                                        >
+                                            <Text style={{ fontSize: 18, color: "red" }}>Hủy</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>
                         {
                             this.state.status == "open" ?
                                 <TouchableOpacity
                                     style={styles.roundedButton}
-                                    onPress={() => { changeStatus() }}
+                                    onPress={() => { this.setState({ isVisible: true }); }}
                                 >
                                     <Text style={styles.textButton}>Đóng Profile</Text>
                                 </TouchableOpacity> :
                                 <TouchableOpacity
                                     style={styles.roundedButton}
-                                    onPress={() => { changeStatus() }}
+                                    onPress={() => { this.setState({ isVisible: true }); }}
                                 >
                                     <Text style={styles.textButton}>Mở Profile</Text>
                                 </TouchableOpacity>
@@ -140,3 +181,27 @@ export default class User extends React.Component {
         );
     };
 }
+
+customStyles = StyleSheet.create({
+    centerView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 25,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        width: "80%",
+    },
+})
