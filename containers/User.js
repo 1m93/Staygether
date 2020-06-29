@@ -98,9 +98,6 @@ export default class User extends React.Component {
                 } catch (err) {
                     console.log(err);
                 };
-                this.setState({
-                    status: "close",
-                })
             } else {
                 try {
                     firebase.database().ref('UsersData/' + id).update({
@@ -109,9 +106,6 @@ export default class User extends React.Component {
                 } catch (err) {
                     console.log(err);
                 };
-                this.setState({
-                    status: "open",
-                })
             }
         }
 
