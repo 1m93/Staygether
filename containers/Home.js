@@ -397,10 +397,10 @@ export default class Home extends React.Component {
                                 <Card
                                     key={index}
                                     onSwipedLeft={() => {
-                                        this.match(item);
+                                        this.dislike(item);
                                     }}
                                     onSwipedRight={() => {
-                                        this.dislike(item);
+                                        this.match(item);
                                     }}
                                 >
                                     {
@@ -441,10 +441,10 @@ export default class Home extends React.Component {
                                                 matches={item.price}
                                                 actions
                                                 onPressLeft={() => {
-                                                    this.swiper.swipeLeft()
+                                                    this.swiper.swipeRight()
                                                 }}
                                                 onPressRight={() => {
-                                                    this.swiper.swipeRight()
+                                                    this.swiper.swipeLeft()
                                                 }}
                                             />
                                     }

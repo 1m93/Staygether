@@ -71,12 +71,6 @@ const CardItem = ({
             {/* ACTIONS */}
             {actions && (
                 <View style={styles.actionsCardItem}>
-                    {/* <TouchableOpacity style={styles.miniButton}>
-                        <Text style={styles.star}>
-                            <Icon name="star" />
-                        </Text>
-                    </TouchableOpacity> */}
-
                     <TouchableOpacity style={styles.button} onPress={() => onPressLeft()}>
                         <Text style={styles.like}>
                             <Icon name="like" />
@@ -91,12 +85,6 @@ const CardItem = ({
                             <Icon name="dislike" />
                         </Text>
                     </TouchableOpacity>
-
-                    {/* <TouchableOpacity style={styles.miniButton}>
-                        <Text style={styles.flash}>
-                            <Icon name="flash" />
-                        </Text>
-                    </TouchableOpacity> */}
                 </View>
             )}
         </View>
