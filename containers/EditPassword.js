@@ -33,21 +33,21 @@ export default class EditPassword extends React.Component {
                     <Text style={styles.text1}>THAY ĐỔI MẬT KHẨU</Text>
                     <FormTextInput
                         value={this.state.oldPass}
-                        onChangeText={(oldPass) => this.setState({ oldPass })} value={this.state.oldPass}
+                        onChangeText={(oldPass) => this.setState({ oldPass })}
                         placeholder="Nhập mật khẩu cũ"
                         keyboardType="password"
                         returnKeyType="next"
                     />
                     <FormTextInput
                         value={this.state.newPass}
-                        onChangeText={(newPass) => this.setState({ newPass })} value={this.state.newPass}
+                        onChangeText={(newPass) => this.setState({ newPass })} 
                         placeholder="Nhập mật khẩu mới"
                         keyboardType="password"
                         returnKeyType="next"
                     />
                     <FormTextInput
                         value={this.state.newRePass}
-                        onChangeText={(newRePass) => this.setState({ newRePass })} value={this.state.newRePass}
+                        onChangeText={(newRePass) => this.setState({ newRePass })} 
                         placeholder="Nhập lại mật khẩu mới"
                         keyboardType="password"
                         returnKeyType="next"

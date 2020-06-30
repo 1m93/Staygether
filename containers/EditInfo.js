@@ -42,8 +42,9 @@ export default class EditInfo extends React.Component {
                     <Text style={{ color: "gray" }}>Họ và tên:</Text>
                     <FormTextInput
                         value={this.state.name}
-                        onChangeText={(name) => this.setState({ name })} value={this.state.name}
+                        onChangeText={(name) => this.setState({ name })}
                         returnKeyType="next"
+                        autoCapitalize='words'
                     />
 
                     <View style={{ flexDirection: "row", justifyContent: "space-between" }} >
@@ -51,7 +52,7 @@ export default class EditInfo extends React.Component {
                             <Text style={{ color: "gray" }}>Tuổi:</Text>
                             <FormTextInput
                                 value={this.state.age}
-                                onChangeText={(age) => this.setState({ age })} value={this.state.age}
+                                onChangeText={(age) => this.setState({ age })}
                                 returnKeyType="next"
                                 keyboardType="number-pad"
                             />
@@ -75,7 +76,7 @@ export default class EditInfo extends React.Component {
                     <Text style={{ color: "gray" }}>Số điện thoại:</Text>
                     <FormTextInput
                         value={this.state.phone}
-                        onChangeText={(phone) => this.setState({ phone })} value={this.state.phone}
+                        onChangeText={(phone) => this.setState({ phone })}
                         returnKeyType="next"
                         keyboardType="phone-pad"
                     />

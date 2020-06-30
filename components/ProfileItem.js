@@ -21,7 +21,7 @@ const ProfileItem = ({
         <View style={styles.containerProfileItem}>
             <View style={styles.matchesProfileItem}>
                 <Text style={styles.matchesTextProfileItem}>
-                    {price} VND
+                    {price.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} VND
                 </Text>
             </View>
 

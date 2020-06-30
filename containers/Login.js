@@ -27,21 +27,23 @@ class Login extends React.Component {
                 <View style={styles.form}>
                     <FormTextInput
                         value={this.state.email}
-                        onChangeText={(email) => this.setState({ email })} value={this.state.email}
+                        onChangeText={(email) => this.setState({ email })} 
                         placeholder="Email"
                         keyboardType="email-address"
                         returnKeyType="next"
                         onSubmitEditing={this.handleEmailSubmitPress}
                         autoCapitalize='none'
+                        autoCompleteType="email"
                     />
                     <FormTextInput
                         ref={this.FormTextInput}
                         secureTextEntry={true}
                         value={this.state.password}
-                        onChangeText={(pass) => this.setState({ pass })} value={this.state.pass}
+                        onChangeText={(pass) => this.setState({ pass })} 
                         placeholder="Mật khẩu"
                         returnKeyType="done"
                         onSubmitEditing={() => this.logIn(this.state.email, this.state.pass)}
+                        autoCompleteType="password"
                     />
                     <Button label="ĐĂNG NHẬP" onPress={() => this.logIn(this.state.email, this.state.pass)} />
                     <TouchableOpacity onPress={() => {

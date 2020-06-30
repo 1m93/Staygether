@@ -20,7 +20,7 @@ class ForgotPassword extends Component {
                     <Text style={{ marginBottom: 10, }}>Nhập Email:</Text>
                     <FormTextInput
                         value={this.state.email}
-                        onChangeText={(email) => this.setState({ email })} value={this.state.email}
+                        onChangeText={(email) => this.setState({ email })}
                         placeholder="Email"
                         keyboardType="email-address"
                         returnKeyType="next"

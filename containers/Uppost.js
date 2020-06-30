@@ -29,6 +29,7 @@ export default class Uppost extends React.Component {
         name = temp.name;
         role = temp.role;
         uppost = (address, describe, price, require, location, roomDescribe, acreage, status) => {
+            price = price.replace(/,/g, '');
             let id = email.replace('.', ',');
             firebase.storage().ref().child(email).getDownloadURL().then(function (url) {
                 console.log(url);
@@ -74,8 +75,14 @@ export default class Uppost extends React.Component {
                     <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                         <View style={{ width: "30%" }}>
                             <FormTextInput
+                                onChangeText={((value) => {
+                                    value = value.replace(/,/g, '');
+                                    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    this.setState({
+                                        price: value
+                                    })
+                                })}
                                 value={this.state.price}
-                                onChangeText={(price) => this.setState({ price })} value={this.state.price}
                                 placeholder="Giá (VND)"
                                 keyboardType="number-pad"
                                 returnKeyType="next"
@@ -126,7 +133,7 @@ export default class Uppost extends React.Component {
 
                     <FormTextInput
                         value={this.state.address}
-                        onChangeText={(address) => this.setState({ address })} value={this.state.address}
+                        onChangeText={(address) => this.setState({ address })}
                         placeholder="Địa chỉ"
                         returnKeyType="next"
                     />
@@ -135,14 +142,14 @@ export default class Uppost extends React.Component {
                         <View>
                             <FormTextInput
                                 value={this.state.acreage}
-                                onChangeText={(acreage) => this.setState({ acreage })} value={this.state.acreage}
+                                onChangeText={(acreage) => this.setState({ acreage })} 
                                 placeholder="Diện tích phòng (m2)"
                                 returnKeyType="next"
                                 keyboardType="number-pad"
                             />
                             <MultiFormTextInput
                                 value={this.state.roomDescribe}
-                                onChangeText={(roomDescribe) => this.setState({ roomDescribe })} value={this.state.roomDescribe}
+                                onChangeText={(roomDescribe) => this.setState({ roomDescribe })} 
                                 placeholder="Mô tả phòng"
                                 returnKeyType="next"
                             />
@@ -150,13 +157,13 @@ export default class Uppost extends React.Component {
                     }
                     <MultiFormTextInput
                         value={this.state.describe}
-                        onChangeText={(describe) => this.setState({ describe })} value={this.state.describe}
+                        onChangeText={(describe) => this.setState({ describe })} 
                         placeholder="Mô tả bản thân"
                         returnKeyType="next"
                     />
                     <MultiFormTextInput
                         value={this.state.require}
-                        onChangeText={(require) => this.setState({ require })} value={this.state.require}
+                        onChangeText={(require) => this.setState({ require })} 
                         placeholder="Yêu cầu"
                         returnKeyType="next"
                     />

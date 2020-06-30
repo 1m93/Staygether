@@ -65,7 +65,7 @@ class Signup extends React.Component {
                     </TouchableOpacity>
                     <FormTextInput
                         value={this.state.email}
-                        onChangeText={(email) => this.setState({ email })} value={this.state.email}
+                        onChangeText={(email) => this.setState({ email })} 
                         placeholder="Email"
                         keyboardType="email-address"
                         returnKeyType="next"
@@ -74,29 +74,30 @@ class Signup extends React.Component {
                     <FormTextInput
                         secureTextEntry={true}
                         value={this.state.pass}
-                        onChangeText={(pass) => this.setState({ pass })} value={this.state.pass}
+                        onChangeText={(pass) => this.setState({ pass })} 
                         placeholder="Mật khẩu"
                         returnKeyType="next"
                     />
                     <FormTextInput
                         secureTextEntry={true}
                         value={this.state.repassword}
-                        onChangeText={(repass) => this.setState({ repass })} value={this.state.repass}
+                        onChangeText={(repass) => this.setState({ repass })} 
                         placeholder="Nhập lại mật khẩu"
                         returnKeyType="next"
                     />
                     <FormTextInput
                         value={this.state.name}
-                        onChangeText={(name) => this.setState({ name })} value={this.state.name}
+                        onChangeText={(name) => this.setState({ name })} 
                         placeholder="Họ Tên"
                         returnKeyType="next"
+                        autoCapitalize='words'
                     />
 
                     <View style={{ flexDirection: "row", justifyContent: "space-between" }} >
                         <View style={{ width: "30%" }}>
                             <FormTextInput
                                 value={this.state.age}
-                                onChangeText={(age) => this.setState({ age })} value={this.state.age}
+                                onChangeText={(age) => this.setState({ age })} 
                                 placeholder="Tuổi"
                                 returnKeyType="next"
                                 keyboardType="number-pad"
@@ -105,7 +106,7 @@ class Signup extends React.Component {
                         <View style={{ width: "60%" }}>
                             <FormTextInput
                                 value={this.state.phone}
-                                onChangeText={(phone) => this.setState({ phone })} value={this.state.phone}
+                                onChangeText={(phone) => this.setState({ phone })} 
                                 placeholder="Số điện thoại"
                                 returnKeyType="next"
                                 keyboardType="phone-pad"

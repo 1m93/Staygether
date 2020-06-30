@@ -46,7 +46,7 @@ const CardItem = ({
             {matches && (
                 <View style={styles.matchesCardItem}>
                     <Text style={styles.matchesTextCardItem}>
-                        {matches} VND
+                        {matches.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} VND
                     </Text>
                 </View>
             )}

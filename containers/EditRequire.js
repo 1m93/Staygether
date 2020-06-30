@@ -13,7 +13,7 @@ export default class EditRequire extends React.Component {
         this.state = {
             email: temp.email,
             role: temp.role,
-            price: temp.price,
+            price: temp.price.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
             location: temp.location,
             address: temp.address,
             describe: temp.describe,
@@ -31,7 +31,7 @@ export default class EditRequire extends React.Component {
                 firebase.database().ref('UsersData/' + id).update({
                     email: this.state.email,
                     role: this.state.role,
-                    price: this.state.price,
+                    price: this.state.price.replace(/,/g, ''),
                     location: this.state.location,
                     address: this.state.address,
                     describe: this.state.describe,
@@ -121,8 +121,14 @@ export default class EditRequire extends React.Component {
                         <View style={{ width: "25%" }}>
                             <Text style={{ color: "gray" }}>Giá (VND):</Text>
                             <FormTextInput
+                                onChangeText={((value) => {
+                                    value = value.replace(/,/g, '');
+                                    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    this.setState({
+                                        price: value
+                                    })
+                                })}
                                 value={this.state.price}
-                                onChangeText={(price) => this.setState({ price })} value={this.state.price}
                                 keyboardType="number-pad"
                                 returnKeyType="next"
                             />
@@ -132,14 +138,14 @@ export default class EditRequire extends React.Component {
                     <Text style={{ color: "gray" }}>Mô tả bản thân:</Text>
                     <MultiFormTextInput
                         value={this.state.describe}
-                        onChangeText={(describe) => this.setState({ describe })} value={this.state.describe}
+                        onChangeText={(describe) => this.setState({ describe })}
                         returnKeyType="next"
                     />
 
                     <Text style={{ color: "gray" }}>Yêu cầu:</Text>
                     <MultiFormTextInput
                         value={this.state.require}
-                        onChangeText={(require) => this.setState({ require })} value={this.state.require}
+                        onChangeText={(require) => this.setState({ require })} 
                         returnKeyType="next"
                     />
 
@@ -149,7 +155,7 @@ export default class EditRequire extends React.Component {
                             <Text style={{ color: "gray" }}>Diện tích phòng (m2):</Text>
                             <FormTextInput
                                 value={this.state.acreage}
-                                onChangeText={(acreage) => this.setState({ acreage })} value={this.state.acreage}
+                                onChangeText={(acreage) => this.setState({ acreage })}
                                 returnKeyType="next"
                                 keyboardType="number-pad"
                             />
@@ -157,7 +163,7 @@ export default class EditRequire extends React.Component {
                             <Text style={{ color: "gray" }}>Mô tả phòng:</Text>
                             <MultiFormTextInput
                                 value={this.state.roomDescribe}
-                                onChangeText={(roomDescribe) => this.setState({ roomDescribe })} value={this.state.roomDescribe}
+                                onChangeText={(roomDescribe) => this.setState({ roomDescribe })} 
                                 returnKeyType="next"
                             />
                         </View>
