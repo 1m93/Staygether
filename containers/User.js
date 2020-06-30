@@ -310,11 +310,6 @@ export default class User extends React.Component {
                         >
                             <Text style={styles.textButton}>Đăng xuất</Text>
                         </TouchableOpacity>
-                        {/* <TouchableOpacity style={styles.circledButton}>
-                            <Text style={styles.iconButton}>
-                                <Icon name="optionsH" />
-                            </Text>
-                        </TouchableOpacity> */}
                     </View>
                 </ScrollView>
             </ImageBackground>
