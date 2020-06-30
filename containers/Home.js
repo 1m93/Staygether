@@ -93,24 +93,24 @@ export default class Home extends React.Component {
 
     sendPushNotification = async (token, name) => {
         const message = {
-          to: token,
-          sound: 'default',
-          title: 'Bạn vừa kết nối với ' + name,
-          body: 'Bạn và ' + name  + ' có thể bắt đầu chat để tìm hiểu nhau rồi đấy',
-          _displayInForeground: true,
+            to: token,
+            sound: 'default',
+            title: 'Bạn vừa kết nối với ' + name,
+            body: 'Bạn và ' + name + ' có thể bắt đầu chat để tìm hiểu nhau rồi đấy',
+            _displayInForeground: true,
         };
         const response = await fetch('https://exp.host/--/api/v2/push/send', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Accept-encoding': 'gzip, deflate',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(message),
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Accept-encoding': 'gzip, deflate',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(message),
         });
-      };
+    };
 
-    match = (item) =>{
+    match = (item) => {
         var user = firebase.auth().currentUser;
         id1 = user.email.replace(/\./g, ',');
         id2 = item.email.replace(/\./g, ',');
@@ -125,7 +125,7 @@ export default class Home extends React.Component {
             email: user.email,
         })
         firebase.database().ref('DataMactch/' + id2 + '/Match').once('value', (snapshot) => {
-            snapshot.forEach((dt)=> {
+            snapshot.forEach((dt) => {
                 if (dt.val().email == user.email) {
                     firebase.database().ref('UsersData/').once('value', (ss) => {
                         ss.forEach((temp) => {
@@ -387,74 +387,75 @@ export default class Home extends React.Component {
                     </View>
 
                     <CardStack
+                        secondCardZoom={0.7}
                         loop={false}
                         verticalSwipe={false}
                         renderNoMoreCards={() => null}
                         ref={swiper => (this.swiper = swiper)}
                     >
                         {
-                            this.state.Data.map((item, index) => (
-                                <Card
-                                    key={index}
-                                    onSwipedLeft={() => {
-                                        this.dislike(item);
-                                    }}
-                                    onSwipedRight={() => {
-                                        this.match(item);
-                                    }}
-                                >
-                                    {
-                                        item.role == "Chưa có phòng" ?
-                                            <CardItem
-                                                image={item.image}
-                                                name={item.name}
-                                                role={item.role}
-                                                description={
-                                                    "Tuổi: " + item.age + "\n" +
-                                                    "Giới tính: " + item.gender + "\n" +
-                                                    "Địa chỉ: " + item.address + ", " + item.location + "\n" +
-                                                    "Mô tả bản thân: " + item.describe + "\n" +
-                                                    "Yêu cầu: " + item.require
-                                                }
-                                                matches={item.price}
-                                                actions
-                                                onPressLeft={() => {
-                                                    this.swiper.swipeLeft()
-                                                }}
-                                                onPressRight={() => {
-                                                    this.swiper.swipeRight()
-                                                }}
-                                            /> :
-                                            <CardItem
-                                                image={item.image}
-                                                name={item.name}
-                                                role={item.role}
-                                                description={
-                                                    "Tuổi: " + item.age + "\n" +
-                                                    "Giới tính: " + item.gender + "\n" +
-                                                    "Địa chỉ: " + item.address + ", " + item.location + "\n" +
-                                                    "Diện tích phòng: " + item.acreage + " m2\n" +
-                                                    "Mô tả phòng: " + item.roomDescribe + "\n" +
-                                                    "Mô tả bản thân: " + item.describe + "\n" +
-                                                    "Yêu cầu: " + item.require
-                                                }
-                                                matches={item.price}
-                                                actions
-                                                onPressLeft={() => {
-                                                    this.swiper.swipeLeft()
-                                                }}
-                                                onPressRight={() => {
-                                                    this.swiper.swipeRight()
-                                                }}
-                                            />
-                                    }
-                                </Card>
-                            ))
-                        }
+                        this.state.Data.map((item, index) => (
+                            <Card
+                                key={index}
+                                onSwipedLeft={() => {
+                                    this.dislike(item);
+                                }}
+                                onSwipedRight={() => {
+                                    this.match(item);
+                                }}
+                            >
+                                {
+                                    item.role == "Chưa có phòng" ?
+                                        <CardItem
+                                            image={item.image}
+                                            name={item.name}
+                                            role={item.role}
+                                            description={
+                                                "Tuổi: " + item.age + "\n" +
+                                                "Giới tính: " + item.gender + "\n" +
+                                                "Địa chỉ: " + item.address + ", " + item.location + "\n" +
+                                                "Mô tả bản thân: " + item.describe + "\n" +
+                                                "Yêu cầu: " + item.require
+                                            }
+                                            matches={item.price}
+                                            actions
+                                            onPressLeft={() => {
+                                                this.swiper.swipeLeft()
+                                            }}
+                                            onPressRight={() => {
+                                                this.swiper.swipeRight()
+                                            }}
+                                        /> :
+                                        <CardItem
+                                            image={item.image}
+                                            name={item.name}
+                                            role={item.role}
+                                            description={
+                                                "Tuổi: " + item.age + "\n" +
+                                                "Giới tính: " + item.gender + "\n" +
+                                                "Địa chỉ: " + item.address + ", " + item.location + "\n" +
+                                                "Diện tích phòng: " + item.acreage + " m2\n" +
+                                                "Mô tả phòng: " + item.roomDescribe + "\n" +
+                                                "Mô tả bản thân: " + item.describe + "\n" +
+                                                "Yêu cầu: " + item.require
+                                            }
+                                            matches={item.price}
+                                            actions
+                                            onPressLeft={() => {
+                                                this.swiper.swipeLeft()
+                                            }}
+                                            onPressRight={() => {
+                                                this.swiper.swipeRight()
+                                            }}
+                                        />
+                                }
+                            </Card>
+                        ))
+                    }
                     </CardStack>
 
                 </View>
-            </ImageBackground>
+            </ImageBackground >
         );
     };
 }
