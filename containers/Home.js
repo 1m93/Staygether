@@ -91,27 +91,72 @@ export default class Home extends React.Component {
         this.getData();
     }
 
-    render() {
-        function match(item) {
-            var user = firebase.auth().currentUser;
-            id1 = user.email.replace('.', ',');
-            id2 = item.email.replace('.', ',');
-            firebase.database().ref('DataMactch/' + id1 + '/Match/' + id2).set({
-                email: item.email,
-            })
-            firebase.database().ref('DataMactch/' + id2 + '/Matched/' + id1).set({
-                email: user.email,
-            })
-        }
+    sendPushNotification = async (token, name) => {
+        const message = {
+          to: token,
+          sound: 'default',
+          title: 'Bạn vừa kết nối với ' + name,
+          body: 'Bạn và ' + name  + ' có thể bắt đầu chat để tìm hiểu nhau rồi đấy',
+          data: { data: 'goes here' },
+          _displayInForeground: true,
+        };
+        const response = await fetch('https://exp.host/--/api/v2/push/send', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Accept-encoding': 'gzip, deflate',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(message),
+        });
+      };
 
-        function dislike(item) {
-            var user = firebase.auth().currentUser;
-            id1 = user.email.replace('.', ',');
-            id2 = item.email.replace('.', ',');
-            firebase.database().ref('DataMactch/' + id1 + '/Dislike/' + id2).set({
-                email: item.email,
+    match = (item) =>{
+        var user = firebase.auth().currentUser;
+        id1 = user.email.replace('.', ',');
+        id2 = item.email.replace('.', ',');
+        var token1 = ''
+        var token2 = ''
+        var name1 = ''
+        var name2 = ''
+        firebase.database().ref('DataMactch/' + id1 + '/Match/' + id2).set({
+            email: item.email,
+        })
+        firebase.database().ref('DataMactch/' + id2 + '/Match').once('value', (snapshot) => {
+            snapshot.forEach((dt)=> {
+                if (dt.val().email == user.email) {
+                    firebase.database().ref('UsersData/').once('value', (ss) => {
+                        ss.forEach((temp) => {
+                            if (temp.val().email == user.email) {
+                                token1 = temp.val().token;
+                                name1 = temp.val().name
+                            }
+                            if (temp.val().email == item.email) {
+                                token2 = temp.val().token;
+                                name2 = temp.val().name
+                            }
+                        })
+                        this.sendPushNotification(token1, name2)
+                        this.sendPushNotification(token2, name1)
+                    })
+                }
             })
-        }
+        })
+        firebase.database().ref('DataMactch/' + id2 + '/Matched/' + id1).set({
+            email: user.email,
+        })
+    }
+
+    dislike = (item) => {
+        var user = firebase.auth().currentUser;
+        id1 = user.email.replace('.', ',');
+        id2 = item.email.replace('.', ',');
+        firebase.database().ref('DataMactch/' + id1 + '/Dislike/' + id2).set({
+            email: item.email,
+        })
+    }
+
+    render() {
 
         return (
             <ImageBackground
@@ -353,10 +398,10 @@ export default class Home extends React.Component {
                                 <Card
                                     key={index}
                                     onSwipedLeft={() => {
-                                        match(item);
+                                        this.match(item);
                                     }}
                                     onSwipedRight={() => {
-                                        dislike(item);
+                                        this.dislike(item);
                                     }}
                                 >
                                     {
@@ -375,11 +420,9 @@ export default class Home extends React.Component {
                                                 matches={item.price}
                                                 actions
                                                 onPressLeft={() => {
-                                                    match(item);
                                                     this.swiper.swipeLeft()
                                                 }}
                                                 onPressRight={() => {
-                                                    dislike(item);
                                                     this.swiper.swipeRight()
                                                 }}
                                             /> :
@@ -399,11 +442,9 @@ export default class Home extends React.Component {
                                                 matches={item.price}
                                                 actions
                                                 onPressLeft={() => {
-                                                    match(item);
                                                     this.swiper.swipeLeft()
                                                 }}
                                                 onPressRight={() => {
-                                                    dislike(item);
                                                     this.swiper.swipeRight()
                                                 }}
                                             />

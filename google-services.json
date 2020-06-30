@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "125929216314",
+    "firebase_url": "https://staygether-8c044.firebaseio.com",
+    "project_id": "staygether-8c044",
+    "storage_bucket": "staygether-8c044.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:125929216314:android:5396cc293cf1ca24469803",
+        "android_client_info": {
+          "package_name": "com.uet.staygether"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "125929216314-qtolm0gv8rkpuiaagb3fos5ugj38plse.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlWsh1NjRhrLH9LnVVXREWhRUuBXIsKQk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "125929216314-qtolm0gv8rkpuiaagb3fos5ugj38plse.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

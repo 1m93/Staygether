@@ -14,6 +14,7 @@ import EditPassword from './containers/EditPassword';
 import EditInfo from './containers/EditInfo';
 import EditRequire from './containers/EditRequire';
 import ForgotPassword from './containers/ForgotPassword';
+import Notify from './containers/notification'
 
 console.disableYellowBox = true;
 
@@ -102,6 +103,12 @@ const App = createSwitchNavigator(
         },
         ForgotPassword: {
             screen: ForgotPassword,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
+        Notify: {
+            screen: Notify,
             navigationOptions: {
                 headerShown: false,
             }

@@ -26,6 +26,7 @@
     },
     "android": {
       "package": "com.uet.staygether",
+      "googleServicesFile": "./google-services.json",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyB2fH5glgpRMqttRtpIkbKGwMcOg8Sstb4"

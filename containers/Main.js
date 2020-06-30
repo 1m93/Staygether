@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, Alert } from "react-native";
+import { Text, Alert, View, Button, Vibration, Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import styles from "../assets/styles";
 import HomeScreen from "./Home";
@@ -7,12 +7,69 @@ import MatchesScreen from "./Matches";
 import MessagesScreen from "./Messages";
 import UserScreen from "./User";
 import Icon from "../components/Icon";
+import firebase from '../containers/firebase';
 import { NavigationContainer, TabActions } from "@react-navigation/native";
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
 
 const Tab = createBottomTabNavigator();
 
 class Main extends React.Component {
-    state = { currentUser: null }
+    state = { 
+        currentUser: firebase.auth().currentUser,
+        expoPushToken: '',
+        notification: {}, 
+    }
+    registerForPushNotificationsAsync = async () => {
+        if (Constants.isDevice) {
+          const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+          let finalStatus = existingStatus;
+          if (existingStatus !== 'granted') {
+            const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+            finalStatus = status;
+          }
+          if (finalStatus !== 'granted') {
+            alert('Failed to get push token for push notification!');
+            return;
+          }
+          token = await Notifications.getExpoPushTokenAsync();
+          console.log(token);
+          this.setState({ expoPushToken: token });
+        } else {
+          alert('Must use physical device for Push Notifications');
+        }
+    
+        if (Platform.OS === 'android') {
+          Notifications.createChannelAndroidAsync('default', {
+            name: 'default',
+            sound: true,
+            priority: 'max',
+            vibrate: [0, 250, 250, 250],
+          });
+        }
+        var id = this.state.currentUser.email.replace('.', ',');
+        firebase.database().ref('UsersData/' + id + '/token').set(token).then(()=>{
+            console.log('haylam')
+        })
+    };
+    
+    componentDidMount() {
+        this.registerForPushNotificationsAsync();
+        // Handle notifications that are received or selected while the app
+        // is open. If the app was closed and then opened by tapping the
+        // notification (rather than just tapping the app icon to open it),
+        // this function will fire on the next tick after the app starts
+        // with the notification data.
+        this._notificationSubscription = Notifications.addListener(this._handleNotification);
+    }
+    
+    _handleNotification = notification => {
+        Vibration.vibrate();
+        console.log(notification);
+        this.setState({ notification: notification });
+    };
+
     render() {
         const { currentUser } = this.state
         return (
