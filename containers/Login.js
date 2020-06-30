@@ -1,12 +1,9 @@
 import * as React from 'react';
-import { Image, StyleSheet, View, Text, Alert } from 'react-native';
+import { Image, StyleSheet, View, Text, Alert, TouchableOpacity } from 'react-native';
 import Button from "../components/Button";
 import FormTextInput from "../components/FormTextInput";
 import logo from "../assets/images/logo.png";
-import * as Facebook from 'expo-facebook'
 import firebase from './firebase.js';
-
-Facebook.initializeAsync('550967015812950', 'Staygether')
 
 class Login extends React.Component {
     constructor(props) {
@@ -47,7 +44,14 @@ class Login extends React.Component {
                         onSubmitEditing={() => this.logIn(this.state.email, this.state.pass)}
                     />
                     <Button label="ĐĂNG NHẬP" onPress={() => this.logIn(this.state.email, this.state.pass)} />
-                    <Button label="ĐĂNG NHẬP VỚI FACEBOOK" style={styles.fblogin} onPress={() => this.logFB()} />
+                    <TouchableOpacity onPress={() => {
+                        let temp = {
+                            email: this.state.email
+                        }
+                        this.props.navigation.navigate('ForgotPassword', temp)
+                    }}>
+                        <Text style={{textAlign: "center", color: "#7444C0"}}>Quên mật khẩu</Text>
+                    </TouchableOpacity>
                     <Text style={styles.text}>Chưa có tài khoản?</Text>
                     <Button label="ĐĂNG KÝ" style={styles.signup} onPress={() => this.props.navigation.navigate('Signup')} />
                 </View>
@@ -66,21 +70,6 @@ class Login extends React.Component {
         }
         catch (err) {
             console.log(err)
-        }
-    }
-
-    async logFB() {
-        const { type, token } = await Facebook.logInWithReadPermissionsAsync(
-            '550967015812950',
-            {
-                permissions: ["public_profile"]
-            }
-        );
-        if (type == 'success') {
-            const check = firebase.auth().FacebookAuthProvider.credential(token)
-            firebase.auth().signInWithCredential(check).catch((err) => {
-                console.log(err)
-            })
         }
     }
 }

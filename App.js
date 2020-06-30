@@ -13,6 +13,7 @@ import Loading from './containers/Loading';
 import EditPassword from './containers/EditPassword';
 import EditInfo from './containers/EditInfo';
 import EditRequire from './containers/EditRequire';
+import ForgotPassword from './containers/ForgotPassword';
 
 console.disableYellowBox = true;
 
@@ -95,6 +96,12 @@ const App = createSwitchNavigator(
         },
         Login: {
             screen: Login,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
+        ForgotPassword: {
+            screen: ForgotPassword,
             navigationOptions: {
                 headerShown: false,
             }
