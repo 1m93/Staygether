@@ -441,10 +441,10 @@ export default class Home extends React.Component {
                                                 matches={item.price}
                                                 actions
                                                 onPressLeft={() => {
-                                                    this.swiper.swipeRight()
+                                                    this.swiper.swipeLeft()
                                                 }}
                                                 onPressRight={() => {
-                                                    this.swiper.swipeLeft()
+                                                    this.swiper.swipeRight()
                                                 }}
                                             />
                                     }

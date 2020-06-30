@@ -71,9 +71,12 @@ const CardItem = ({
             {/* ACTIONS */}
             {actions && (
                 <View style={styles.actionsCardItem}>
-                    <TouchableOpacity style={styles.button} onPress={() => onPressLeft()}>
-                        <Text style={styles.like}>
-                            <Icon name="like" />
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => onPressLeft()}
+                    >
+                        <Text style={styles.dislike}>
+                            <Icon name="dislike" />
                         </Text>
                     </TouchableOpacity>
 
@@ -81,8 +84,8 @@ const CardItem = ({
                         style={styles.button}
                         onPress={() => onPressRight()}
                     >
-                        <Text style={styles.dislike}>
-                            <Icon name="dislike" />
+                        <Text style={styles.like}>
+                            <Icon name="like" />
                         </Text>
                     </TouchableOpacity>
                 </View>
