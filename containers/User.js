@@ -275,6 +275,11 @@ export default class User extends React.Component {
 
                                         <TouchableOpacity
                                             onPress={() => {
+                                                var user = firebase.auth().currentUser
+                                                var id  = user.email.replace('.', ',')
+                                                firebase.database().ref('UsersData/' + id + '/token').set('').then(()=>{
+                                                    console.log('haylam')
+                                                })
                                                 firebase.auth().signOut();
                                             }}
                                         >

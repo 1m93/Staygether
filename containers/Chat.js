@@ -79,6 +79,44 @@ class Chat extends React.Component {
         return firebase.database.ServerValue.TIMESTAMP;
     }
 
+    sendPushNotification = async (token, name, text) => {
+        var message = {
+            to: token,
+            sound: 'default',
+            title: name + ' vừa nhắn tin cho bạn',
+            body: name + ': ' + text,
+            _displayInForeground: true,
+        };
+
+        if (text != '') {
+            message = {
+                to: token,
+                sound: 'default',
+                title: name + ' vừa nhắn tin cho bạn',
+                body: name + ': ' + text,
+            };
+        }
+        else {
+            message = {
+                to: token,
+                sound: 'default',
+                title: name + ' vừa nhắn tin cho bạn',
+                body: name + ': đã gửi 1 ảnh',
+              };
+        }
+       
+        const response = await fetch('https://exp.host/--/api/v2/push/send', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Accept-encoding': 'gzip, deflate',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(message),
+        });
+      };
+
+
     send = messages => {
         for (let i = 0; i < messages.length; i++) {
             const { text, image, user } = messages[i];
@@ -113,12 +151,16 @@ class Chat extends React.Component {
         this.ref.push(message);
         var id1 = this.state.email1.replace('.', ',');
         var id2 = this.state.email2.replace('.', ',');
+        firebase.database().ref('UsersData/' + id2).once('value', (snapshot) =>{
+            this.sendPushNotification(snapshot.val().token, snapshot.val().name, message.text)
+        })
         firebase.database().ref('DataMactch/' + id1 + '/messages/' + id2).set({
             email: id2,
         })
         firebase.database().ref('DataMactch/' + id2 + '/messages/' + id1).set({
             email: id1,
         })
+
     }
 
     get user() {

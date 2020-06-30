@@ -97,7 +97,6 @@ export default class Home extends React.Component {
           sound: 'default',
           title: 'Bạn vừa kết nối với ' + name,
           body: 'Bạn và ' + name  + ' có thể bắt đầu chat để tìm hiểu nhau rồi đấy',
-          data: { data: 'goes here' },
           _displayInForeground: true,
         };
         const response = await fetch('https://exp.host/--/api/v2/push/send', {
