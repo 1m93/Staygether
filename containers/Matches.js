@@ -29,15 +29,16 @@ class Matches extends React.Component {
     componentDidMount() {
         var user = firebase.auth().currentUser;
         let id1 = user.email.replace('.', ',');
-        match = []
-        matched = []
-        love = []
+        var match = []
+        var matched = []
+        var love = []
+        var data = [];
         firebase.database().ref('DataMactch/' + id1 + '/Match').on('value', (snapshot) => {
             snapshot.forEach((dt) => {
                 match.push(dt.val().email)
             })
-            firebase.database().ref('DataMactch/' + id1 + '/Matched').on('value', (snapshot) => {
-                snapshot.forEach((dt) => {
+            firebase.database().ref('DataMactch/' + id1 + '/Matched').on('value', (ss) => {
+                ss.forEach((dt) => {
                     matched.push(dt.val().email)
                 })
                 for (let i = 0; i < match.length; i++) {
@@ -47,9 +48,11 @@ class Matches extends React.Component {
                         }
                     }
                 }
-                firebase.database().ref('UsersData/').on('value', (snapshot) => {
-                    snapshot.forEach((dt) => {
-                        for (let k = 0; k < love.length; k++) {
+                match = []
+                matched = []
+                firebase.database().ref('UsersData/').on('value', (s) => {
+                    for (let k = 0; k < love.length; k++) {
+                        s.forEach((dt) => {
                             if (love[k] == dt.val().email) {
                                 data.push({
                                     image: dt.val().url,
@@ -68,17 +71,16 @@ class Matches extends React.Component {
                                     roomDescribe: dt.val().roomDescribe,
                                 });
                             }
-                        }
-                    });
+                        })
+                    }
+                    love = []
                     this.setState({ Data: data }, () => {
                         console.log(this.state.Data)
                     })
                     data = [];
                 })
             })
-
         })
-
     }
 
     render() {

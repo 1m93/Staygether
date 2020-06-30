@@ -121,6 +121,9 @@ export default class Home extends React.Component {
         firebase.database().ref('DataMactch/' + id1 + '/Match/' + id2).set({
             email: item.email,
         })
+        firebase.database().ref('DataMactch/' + id2 + '/Matched/' + id1).set({
+            email: user.email,
+        })
         firebase.database().ref('DataMactch/' + id2 + '/Match').once('value', (snapshot) => {
             snapshot.forEach((dt)=> {
                 if (dt.val().email == user.email) {
@@ -140,9 +143,6 @@ export default class Home extends React.Component {
                     })
                 }
             })
-        })
-        firebase.database().ref('DataMactch/' + id2 + '/Matched/' + id1).set({
-            email: user.email,
         })
     }
 
