@@ -14,8 +14,8 @@ class Chat extends React.Component {
 
     static navigationOptions = ({ navigation }) => ({
         title: (navigation.state.params || {}).name || 'Chat!',
-        headerRight: <TouchableOpacity onPress={() => navigation.navigate("Main", this.props)}>
-            <Text>Back</Text></TouchableOpacity>
+        // headerRight: <TouchableOpacity onPress={() => navigation.navigate("Main", this.props)}>
+        //     <Text>Back</Text></TouchableOpacity>
     });
 
     state = {
@@ -151,8 +151,14 @@ class Chat extends React.Component {
         this.ref.push(message);
         var id1 = this.state.email1.replace('.', ',');
         var id2 = this.state.email2.replace('.', ',');
+        var token = ''
+        var name = ''
         firebase.database().ref('UsersData/' + id2).once('value', (snapshot) =>{
-            this.sendPushNotification(snapshot.val().token, snapshot.val().name, message.text)
+            token = snapshot.val().token
+            firebase.database().ref('UsersData/' + id1).once('value', (ss) =>{
+                name = ss.val().name
+                this.sendPushNotification(token, name, message.text)
+            })
         })
         firebase.database().ref('DataMactch/' + id1 + '/messages/' + id2).set({
             email: id2,
