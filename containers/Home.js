@@ -32,7 +32,7 @@ export default class Home extends React.Component {
         var data = [];
         var dataNotShow = [];
         var user = firebase.auth().currentUser;
-        id1 = user.email.replace('.', ',');
+        id1 = user.email.replace(/\./g, ',');
         var priceDot = 0;
         firebase.database().ref('UsersData/' + id1).on('value', (snapshot) => {
             priceDot = snapshot.val().price;
@@ -112,8 +112,8 @@ export default class Home extends React.Component {
 
     match = (item) =>{
         var user = firebase.auth().currentUser;
-        id1 = user.email.replace('.', ',');
-        id2 = item.email.replace('.', ',');
+        id1 = user.email.replace(/\./g, ',');
+        id2 = item.email.replace(/\./g, ',');
         var token1 = ''
         var token2 = ''
         var name1 = ''
@@ -148,8 +148,8 @@ export default class Home extends React.Component {
 
     dislike = (item) => {
         var user = firebase.auth().currentUser;
-        id1 = user.email.replace('.', ',');
-        id2 = item.email.replace('.', ',');
+        id1 = user.email.replace(/\./g, ',');
+        id2 = item.email.replace(/\./g, ',');
         firebase.database().ref('DataMactch/' + id1 + '/Dislike/' + id2).set({
             email: item.email,
         })

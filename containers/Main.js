@@ -48,7 +48,7 @@ class Main extends React.Component {
             vibrate: [0, 250, 250, 250],
           });
         }
-        var id = this.state.currentUser.email.replace('.', ',');
+        var id = this.state.currentUser.email.replace(/\./g, ',');
         firebase.database().ref('UsersData/' + id + '/token').set(token).then(()=>{
             console.log('haylam')
         })

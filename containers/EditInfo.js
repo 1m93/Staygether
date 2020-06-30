@@ -20,7 +20,7 @@ export default class EditInfo extends React.Component {
     render() {
 
         changeInfo = () => {
-            let id = this.state.email.replace('.', ',');
+            let id = this.state.email.replace(/\./g, ',');
             try {
                 firebase.database().ref('UsersData/' + id).update({
                     name: this.state.name,

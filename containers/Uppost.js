@@ -30,7 +30,7 @@ export default class Uppost extends React.Component {
         role = temp.role;
         uppost = (address, describe, price, require, location, roomDescribe, acreage, status) => {
             price = price.replace(/,/g, '');
-            let id = email.replace('.', ',');
+            let id = email.replace(/\./g, ',');
             firebase.storage().ref().child(email).getDownloadURL().then(function (url) {
                 console.log(url);
                 try {

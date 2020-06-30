@@ -46,7 +46,7 @@ export default class User extends React.Component {
     async componentDidMount() {
         this.getPermissionAsync;
         var user = firebase.auth().currentUser;
-        firebase.database().ref('UsersData/' + user.email.replace('.', ',')).on('value', (snapshot) => {
+        firebase.database().ref('UsersData/' + user.email.replace(/\./g, ',')).on('value', (snapshot) => {
             this.setState({
                 email: snapshot.val().email,
                 age: snapshot.val().age,
@@ -75,7 +75,7 @@ export default class User extends React.Component {
             const blob = await res.blob();
             var ref = firebase.storage().ref().child(this.state.email);
             ref.put(blob).then(() => {
-                let id = this.state.email.replace('.', ',');
+                let id = this.state.email.replace(/\./g, ',');
                 firebase.storage().ref().child(this.state.email).getDownloadURL().then(function (url) {
                     console.log(url);
                     try {
@@ -90,7 +90,7 @@ export default class User extends React.Component {
         }
 
         changeStatus = () => {
-            let id = this.state.email.replace('.', ',');
+            let id = this.state.email.replace(/\./g, ',');
             if (this.state.status == "open") {
                 try {
                     firebase.database().ref('UsersData/' + id).update({
@@ -276,7 +276,7 @@ export default class User extends React.Component {
                                         <TouchableOpacity
                                             onPress={() => {
                                                 var user = firebase.auth().currentUser
-                                                var id  = user.email.replace('.', ',')
+                                                var id  = user.email.replace(/\./g, ',')
                                                 firebase.database().ref('UsersData/' + id + '/token').set('').then(()=>{
                                                     console.log('haylam')
                                                 })

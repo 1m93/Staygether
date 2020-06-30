@@ -35,8 +35,8 @@ class Chat extends React.Component {
     };
 
     get ref() {
-        var id1 = this.state.email1.replace('.', ',');
-        var id2 = this.state.email2.replace('.', ',');
+        var id1 = this.state.email1.replace(/\./g, ',');
+        var id2 = this.state.email2.replace(/\./g, ',');
         if (id1 > id2) {
             return firebase.database().ref('messages/' + id1 + id2);
         }
@@ -149,8 +149,8 @@ class Chat extends React.Component {
     };
     append = message => {
         this.ref.push(message);
-        var id1 = this.state.email1.replace('.', ',');
-        var id2 = this.state.email2.replace('.', ',');
+        var id1 = this.state.email1.replace(/\./g, ',');
+        var id2 = this.state.email2.replace(/\./g, ',');
         var token = ''
         var name = ''
         firebase.database().ref('UsersData/' + id2).once('value', (snapshot) =>{
@@ -313,7 +313,7 @@ class Chat extends React.Component {
             email: '',
             name: '',
         }
-        var id1 = this.state.email1.replace('.', ',');
+        var id1 = this.state.email1.replace(/\./g, ',');
         firebase.database().ref('UsersData/' + id1).on('value', (snapshot) => {
             data = {
                 image: snapshot.val().url,

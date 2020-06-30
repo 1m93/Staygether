@@ -26,7 +26,7 @@ export default class EditRequire extends React.Component {
     render() {
 
         changeRequire = () => {
-            let id = this.state.email.replace('.', ',');
+            let id = this.state.email.replace(/\./g, ',');
             try {
                 firebase.database().ref('UsersData/' + id).update({
                     email: this.state.email,

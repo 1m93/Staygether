@@ -28,7 +28,7 @@ class Matches extends React.Component {
 
     componentDidMount() {
         var user = firebase.auth().currentUser;
-        let id1 = user.email.replace('.', ',');
+        let id1 = user.email.replace(/\./g, ',');
         var match = []
         var matched = []
         var love = []
