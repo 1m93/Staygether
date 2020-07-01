@@ -126,7 +126,7 @@ npm start
 | `Xem bài đăng`      | Vũ Quốc Trưởng             |
 | `Yêu thích bài đăng`  | Vũ Quốc Trưởng |
 | `Bỏ qua bài đăng` | Vũ Quốc Trưởng          |
-| `Xóa quan tâm` | Vũ Quốc Trưởng         |
+| `Xóa quan tâm` | Nguyễn Tuấn Linh         |
 | `Chat`       | Vũ Quốc Trưởng |
 | `Thông báo`      | Vũ Quốc Trưởng  |
 | `Kiểm thử và sửa lỗi`      | Vũ Quốc Trưởng, Nguyễn Tuấn Linh                                     |
