@@ -29,11 +29,11 @@ class Matches extends React.Component {
     componentDidMount() {
         var user = firebase.auth().currentUser;
         let id1 = user.email.replace(/\./g, ',');
-        var match = []
-        var matched = []
-        var love = []
-        var data = [];
         firebase.database().ref('DataMactch/' + id1 + '/Match').on('value', (snapshot) => {
+            var match = []
+            var matched = []
+            var love = []
+            var data = []
             snapshot.forEach((dt) => {
                 match.push(dt.val().email)
             })
@@ -50,7 +50,7 @@ class Matches extends React.Component {
                 }
                 match = []
                 matched = []
-                firebase.database().ref('UsersData/').on('value', (s) => {
+                firebase.database().ref('UsersData/').once('value', (s) => {
                     for (let k = 0; k < love.length; k++) {
                         s.forEach((dt) => {
                             if (love[k] == dt.val().email) {

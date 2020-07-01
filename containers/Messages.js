@@ -28,56 +28,56 @@ class Messages extends React.Component {
         firebase.database().ref('DataMactch/' + id1 + '/messages').on('value', (snapshot) => {
             snapshot.forEach((dt) => {
                 firebase.database().ref('UsersData/' + dt.val().email).on('value', (s) => {
-                    if (s.val().email > email1) {
-                        var id2 = s.val().email.replace(/\./g, ',');
-                        firebase.database().ref('messages/' + id2 + id1).on('value', (info) => {
-                            var max = 0
-                            var text = ''
-                            var user = ''
-                            info.forEach((i) => {
-                                if (i.val().timestamp > max) {
-                                    max = i.val().timestamp
-                                    text = i.val().text
-                                    user = i.val().user.name
-                                }
-                            })
-                            if (text == '') {
-                                text = 'Đã gửi 1 ảnh'
-                            }
+                    // if (s.val().email > email1) {
+                    //     var id2 = s.val().email.replace(/\./g, ',');
+                    //     firebase.database().ref('messages/' + id2 + id1).on('value', (info) => {
+                    //         var max = 0
+                    //         var text = ''
+                    //         var user = ''
+                    //         info.forEach((i) => {
+                    //             if (i.val().timestamp > max) {
+                    //                 max = i.val().timestamp
+                    //                 text = i.val().text
+                    //                 user = i.val().user.name
+                    //             }
+                    //         })
+                    //         if (text == '') {
+                    //             text = 'Đã gửi 1 ảnh'
+                    //         }
                             data.push({
-                                text: text,
-                                user: user,
+                                // text: text,
+                                // user: user,
                                 image: s.val().url,
                                 email: s.val().email,
                                 name: s.val().name,
                             });
-                        })
-                    }
-                    else {
-                        var id2 = s.val().email.replace(/\./g, ',');
-                        firebase.database().ref('messages/' + id1 + id2).on('value', (info) => {
-                            var max = 0
-                            var text = ''
-                            var user = ''
-                            info.forEach((i) => {
-                                if (i.val().timestamp > max) {
-                                    max = i.val().timestamp
-                                    text = i.val().text
-                                    user = i.val().user.name
-                                }
-                            })
-                            if (text == '') {
-                                text = 'Đã gửi 1 ảnh'
-                            }
-                            data.push({
-                                text: text,
-                                user: user,
-                                image: s.val().url,
-                                email: s.val().email,
-                                name: s.val().name,
-                            });
-                        })
-                    }
+                    //     })
+                    // }
+                    // else {
+                    //     var id2 = s.val().email.replace(/\./g, ',');
+                    //     firebase.database().ref('messages/' + id1 + id2).on('value', (info) => {
+                    //         var max = 0
+                    //         var text = ''
+                    //         var user = ''
+                    //         info.forEach((i) => {
+                    //             if (i.val().timestamp > max) {
+                    //                 max = i.val().timestamp
+                    //                 text = i.val().text
+                    //                 user = i.val().user.name
+                    //             }
+                    //         })
+                    //         if (text == '') {
+                    //             text = 'Đã gửi 1 ảnh'
+                    //         }
+                            // data.push({
+                            //     // text: text,
+                            //     // user: user,
+                            //     image: s.val().url,
+                            //     email: s.val().email,
+                            //     name: s.val().name,
+                            // });
+                    //     })
+                    // }
                 })
             })
             this.setState({ Data: data }, () => {
@@ -105,7 +105,6 @@ class Messages extends React.Component {
                                     <Message
                                         image={item.image}
                                         name={item.name}
-                                        lastMessage={item.user + ':' + item.text}
                                     />
                                 </TouchableOpacity>
                             )}

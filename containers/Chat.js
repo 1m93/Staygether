@@ -54,12 +54,13 @@ class Chat extends React.Component {
     parse = snapshot => {
         const { timestamp: numberStamp, image, text, user } = snapshot.val();
         const { key: _id } = snapshot;
-
         const timestamp = new Date(numberStamp);
+        const createdAt = new Date(numberStamp)
 
         const message = {
             _id,
             image,
+            createdAt,
             timestamp,
             text,
             user,
