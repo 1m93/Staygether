@@ -83,6 +83,7 @@ export default class Home extends React.Component {
             data = shuffleArray(data);
             this.setState({ Data: data }, () => {
                 console.log(this.state.Data)
+                data=[]
             })
         })
     }
