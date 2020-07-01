@@ -27,30 +27,8 @@ class Messages extends React.Component {
         id1 = email1.replace(/\./g, ',');
         firebase.database().ref('DataMactch/' + id1 + '/messages').on('value', (snapshot) => {
             snapshot.forEach((dt) => {
-                var id2 = dt.val().email;
-                if (id1 > id2) {
-                    var id3 = id1 + id2;
-                } else {
-                    var id3 = id2 + id1;
-                };
-                var lastMessage = "";
-                var lastName = "";
-                firebase.database().ref('messages/' + id3).limitToLast(1).once('value', (x) => {
-                    x.forEach((i) => {
-                        if (i.val().text == "") {
-                            lastMessage = "Đã gửi một ảnh"
-                        } else {
-                            lastMessage = i.val().text
-                        }
-                        console.log(lastMessage);
-                        console.log(i.val().user.name);
-                        lastName = i.val().user.name;
-                    })
-                });
                 firebase.database().ref('UsersData/' + dt.val().email).on('value', (s) => {
                     data.push({
-                        lastName: lastName,
-                        last: lastMessage,
                         image: s.val().url,
                         email: s.val().email,
                         name: s.val().name,
@@ -83,7 +61,7 @@ class Messages extends React.Component {
                                     <Message
                                         image={item.image}
                                         name={item.name}
-                                        lastMessage={item.lastName + ": " + item.last}
+                                        lastMessage={"Ấn để liên hệ"}
                                     />
                                 </TouchableOpacity>
                             )}

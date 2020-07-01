@@ -13,6 +13,9 @@ class Chat extends React.Component {
         title: (navigation.state.params || {}).name || 'Chat!',
         // headerRight:
         //     <Icon
+        //         onPress={() => {
+        //             this.props.navigation.navigate('Main')
+        //         }}
         //         name='info'
         //         color="#7444C0"
         //     />
