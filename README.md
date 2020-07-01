@@ -101,6 +101,7 @@ npm start
 | `Xóa quan tâm` | Xóa một người dùng khỏi danh sách quan tâm, đồng thời sẽ xóa toàn bộ cuộc trò chuyện với họ.          |
 | `Chat`       | Hai người cùng thích nhau có thể nhắn tin cho nhau, hỗ trợ gửi ảnh. |
 | `Thông báo`      | Gửi thông báo đến người dùng khi có người thích và có tin nhắn.  |
+| `Quên mật khẩu`      | Đặt lại mật khẩu khi người dungf quên mật khẩu tài khoản của mình.  |
 
 
 ## Thành viên phát triển
@@ -119,7 +120,7 @@ npm start
 | `Thiết kế Database`         | Vũ Quốc Trưởng                                         |
 | `Code Front-end`  | Nguyễn Tuấn Linh                                |
 | `Code Back-end`      | Vũ Quốc Trưởng                                      |
-| `Đăng nhập/ Đăng ký/ Đăng xuất`        | Nguyễn Tuấn Linh                                       |
+| `Đăng nhập/ Đăng ký/ Đăng xuất`        | Nguyễn Tuấn Linh, Vũ Quốc Trưởng                                       |
 | `Bộ lọc`         | Nguyễn Tuấn Linh                                          |
 | `Quản lý thông tin`  | Nguyễn Tuấn Linh                                  |
 | `Đóng profile`      | Nguyễn Tuấn Linh                                         |
@@ -129,6 +130,7 @@ npm start
 | `Xóa quan tâm` | Nguyễn Tuấn Linh         |
 | `Chat`       | Vũ Quốc Trưởng |
 | `Thông báo`      | Vũ Quốc Trưởng  |
+| `Quên mật khẩu`      | Nguyễn Tuấn Linh |
 | `Kiểm thử và sửa lỗi`      | Vũ Quốc Trưởng, Nguyễn Tuấn Linh                                     |
 
 * Nguyễn Tuấn Linh: 50%
