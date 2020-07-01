@@ -101,7 +101,7 @@ npm start
 | `Xóa quan tâm` | Xóa một người dùng khỏi danh sách quan tâm, đồng thời sẽ xóa toàn bộ cuộc trò chuyện với họ.          |
 | `Chat`       | Hai người cùng thích nhau có thể nhắn tin cho nhau, hỗ trợ gửi ảnh. |
 | `Thông báo`      | Gửi thông báo đến người dùng khi có người thích và có tin nhắn.  |
-| `Quên mật khẩu`      | Đặt lại mật khẩu khi người dungf quên mật khẩu tài khoản của mình.  |
+| `Quên mật khẩu`      | Đặt lại mật khẩu khi người dùng quên mật khẩu tài khoản của mình.  |
 
 
 ## Thành viên phát triển
