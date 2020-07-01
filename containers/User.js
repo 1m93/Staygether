@@ -17,6 +17,7 @@ import Button from "../components/Button";
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 export default class User extends React.Component {
     constructor(props) {
@@ -193,7 +194,7 @@ export default class User extends React.Component {
                                                 });
                                             }}
                                         >
-                                            <Text style={{ fontSize: 18, color: "red" }}>Đóng</Text>
+                                            <Text style={{ fontSize: RFValue(15), color: "red" }}>Đóng</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -218,8 +219,8 @@ export default class User extends React.Component {
                                 <View style={customStyles2.modalView}>
                                     {
                                         this.state.status == "open" ?
-                                            <Text style={{ color: "#7444C0", fontSize: 18, textAlign: "center" }} >Sau khi đóng profile, thông tin tìm người ở ghép của bạn sẽ không còn xuất hiện trên bảng tin của người khác nữa, bạn có chắc chắn muốn đóng?</Text> :
-                                            <Text style={{ color: "#7444C0", fontSize: 18, textAlign: "center" }} >Sau khi mở profile, thông tin tìm người ở ghép của bạn sẽ xuất hiện trên bảng tin của người khác, bạn có chắc chắn muốn mở?</Text>
+                                            <Text style={{ color: "#7444C0", fontSize: RFValue(15), textAlign: "center" }} >Sau khi đóng profile, thông tin tìm người ở ghép của bạn sẽ không còn xuất hiện trên bảng tin của người khác nữa, bạn có chắc chắn muốn đóng?</Text> :
+                                            <Text style={{ color: "#7444C0", fontSize: RFValue(15), textAlign: "center" }} >Sau khi mở profile, thông tin tìm người ở ghép của bạn sẽ xuất hiện trên bảng tin của người khác, bạn có chắc chắn muốn mở?</Text>
                                     }
                                     <View style={{ display: "flex", flexDirection: "row", marginTop: 40 }}>
 
@@ -231,7 +232,7 @@ export default class User extends React.Component {
                                                 })
                                             }}
                                         >
-                                            <Text style={{ fontSize: 18, color: "green", marginRight: 25 }}>Xác nhận</Text>
+                                            <Text style={{ fontSize: RFValue(15), color: "green", marginRight: 25 }}>Xác nhận</Text>
                                         </TouchableOpacity>
 
                                         <TouchableOpacity
@@ -241,7 +242,7 @@ export default class User extends React.Component {
                                                 });
                                             }}
                                         >
-                                            <Text style={{ fontSize: 18, color: "red" }}>Hủy</Text>
+                                            <Text style={{ fontSize: RFValue(15), color: "red" }}>Hủy</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -270,7 +271,7 @@ export default class User extends React.Component {
                         >
                             <View style={customStyles2.centerView}>
                                 <View style={customStyles2.modalView}>
-                                    <Text style={{ color: "#7444C0", fontSize: 18, textAlign: "center" }} >Bạn có chắc muốn đăng xuất khỏi tài khoản này?</Text>
+                                    <Text style={{ color: "#7444C0", fontSize: RFValue(15), textAlign: "center" }} >Bạn có chắc muốn đăng xuất khỏi tài khoản này?</Text>
                                     <View style={{ display: "flex", flexDirection: "row", marginTop: 40 }}>
 
                                         <TouchableOpacity
@@ -283,7 +284,7 @@ export default class User extends React.Component {
                                                 firebase.auth().signOut();
                                             }}
                                         >
-                                            <Text style={{ fontSize: 18, color: "green", marginRight: 25 }}>Xác nhận</Text>
+                                            <Text style={{ fontSize: RFValue(15), color: "green", marginRight: 25 }}>Xác nhận</Text>
                                         </TouchableOpacity>
 
                                         <TouchableOpacity
@@ -293,7 +294,7 @@ export default class User extends React.Component {
                                                 });
                                             }}
                                         >
-                                            <Text style={{ fontSize: 18, color: "red" }}>Hủy</Text>
+                                            <Text style={{ fontSize: RFValue(15), color: "red" }}>Hủy</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>

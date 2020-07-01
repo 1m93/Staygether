@@ -334,13 +334,10 @@ export default StyleSheet.create({
 		borderRadius: 25,
 		backgroundColor: SECONDARY_COLOR,
 		padding: 15,
-		//paddingHorizontal: 20
 	},
 
 	// MENU
 	tabButton: {
-		paddingTop: 20,
-		paddingBottom: 30,
 		alignItems: "center",
 		justifyContent: "center",
 		flex: 1
@@ -350,7 +347,7 @@ export default StyleSheet.create({
 	},
 	iconMenu: {
 		fontFamily: ICON_FONT,
-		height: 20,
-		paddingBottom: 7
+		height: "auto",
+		paddingBottom: 0
 	}
 });

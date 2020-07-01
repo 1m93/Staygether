@@ -27,61 +27,39 @@ class Messages extends React.Component {
         id1 = email1.replace(/\./g, ',');
         firebase.database().ref('DataMactch/' + id1 + '/messages').on('value', (snapshot) => {
             snapshot.forEach((dt) => {
+                var id2 = dt.val().email;
+                if (id1 > id2) {
+                    var id3 = id1 + id2;
+                } else {
+                    var id3 = id2 + id1;
+                };
+                var lastMessage = "";
+                var lastName = "";
+                firebase.database().ref('messages/' + id3).limitToLast(1).once('value', (x) => {
+                    x.forEach((i) => {
+                        if (i.val().text == "") {
+                            lastMessage = "Đã gửi một ảnh"
+                        } else {
+                            lastMessage = i.val().text
+                        }
+                        console.log(lastMessage);
+                        console.log(i.val().user.name);
+                        lastName = i.val().user.name;
+                    })
+                });
                 firebase.database().ref('UsersData/' + dt.val().email).on('value', (s) => {
-                    // if (s.val().email > email1) {
-                    //     var id2 = s.val().email.replace(/\./g, ',');
-                    //     firebase.database().ref('messages/' + id2 + id1).on('value', (info) => {
-                    //         var max = 0
-                    //         var text = ''
-                    //         var user = ''
-                    //         info.forEach((i) => {
-                    //             if (i.val().timestamp > max) {
-                    //                 max = i.val().timestamp
-                    //                 text = i.val().text
-                    //                 user = i.val().user.name
-                    //             }
-                    //         })
-                    //         if (text == '') {
-                    //             text = 'Đã gửi 1 ảnh'
-                    //         }
-                            data.push({
-                                // text: text,
-                                // user: user,
-                                image: s.val().url,
-                                email: s.val().email,
-                                name: s.val().name,
-                            });
-                    //     })
-                    // }
-                    // else {
-                    //     var id2 = s.val().email.replace(/\./g, ',');
-                    //     firebase.database().ref('messages/' + id1 + id2).on('value', (info) => {
-                    //         var max = 0
-                    //         var text = ''
-                    //         var user = ''
-                    //         info.forEach((i) => {
-                    //             if (i.val().timestamp > max) {
-                    //                 max = i.val().timestamp
-                    //                 text = i.val().text
-                    //                 user = i.val().user.name
-                    //             }
-                    //         })
-                    //         if (text == '') {
-                    //             text = 'Đã gửi 1 ảnh'
-                    //         }
-                            // data.push({
-                            //     // text: text,
-                            //     // user: user,
-                            //     image: s.val().url,
-                            //     email: s.val().email,
-                            //     name: s.val().name,
-                            // });
-                    //     })
-                    // }
+                    data.push({
+                        lastName: lastName,
+                        last: lastMessage,
+                        image: s.val().url,
+                        email: s.val().email,
+                        name: s.val().name,
+                    });
                 })
             })
             this.setState({ Data: data }, () => {
                 console.log(this.state.Data);
+                data = []
             })
         })
     }
@@ -105,6 +83,7 @@ class Messages extends React.Component {
                                     <Message
                                         image={item.image}
                                         name={item.name}
+                                        lastMessage={item.lastName + ": " + item.last}
                                     />
                                 </TouchableOpacity>
                             )}

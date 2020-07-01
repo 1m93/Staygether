@@ -12,6 +12,7 @@ import {
 import ProfileItem from '../components/ProfileItem';
 import Icon from '../components/Icon';
 import firebase from '../containers/firebase';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 export default class Profile extends React.Component {
     constructor(props) {
@@ -80,7 +81,7 @@ export default class Profile extends React.Component {
                         >
                             <View style={customStyles2.centerView}>
                                 <View style={customStyles2.modalView}>
-                                    <Text style={{ color: "#7444C0", fontSize: 18, textAlign: "center" }} >Bạn có chắc muốn xóa người này khỏi danh sách quan tâm?</Text>
+                                    <Text style={{ color: "#7444C0", fontSize: RFValue(15), textAlign: "center" }} >Bạn có chắc muốn xóa người này khỏi danh sách quan tâm?, việc này cũng sẽ xóa cả cuộc trò chuyện giữa người này và bạn</Text>
                                     <View style={{ display: "flex", flexDirection: "row", marginTop: 40 }}>
 
                                         <TouchableOpacity
@@ -88,15 +89,30 @@ export default class Profile extends React.Component {
                                                 var user = firebase.auth().currentUser;
                                                 var id = user.email.replace(/\./g, ',');
                                                 var id2 = email.replace(/\./g, ',');
-                                                firebase.database().ref('DataMactch/' + id + '/Match/' + id2).remove().then(() => {
-                                                    this.props.navigation.navigate('Main');
-                                                    this.setState({
-                                                        isVisible3: false
+                                                if (id > id2) {
+                                                    var id3 = id + id2
+                                                } else {
+                                                    var id3 = id2 + id;
+                                                }
+                                                firebase.database().ref('messages/' + id3).remove().then(() => {
+                                                    firebase.database().ref('DataMactch/' + id + '/messages/' + id2).remove().then(() => {
+                                                        firebase.database().ref('DataMactch/' + id2 + '/messages/' + id).remove().then(() => {
+                                                            firebase.database().ref('DataMactch/' + id + '/Match/' + id2).remove().then(() => {
+                                                                firebase.database().ref('DataMactch/' + id2 + '/Matched/' + id).remove().then(() => {
+                                                                    this.props.navigation.navigate('Main');
+                                                                    this.setState({
+                                                                        isVisible3: false
+                                                                    })
+                                                                    alert("Đã xóa " + name + " khỏi danh sách quan tâm");
+                                                                })
+                                                            })
+                                                        })
                                                     })
-                                                })
+                                                });
+
                                             }}
                                         >
-                                            <Text style={{ fontSize: 18, color: "green", marginRight: 25 }}>Xác nhận</Text>
+                                            <Text style={{ fontSize: RFValue(15), color: "green", marginRight: 25 }}>Xác nhận</Text>
                                         </TouchableOpacity>
 
                                         <TouchableOpacity
@@ -106,7 +122,7 @@ export default class Profile extends React.Component {
                                                 });
                                             }}
                                         >
-                                            <Text style={{ fontSize: 18, color: "red" }}>Hủy</Text>
+                                            <Text style={{ fontSize: RFValue(15), color: "red" }}>Hủy</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>

@@ -1,21 +1,21 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
-import { GiftedChat, Bubble, Send, Composer } from 'react-native-gifted-chat';
+import { Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { GiftedChat, Bubble, Send, Composer, Time, InputToolbar } from 'react-native-gifted-chat';
 import firebase from 'firebase';
-import { HeaderBackButton } from 'react-navigation-stack'
-import NavigationBar from "react-native-navbar";
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import avatar from "../assets/images/avatar.png";
-import { format } from 'url';
-
+import { Icon } from 'react-native-elements'
 class Chat extends React.Component {
 
     static navigationOptions = ({ navigation }) => ({
         title: (navigation.state.params || {}).name || 'Chat!',
-        // headerRight: <TouchableOpacity onPress={() => navigation.navigate("Main", this.props)}>
-        //     <Text>Back</Text></TouchableOpacity>
+        // headerRight:
+        //     <Icon
+        //         name='info'
+        //         color="#7444C0"
+        //     />
     });
 
     state = {
@@ -206,63 +206,6 @@ class Chat extends React.Component {
         });
 
     }
-    // renderName = props => {
-    //   const { user: self } = this.user; 
-    //   const { user = {} } = props.currentMessage;
-    //   const { user: pUser = {} } = props.previousMessage;
-    //   const isSameUser = pUser._id === user._id;
-    //   const isSelf = user._id === user._Id;
-    //   const shouldNotRenderName = isSameUser;
-    //   let Name = user.name;
-    //   return shouldNotRenderName ? (
-    //       <View />
-    //   ) : (
-    //           <View>
-    //               <Text style={{ color: "Grey", padding: 2, alignSelf: "stretch" }}>
-    //               {`${Name}`}
-    //               </Text>
-    //           </View>
-    //       );
-    // };
-    // renderBubble = props => {
-    //   return (
-    //       <View>
-    //           {this.renderName(props)}
-    //           <Bubble {...props} />
-    //       </View>
-    //   );
-    // };
-
-    // sendImage = name =>{
-    //   console.log('moi')
-    //   var check = false;
-    //   while(!check) {
-    //     try {
-    //       firebase.storage().ref().child(name).getDownloadURL().then((temp) =>{
-    //       check = true;
-    //       const message = {
-    //         text:'',
-    //         image: temp,
-    //         user:this.user,
-    //         timestamp: firebase.database.ServerValue.TIMESTAMP,
-    //       };
-    //       this.append(message);  
-    //       console.log(message)
-    //       // this.on(message =>
-    //       //   this.setState(previousState => ({
-    //       //     messages: GiftedChat.append(previousState.messages, message),
-    //       //   }))
-    //       // );
-    //       }); 
-    //       this.setState({name:''},() => {
-    //         console.log(this.state.name)
-    //       })
-    //     }
-    //     catch{
-    //       console.log('loi');
-    //     }
-    //   }
-    // }
 
     _pickImage = async () => {
         try {
@@ -282,42 +225,28 @@ class Chat extends React.Component {
     };
 
     render() {
-        const rightButtonConfig = {
-            title: 'Thêm hình ảnh',
-            handler: () => {
-                this._pickImage();
-            },
-        };
-
         return (
-            <View style={{ flex: 1 }}>
-                <NavigationBar
-                    rightButton={rightButtonConfig}
-                />
+            <View style={{ flex: 1, backgroundColor: "white" }}>
                 <GiftedChat
                     messages={this.state.messages}
                     onSend={this.send}
                     user={this.user}
                     isTyping={true}
-                    showUserAvatar={true}
+                    showUserAvatar={false}
                     alwaysShowSend
                     renderSend={(props) => {
                         return (
-                            <Send {...props} wrapperStyle={{ textStyle: { color: 'red' } }} >
-                                <Text
-                                    style={{
-                                        color: "#7444C0",
-                                        fontWeight: '600',
-                                        fontSize: 17,
-                                        backgroundColor: "transparent",
-                                        marginBottom: 12,
-                                        marginLeft: 10,
-                                        marginRight: 10,
-                                    }}
-                                >
-                                    Gửi
-                                </Text>
-                            </Send>
+                            <View style={{ marginLeft: -13 }}>
+                                <Send {...props}>
+                                    <Icon
+                                        style={{
+                                            marginBottom: 10,
+                                        }}
+                                        name='send'
+                                        color="#7444C0"
+                                    />
+                                </Send>
+                            </View>
                         )
                     }}
                     renderBubble={(props) => {
@@ -325,6 +254,9 @@ class Chat extends React.Component {
                             <Bubble
                                 {...props}
                                 wrapperStyle={{
+                                    left: {
+                                        backgroundColor: "#ECECEC",
+                                    },
                                     right: {
                                         backgroundColor: "#7444C0",
                                     }
@@ -334,10 +266,51 @@ class Chat extends React.Component {
                     }}
                     renderComposer={(props) => {
                         return (
-                            <Composer {...props} placeholder={'Soạn tin nhắn'} />
+                            <View style={{ flexDirection: "row" }}>
+                                <View style={{ width: "8%", alignSelf: "flex-end", marginBottom: 10 }}>
+                                    <Icon
+                                        onPress={() => {
+                                            this._pickImage();
+                                        }}
+                                        name='image'
+                                        color="#7444C0"
+                                    />
+                                </View>
+                                <View style={{ width: "90%", marginLeft: -10 }}>
+                                    <Composer
+                                        {...props}
+                                        placeholder={'Soạn tin nhắn'}
+                                    />
+                                </View>
+                            </View>
                         )
                     }}
-                // renderBubble={this.renderBubble}      
+                    renderTime={(props) => {
+                        return (
+                            <Time
+                                {...props}
+                                timeTextStyle={{
+                                    left: {
+                                        color: "#757E90"
+                                    },
+                                    right: {
+                                        color: "#a9a9a9"
+                                    }
+                                }}
+                            />
+                        )
+                    }}
+                    textInputStyle={{
+                        paddingVertical: 5,
+                        paddingHorizontal: 10,
+                        backgroundColor: "#f5f5f5",
+                        borderRadius: 20
+                    }}
+                    loadEarlier={true}
+                    renderLoading={() => <ActivityIndicator size="large" color="#7444C0" />}
+                    renderInputToolbar={(props) => (
+                        <InputToolbar {...props} containerStyle={{ borderTopWidth: 0 }} />
+                    )}
                 />
             </View>
         );
