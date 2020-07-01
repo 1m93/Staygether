@@ -12,6 +12,7 @@ import { NavigationContainer, TabActions } from "@react-navigation/native";
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
+import { RFValue } from "react-native-responsive-fontsize";
 
 const Tab = createBottomTabNavigator();
 
@@ -101,7 +102,7 @@ class Main extends React.Component {
                         activeTintColor: "#7444C0",
                         inactiveTintColor: "#363636",
                         labelStyle: {
-                            fontSize: 14,
+                            fontSize: RFValue(12),
                             textTransform: "uppercase",
                             paddingTop: 10
                         },

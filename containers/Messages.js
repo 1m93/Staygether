@@ -95,11 +95,6 @@ class Messages extends React.Component {
                     <ScrollView>
                         <View style={styles.top}>
                             <Text style={styles.title}>Tin nhắn</Text>
-                            <TouchableOpacity>
-                                <Text style={styles.icon}>
-                                    <Icon name="optionsV" />
-                                </Text>
-                            </TouchableOpacity>
                         </View>
 
                         <FlatList

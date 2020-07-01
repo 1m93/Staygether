@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, Alert, Picker } from 'react-native';
 import Button from "../components/Button";
 import FormTextInput from "../components/FormTextInput";
 import firebase from '../containers/firebase';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 export default class EditInfo extends React.Component {
     constructor(props) {
@@ -39,7 +40,7 @@ export default class EditInfo extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.form}>
-                    <Text style={{ color: "gray" }}>Họ và tên:</Text>
+                    <Text style={{ color: "gray", fontSize: RFValue(12) }}>Họ và tên:</Text>
                     <FormTextInput
                         value={this.state.name}
                         onChangeText={(name) => this.setState({ name })}
@@ -49,7 +50,7 @@ export default class EditInfo extends React.Component {
 
                     <View style={{ flexDirection: "row", justifyContent: "space-between" }} >
                         <View style={{ width: "45%" }} >
-                            <Text style={{ color: "gray" }}>Tuổi:</Text>
+                            <Text style={{ color: "gray", fontSize: RFValue(12) }}>Tuổi:</Text>
                             <FormTextInput
                                 value={this.state.age}
                                 onChangeText={(age) => this.setState({ age })}
@@ -59,7 +60,7 @@ export default class EditInfo extends React.Component {
                         </View>
 
                         <View style={{ width: "45%" }}>
-                            <Text style={{ color: "gray" }}>Giới tính:</Text>
+                            <Text style={{ color: "gray", fontSize: RFValue(12) }}>Giới tính:</Text>
                             <View style={styles.picker}>
                                 <Picker style={styles.pickerItem}
                                     selectedValue={this.state.gender}
@@ -73,7 +74,7 @@ export default class EditInfo extends React.Component {
                         </View>
                     </View>
 
-                    <Text style={{ color: "gray" }}>Số điện thoại:</Text>
+                    <Text style={{ color: "gray", fontSize: RFValue(12) }}>Số điện thoại:</Text>
                     <FormTextInput
                         value={this.state.phone}
                         onChangeText={(phone) => this.setState({ phone })}

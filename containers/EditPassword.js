@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, Alert } from 'react-native';
 import Button from "../components/Button";
 import FormTextInput from "../components/FormTextInput";
 import firebase from '../containers/firebase';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 export default class EditPassword extends React.Component {
     constructor(props) {
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
     },
     text1: {
         fontWeight: "bold",
-        fontSize: 30,
+        fontSize: RFValue(23),
         marginBottom: 60,
         textAlign: "center",
         color: "#7444C0"

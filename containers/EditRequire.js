@@ -5,6 +5,7 @@ import FormTextInput from "../components/FormTextInput";
 import MultiFormTextInput from "../components/MultiFormTextInput";
 import firebase from '../containers/firebase';
 import { ScrollView } from 'react-native-gesture-handler';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 export default class EditRequire extends React.Component {
     constructor(props) {
@@ -52,7 +53,7 @@ export default class EditRequire extends React.Component {
                 <View style={styles.form}>
                     <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                         <View style={{ width: "45%" }}>
-                            <Text style={{ color: "gray" }}>Loại người dùng:</Text>
+                            <Text style={{ color: "gray", fontSize: RFValue(12) }}>Loại người dùng:</Text>
                             <View style={styles.picker}>
                                 <Picker style={styles.pickerItem}
                                     selectedValue={this.state.role}
@@ -66,7 +67,7 @@ export default class EditRequire extends React.Component {
                         </View>
 
                         <View style={{ width: "45%" }}>
-                            <Text style={{ color: "gray" }}>Khu vực:</Text>
+                            <Text style={{ color: "gray", fontSize: RFValue(12) }}>Khu vực:</Text>
                             <View style={styles.picker}>
                                 <Picker style={styles.pickerItem}
                                     selectedValue={this.state.location}
@@ -110,7 +111,7 @@ export default class EditRequire extends React.Component {
 
                     <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                         <View style={{ width: "65%" }}>
-                            <Text style={{ color: "gray" }}>Điạ chỉ:</Text>
+                            <Text style={{ color: "gray", fontSize: RFValue(12) }}>Điạ chỉ:</Text>
                             <FormTextInput
                                 value={this.state.address}
                                 onChangeText={(address) => this.setState({ address })} value={this.state.address}
@@ -119,7 +120,7 @@ export default class EditRequire extends React.Component {
                         </View>
 
                         <View style={{ width: "25%" }}>
-                            <Text style={{ color: "gray" }}>Giá (VND):</Text>
+                            <Text style={{ color: "gray", fontSize: RFValue(12) }}>Giá (VND):</Text>
                             <FormTextInput
                                 onChangeText={((value) => {
                                     value = value.replace(/,/g, '');
@@ -135,14 +136,14 @@ export default class EditRequire extends React.Component {
                         </View>
                     </View>
 
-                    <Text style={{ color: "gray" }}>Mô tả bản thân:</Text>
+                    <Text style={{ color: "gray", fontSize: RFValue(12) }}>Mô tả bản thân:</Text>
                     <MultiFormTextInput
                         value={this.state.describe}
                         onChangeText={(describe) => this.setState({ describe })}
                         returnKeyType="next"
                     />
 
-                    <Text style={{ color: "gray" }}>Yêu cầu:</Text>
+                    <Text style={{ color: "gray", fontSize: RFValue(12) }}>Yêu cầu:</Text>
                     <MultiFormTextInput
                         value={this.state.require}
                         onChangeText={(require) => this.setState({ require })} 
@@ -152,7 +153,7 @@ export default class EditRequire extends React.Component {
                     {
                         this.state.role == "Đã có phòng" &&
                         <View>
-                            <Text style={{ color: "gray" }}>Diện tích phòng (m2):</Text>
+                            <Text style={{ color: "gray", fontSize: RFValue(12) }}>Diện tích phòng (m2):</Text>
                             <FormTextInput
                                 value={this.state.acreage}
                                 onChangeText={(acreage) => this.setState({ acreage })}
@@ -160,7 +161,7 @@ export default class EditRequire extends React.Component {
                                 keyboardType="number-pad"
                             />
 
-                            <Text style={{ color: "gray" }}>Mô tả phòng:</Text>
+                            <Text style={{ color: "gray", fontSize: RFValue(12) }}>Mô tả phòng:</Text>
                             <MultiFormTextInput
                                 value={this.state.roomDescribe}
                                 onChangeText={(roomDescribe) => this.setState({ roomDescribe })} 

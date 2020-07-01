@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
+import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 
 const PRIMARY_COLOR = "#7444C0";
 const SECONDARY_COLOR = "#5636B8";
@@ -30,7 +31,7 @@ export default StyleSheet.create({
 		shadowOpacity: 0.05,
 		shadowRadius: 10,
 		shadowColor: BLACK,
-		shadowOffset: { height: 0, width: 0 }
+		shadowOffset: { height: 0, width: 0 },
 	},
 	matchesCardItem: {
 		marginTop: -35,
@@ -44,12 +45,15 @@ export default StyleSheet.create({
 		color: WHITE,
 	},
 	descriptionCardItem: {
-		width: "85%",
 		color: GRAY,
+		fontSize: RFValue(12),
+		flex: 1,
+		flexWrap: "wrap"
 	},
 	matchDescription: {
 		color: GRAY,
 		textAlign: "center",
+		fontSize: RFValue(11)
 	},
 	status: {
 		paddingBottom: 10,
@@ -191,7 +195,7 @@ export default StyleSheet.create({
 		shadowOpacity: 0.05,
 		shadowRadius: 10,
 		shadowColor: BLACK,
-		shadowOffset: { height: 0, width: 0 }
+		shadowOffset: { height: 0, width: 0 },
 	},
 	matchesProfileItem: {
 		width: 150,
@@ -204,7 +208,7 @@ export default StyleSheet.create({
 		alignSelf: "center"
 	},
 	matchesTextProfileItem: {
-		fontSize:15,
+		fontSize: RFValue(13),
 		fontFamily: ICON_FONT,
 		color: WHITE,
 		textAlign: "center",
@@ -213,29 +217,33 @@ export default StyleSheet.create({
 		paddingTop: 10,
 		paddingBottom: 5,
 		color: DARK_GRAY,
-		fontSize: 25,
-		textAlign: "center"
+		fontSize: RFValue(23),
+		textAlign: "center",
+		fontWeight: "200",
 	},
 	descriptionProfileItem: {
 		color: GRAY,
 		textAlign: "center",
 		paddingBottom: 20,
-		fontSize: 13
+		fontSize: RFValue(12)
 	},
 	info: {
-		paddingVertical: 8,
+		paddingVertical: 3,
 		flexDirection: "row",
-		alignItems: "center"
+		alignItems: "center",
+		flexWrap: "wrap"
 	},
 	iconProfile: {
 		fontFamily: ICON_FONT,
 		fontSize: 13,
 		color: DARK_GRAY,
-		paddingHorizontal: 10
+		paddingHorizontal: 10,
+		flex: 1
 	},
 	infoContent: {
 		color: GRAY,
-		fontSize: 13
+		fontSize: RFValue(12),
+		flex: 19
 	},
 
 	// CONTAINER - GENERAL
@@ -285,13 +293,13 @@ export default StyleSheet.create({
 	},
 	topIconLeft: {
 		fontFamily: ICON_FONT,
-		fontSize: 20,
+		fontSize: RFValue(12),
 		color: WHITE,
 		transform: [{ rotate: "90deg" }]
 	},
 	topIconRight: {
 		fontFamily: ICON_FONT,
-		fontSize: 20,
+		fontSize: RFValue(12),
 		color: WHITE,
 		paddingRight: 20
 	},
@@ -300,12 +308,11 @@ export default StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center"
 	},
-	iconButton: { fontFamily: ICON_FONT, fontSize: 20, color: WHITE },
+	iconButton: { fontFamily: ICON_FONT, fontSize: RFValue(12), color: WHITE },
 	textButton: {
 		fontFamily: ICON_FONT,
-		fontSize: 15,
-		color: WHITE,
-		
+		fontSize: RFValue(12),
+		color: WHITE,	
 	},
 	circledButton: {
 		width: 50,
@@ -320,7 +327,8 @@ export default StyleSheet.create({
 		justifyContent: "center",
 		flexDirection: "row",
 		alignItems: "center",
-		marginLeft: 10,
+		marginLeft: 5,
+		marginRight: 5,
 		height: "auto",
 		width: "auto",
 		borderRadius: 25,

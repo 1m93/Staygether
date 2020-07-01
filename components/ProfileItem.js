@@ -3,6 +3,7 @@ import styles from '../assets/styles';
 
 import { Text, View } from 'react-native';
 import Icon from './Icon';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 const ProfileItem = ({
     age,
@@ -26,7 +27,7 @@ const ProfileItem = ({
             </View>
 
             <Text style={styles.name}>{name}</Text>
-            <Text style={{ fontSize: 17, color: "#7444C0", marginTop: -10, marginBottom: 0, textAlign: "center" }}>{role}</Text>
+            <Text style={{ fontSize: RFValue(15), color: "#7444C0", marginTop: -10, marginBottom: 0, textAlign: "center" }}>{role}</Text>
 
             <Text style={styles.descriptionProfileItem}>
                 {address}, {location}

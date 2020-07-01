@@ -3,6 +3,7 @@ import { Text, View, StyleSheet } from 'react-native'
 import Button from "../components/Button";
 import FormTextInput from "../components/FormTextInput";
 import firebase from '../containers/firebase';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 class ForgotPassword extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class ForgotPassword extends Component {
             <View style={styles.container}>
                 <View style={styles.form}>
                     <Text style={styles.text1}>QUÊN MẬT KHẨU?</Text>
-                    <Text style={{ marginBottom: 10, }}>Nhập Email:</Text>
+                    <Text style={{ marginBottom: 10, fontSize: RFValue(12) }}>Nhập Email:</Text>
                     <FormTextInput
                         value={this.state.email}
                         onChangeText={(email) => this.setState({ email })}
@@ -78,10 +79,10 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     text1: {
-        fontSize: 30,
+        fontSize: RFValue(22),
         marginBottom: 60,
         color: "#7444C0"
     },
 });
 
-export default ForgotPassword
+export default ForgotPassword;

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 class Button extends React.Component {
     render() {
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
         color: "#FFF",
         textAlign: "center",
         height: 20,
+        fontSize: RFValue(12)
     }
 });
 

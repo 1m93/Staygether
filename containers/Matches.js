@@ -9,10 +9,10 @@ import {
     ImageBackground,
     FlatList
 } from 'react-native';
-import CardItem from '../components/CardItem';
 import Icon from '../components/Icon';
 import firebase from '../containers/firebase';
 import shuffleArray from '../components/ShuffleArray';
+import MatchedItem from '../components/MatchedItem';
 //import Demo from '../assets/data/demo.js';
 var data = [];
 var match = [];
@@ -93,11 +93,6 @@ class Matches extends React.Component {
                     <ScrollView>
                         <View style={styles.top}>
                             <Text style={styles.title}>Quan Tâm</Text>
-                            <TouchableOpacity>
-                                <Text style={styles.icon}>
-                                    <Icon name="optionsV" />
-                                </Text>
-                            </TouchableOpacity>
                         </View>
 
                         <FlatList
@@ -124,7 +119,7 @@ class Matches extends React.Component {
                                     }
                                     this.props.myProp.navigation.navigate('Profile', tmp);
                                 }}>
-                                    <CardItem
+                                    <MatchedItem
                                         image={item.image}
                                         name={item.name}
                                         matchDescription={item.gender + " - " + item.age + " tuổi\n"}

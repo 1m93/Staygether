@@ -5,7 +5,7 @@ import { Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { RFValue } from "react-native-responsive-fontsize";
 import Icon from './Icon';
 
-const CardItem = ({
+const MatchedItem = ({
     actions,
     role,
     description,
@@ -34,7 +34,7 @@ const CardItem = ({
             paddingTop: variant ? 10 : 15,
             paddingBottom: variant ? 5 : 7,
             color: '#363636',
-            fontSize: RFValue(23),
+            fontSize: RFValue(12),
         }
     ];
 
@@ -62,9 +62,7 @@ const CardItem = ({
 
             {/* DESCRIPTION */}
             {description && (
-                <View style={{flexDirection: "row", width: "85%",}}>
-                    <Text style={styles.descriptionCardItem}>{description}</Text>
-                </View>
+                <Text style={styles.descriptionCardItem}>{description}</Text>
             )}
 
             {matchDescription && (
@@ -97,4 +95,4 @@ const CardItem = ({
     );
 };
 
-export default CardItem;
+export default MatchedItem;

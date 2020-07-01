@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { GiftedChat, Bubble } from 'react-native-gifted-chat';
+import { GiftedChat, Bubble, Send, Composer } from 'react-native-gifted-chat';
 import firebase from 'firebase';
 import { HeaderBackButton } from 'react-navigation-stack'
 import NavigationBar from "react-native-navbar";
@@ -102,19 +102,19 @@ class Chat extends React.Component {
                 sound: 'default',
                 title: name + ' vừa nhắn tin cho bạn',
                 body: name + ': đã gửi 1 ảnh',
-              };
+            };
         }
-       
+
         const response = await fetch('https://exp.host/--/api/v2/push/send', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Accept-encoding': 'gzip, deflate',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(message),
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Accept-encoding': 'gzip, deflate',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(message),
         });
-      };
+    };
 
 
     send = messages => {
@@ -153,9 +153,9 @@ class Chat extends React.Component {
         var id2 = this.state.email2.replace(/\./g, ',');
         var token = ''
         var name = ''
-        firebase.database().ref('UsersData/' + id2).once('value', (snapshot) =>{
+        firebase.database().ref('UsersData/' + id2).once('value', (snapshot) => {
             token = snapshot.val().token
-            firebase.database().ref('UsersData/' + id1).once('value', (ss) =>{
+            firebase.database().ref('UsersData/' + id1).once('value', (ss) => {
                 name = ss.val().name
                 this.sendPushNotification(token, name, message.text)
             })
@@ -300,6 +300,42 @@ class Chat extends React.Component {
                     isTyping={true}
                     showUserAvatar={true}
                     alwaysShowSend
+                    renderSend={(props) => {
+                        return (
+                            <Send {...props} wrapperStyle={{ textStyle: { color: 'red' } }} >
+                                <Text
+                                    style={{
+                                        color: "#7444C0",
+                                        fontWeight: '600',
+                                        fontSize: 17,
+                                        backgroundColor: "transparent",
+                                        marginBottom: 12,
+                                        marginLeft: 10,
+                                        marginRight: 10,
+                                    }}
+                                >
+                                    Gửi
+                                </Text>
+                            </Send>
+                        )
+                    }}
+                    renderBubble={(props) => {
+                        return (
+                            <Bubble
+                                {...props}
+                                wrapperStyle={{
+                                    right: {
+                                        backgroundColor: "#7444C0",
+                                    }
+                                }}
+                            />
+                        )
+                    }}
+                    renderComposer={(props) => {
+                        return (
+                            <Composer {...props} placeholder={'Soạn tin nhắn'} />
+                        )
+                    }}
                 // renderBubble={this.renderBubble}      
                 />
             </View>
