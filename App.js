@@ -116,7 +116,7 @@ const App = createSwitchNavigator(
         mainStack: mainStack,
     },
     {
-        initialRouteName: "Notify"
+        initialRouteName: "Loading"
     }
 );
 
