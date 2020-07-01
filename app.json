@@ -32,6 +32,9 @@
           "apiKey": "AIzaSyB2fH5glgpRMqttRtpIkbKGwMcOg8Sstb4"
         }
       }
+    },
+    "notification": {
+      "icon": "./assets/notification.png"
     }
   }
 }
