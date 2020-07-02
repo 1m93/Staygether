@@ -111,29 +111,4 @@ npm start
 * Nguyễn Tuấn Linh
 
 * Vũ Quốc trưởng
-
-## Phân chia công việc
-
-| Công việc            | Thành viên thực hiện                                                    | 
-| -------------- | --------------------------------------------------------- |
-| `Thiết kế UI/UX`        | Nguyễn Tuấn Linh                                        |
-| `Thiết kế Database`         | Vũ Quốc Trưởng                                         |
-| `Code Front-end`  | Nguyễn Tuấn Linh                                |
-| `Code Back-end`      | Vũ Quốc Trưởng                                      |
-| `Đăng nhập/ Đăng ký/ Đăng xuất`        | Nguyễn Tuấn Linh, Vũ Quốc Trưởng                                       |
-| `Bộ lọc`         | Nguyễn Tuấn Linh                                          |
-| `Quản lý thông tin`  | Nguyễn Tuấn Linh                                  |
-| `Đóng profile`      | Nguyễn Tuấn Linh                                         |
-| `Xem bài đăng`      | Vũ Quốc Trưởng             |
-| `Yêu thích bài đăng`  | Vũ Quốc Trưởng |
-| `Bỏ qua bài đăng` | Vũ Quốc Trưởng          |
-| `Xóa quan tâm` | Nguyễn Tuấn Linh         |
-| `Chat`       | Vũ Quốc Trưởng |
-| `Thông báo`      | Vũ Quốc Trưởng  |
-| `Quên mật khẩu`      | Nguyễn Tuấn Linh |
-| `Kiểm thử và sửa lỗi`      | Vũ Quốc Trưởng, Nguyễn Tuấn Linh                                     |
-
-* Nguyễn Tuấn Linh: 50%
-* Vũ Quốc Trưởng: 50%
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
